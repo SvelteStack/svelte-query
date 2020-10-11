@@ -8,8 +8,10 @@ module.exports = {
     "@storybook/addon-essentials"
   ],
   webpackFinal: async (config) => {
-    config.module.rules[3] = {
-      test: /\.(html|svelte)$/,
+    const svelteLoaderIndex = config.module.rules.findIndex(rule => rule.loader && rule.loader.includes('svelte-loader'));
+    // include svelte-preprocess (must be detected by the storybook project)
+    config.module.rules[svelteLoaderIndex] = {
+      test: /\.(svelte|html)$/,
       exclude: /node_modules/,
       use: {
         loader: 'svelte-loader',

@@ -5,6 +5,6 @@ export default {
   component: Mutation,
 };
 
-export const SvelteQueryMutation = () => ({
+export const Default = () => ({
   Component: Mutation
 });

@@ -5,6 +5,6 @@ export default {
   component: IsFetching,
 };
 
-export const SvelteQueryIsFetching = () => ({
+export const History = () => ({
   Component: IsFetching
 });

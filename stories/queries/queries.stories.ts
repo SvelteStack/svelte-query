@@ -5,6 +5,6 @@ export default {
   component: Queries,
 };
 
-export const SvelteQueryQueries = () => ({
+export const Default = () => ({
   Component: Queries
 });
