@@ -74,7 +74,7 @@
     MutateFunction,
     MutateAsyncFunction,
   } from "./types";
-import { useQueryClient } from "./QueryClientProvider.svelte";
+  import { useQueryClient } from "./QueryClientProvider.svelte";
 
   export let mutationFn: MutationFunction;
   export let options: MutationOptions;

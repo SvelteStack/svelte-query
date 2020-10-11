@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { getContext, onDestroy } from "svelte";
+  import { onDestroy } from "svelte";
 
   import type { QueryFilters } from "./query/core/utils";
   import type { QueryClient } from "./query/core";
+  import { useQueryClient } from "./QueryClientProvider.svelte";
 
   export let filters: QueryFilters;
 
-  const client: QueryClient = getContext("queryClient");
+  const client: QueryClient = useQueryClient();
 
   export let isFetching = client.isFetching(filters);
 
