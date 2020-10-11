@@ -1,0 +1,93 @@
+{
+  "name": "svelte-query",
+  "version": "0.0.1",
+  "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
+  "license": "MIT",
+  "svelte": "src/index.js",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": [
+    "lib/setLogger.js"
+  ],
+  "engines": {
+    "npm": "use yarn instead of npm."
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && rollup -c && yarn build:types && yarn build:lib",
+    "build:types": "tsc --project ./tsconfig.types.json && replace 'import type' 'import' ./dist -r --silent && replace 'export type' 'export' ./dist -r --silent",
+    "build:lib": "rimraf ./lib && tsc --project tsconfig.lib.json --module 'CommonJS' --outDir ./lib",
+    "prepublishOnly": "yarn run build",
+    "test:watch": "yarn test -- --watch",
+    "test": "yarn build && yarn build:types && yarn test:eslint",
+    "test:dev": "yarn test:types && yarn test:eslint && jest --watch",
+    "test:eslint": "eslint --ext .ts ./src",
+    "test:types": "tsc --b ./tsconfig.types.json --dry --force",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/svelte": "^6.0.26",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/svelte": "^3.0.0",
+    "@testing-library/user-event": "^12.1.7",
+    "@tsconfig/svelte": "^1.0.10",
+    "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "babel-jest": "^25.2.6",
+    "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.2",
+    "del-cli": "^3.0.0",
+    "eslint": "7.x",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-flowtype": "5.x",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "husky": "^4.3.0",
+    "jest": "^25.2.7",
+    "nan": "^2.14.1",
+    "prettier": "^2.0.5",
+    "prettier-plugin-svelte": "^1.4.0",
+    "react-is": "^16.13.1",
+    "replace": "^1.2.0",
+    "rollup": "^1.20.0",
+    "rollup-plugin-svelte": "^5.0.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "svelte": "^3.29.0",
+    "svelte-check": "^1.0.55",
+    "svelte-jester": "^1.0.5",
+    "svelte-loader": "^2.13.6",
+    "svelte-preprocess": "^4.5.1",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
+  },
+  "keywords": [
+    "svelte",
+    "react-query"
+  ],
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test:types && yarn test:eslint && jest"
+    }
+  }
+}

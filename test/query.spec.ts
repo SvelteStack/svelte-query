@@ -1,0 +1,17 @@
+import "@testing-library/jest-dom/extend-expect";
+import { render, waitFor } from "@testing-library/svelte";
+
+import Query from "../stories/query/Query.svelte";
+
+describe("Query", () => {
+  it("should render the first query result before the second query result", async () => {
+    const { getByText, getAllByText, queryByText } = render(Query);
+    //@ts-ignore
+    expect(getByText("Query loading...")).toBeInTheDocument();
+    //@ts-ignore
+    expect(queryByText("My Data 2")).toBeFalsy();
+    await waitFor(() => getAllByText("My Data"));
+    await waitFor(() => getAllByText("Query 2 loading..."));
+    await waitFor(() => getAllByText("My Data 2"));
+  });
+});
