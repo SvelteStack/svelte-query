@@ -65,8 +65,6 @@
 </script>
 
 <script lang="ts">
-  import { getContext } from "svelte";
-
   import type { MutationOptions, QueryClient } from "./query/core";
   import { getLogger } from "./query/core/logger";
   import { notifyManager } from "./query/core/notifyManager";
@@ -76,13 +74,14 @@
     MutateFunction,
     MutateAsyncFunction,
   } from "./types";
+import { useQueryClient } from "./QueryClientProvider.svelte";
 
   export let mutationFn: MutationFunction;
   export let options: MutationOptions;
 
   export let mutation: MutationResult;
 
-  const client: QueryClient = getContext("queryClient");
+  const client: QueryClient = useQueryClient();
   const defaultedOptions = client.defaultMutationOptions(options);
 
   const initial = getDefaultMutationState();

@@ -10,7 +10,7 @@
 
   // the query fn
   const queryFn = () => later(1000, "My Data");
-  // the query fn
+  // the query fn 2
   const queryFn2 = () => later(500, "My Data 2");
   
   // The query result

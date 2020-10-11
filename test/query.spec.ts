@@ -6,7 +6,7 @@ import Query from "../stories/query/Query.svelte";
 describe("Query", () => {
   it("should render the first query result before the second query result", async () => {
     const { getByText, getAllByText, queryByText } = render(Query);
-    //@ts-ignore
+    //@ts-ignore Property 'toBeInTheDocument' does not exist on type 'JestMatchersShape'
     expect(getByText("Query loading...")).toBeInTheDocument();
     //@ts-ignore
     expect(queryByText("My Data 2")).toBeFalsy();

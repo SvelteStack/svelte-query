@@ -1,14 +1,25 @@
+<script context="module" lang="ts">
+  import { getContext } from "svelte";
+
+  import { QueryClient } from "./query/core/queryClient";
+
+  export function useQueryClient(): QueryClient {
+    return getContext("queryClient")
+  }
+</script>
+
 <script lang="ts">
-  import { setContext, onDestroy } from "svelte";
+  import { setContext, onMount, onDestroy } from "svelte";
 
   import { QueryCache } from "./query/core/queryCache";
-  import { QueryClient } from "./query/core/queryClient";
 
   // Props with default values
   export let cache = new QueryCache();
   export let client = new QueryClient({ cache });
-
-  client.mount();
+  
+  onMount(()=>{
+    client.mount();
+  })
 
   setContext("queryClient", client);
 

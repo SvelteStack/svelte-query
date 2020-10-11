@@ -6,7 +6,7 @@ import IsFetching from "../stories/isFetching/IsFetching.svelte";
 describe("IsFetching", () => {
   it("should render the fetching history", async () => {
     const { getByText, getAllByText } = render(IsFetching);
-    //@ts-ignore
+    //@ts-ignore Property 'toBeInTheDocument' does not exist on type 'JestMatchersShape'
     expect(getByText("Query loading...")).toBeInTheDocument();
     //@ts-ignore
     expect(getByText("Query 2 loading...")).toBeInTheDocument();

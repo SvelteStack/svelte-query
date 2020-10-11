@@ -3,10 +3,10 @@ import { render, waitFor } from "@testing-library/svelte";
 
 import Queries from "../stories/queries/Queries.svelte";
 
-describe("App", () => {
-  it("loading and data rendering", async () => {
+describe("Queries", () => {
+  it("should fetch 2 queries", async () => {
     const { getByText, getAllByText } = render(Queries);
-    //@ts-ignore
+    //@ts-ignore Property 'toBeInTheDocument' does not exist on type 'JestMatchersShape'
     expect(getByText("Query loading...")).toBeInTheDocument();
     //@ts-ignore
     expect(getByText("Query 2 loading...")).toBeInTheDocument();

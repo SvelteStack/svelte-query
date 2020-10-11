@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { getContext, onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   import type { QueryClient } from "./query/core";
+  import { useQueryClient } from "./QueryClientProvider.svelte";
   import type { QueryOptions, QueryResult } from "./types";
 
   export let options: QueryOptions;
 
   let firstRender = true;
   let unsubscribe;
-  const client: QueryClient = getContext("queryClient");
+  const client: QueryClient = useQueryClient();
   let defaultedOptions = client.defaultQueryObserverOptions(options);
   const observer = client.watchQuery(defaultedOptions);
 
