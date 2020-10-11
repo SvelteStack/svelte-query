@@ -7,7 +7,7 @@ Hooks for managing, caching and syncing asynchronous and remote data in Svelte (
 ## Get started
 
 ```bash
-git clone git@github.com:amen-souissi/svelte-query.git
+git clone git@github.com:TanStack/svelte-query.git
 cd svelte-query
 yarn
 yarn storybook
