@@ -25,6 +25,7 @@
     "test:watch": "yarn test -- --watch",
     "test": "yarn build && yarn build:types && yarn test:eslint",
     "test:dev": "yarn test:types && yarn test:eslint && jest --watch",
+    "test:ci": "yarn test:types && yarn test:eslint && jest",
     "test:eslint": "eslint --ext .ts ./src",
     "test:types": "tsc --b ./tsconfig.types.json --dry --force",
     "storybook": "start-storybook -p 6006",
@@ -87,7 +88,7 @@
   "dependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test:types && yarn test:eslint && jest"
+      "pre-commit": "yarn test:ci"
     }
   }
 }

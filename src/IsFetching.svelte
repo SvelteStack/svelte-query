@@ -1,26 +1,38 @@
-<script lang="ts">
-  import { onDestroy } from "svelte";
+<script context="module" lang="ts">
+  import { readable } from 'svelte/store';
 
   import type { QueryFilters } from "./query/core/utils";
   import type { QueryClient } from "./query/core";
   import { useQueryClient } from "./QueryClientProvider.svelte";
 
+  export function useIsFetching(
+    filters?: QueryFilters
+  ) {
+    const client: QueryClient = useQueryClient();
+    const cache = client.getCache();
+    let isFetching = client.isFetching(filters)
+
+    let { subscribe } = readable(isFetching, (set) => {
+        return cache.subscribe(()=>{
+          const newIsFetching = client.isFetching(filters);
+          if (isFetching !== newIsFetching) {
+            isFetching = newIsFetching;
+            set(isFetching)
+          }
+        });
+    });
+
+    return { subscribe };
+  }
+</script>
+
+<script lang="ts">
   export let filters: QueryFilters;
+  export let isFetching;
 
-  const client: QueryClient = useQueryClient();
+  $: isFetchingResult = useIsFetching(filters)
+  $: isFetching = $isFetchingResult
 
-  export let isFetching = client.isFetching(filters);
-
-  let unsubscribe = client.getCache().subscribe(() => {
-    const newIsFetching = client.isFetching(filters);
-    if (isFetching !== newIsFetching) {
-      isFetching = newIsFetching;
-    }
-  });
-
-  onDestroy(() => {
-    unsubscribe();
-  });
 </script>
 
 <slot name="isFetching" {isFetching} />

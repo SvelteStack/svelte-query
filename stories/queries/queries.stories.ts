@@ -1,10 +1,10 @@
-import Queries from './Queries.svelte';
+import App from './App.svelte';
 
 export default {
   title: 'Queries',
-  component: Queries,
+  component: App,
 };
 
 export const Default = () => ({
-  Component: Queries
+  Component: App
 });

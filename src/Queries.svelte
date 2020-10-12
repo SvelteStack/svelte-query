@@ -1,36 +1,48 @@
-<script lang="ts">
-  import { onMount, onDestroy } from "svelte";
-
+<script context="module" lang="ts">
+  import { readable } from 'svelte/store';
+  
   import type { QueryClient } from "./query/core";
+  import type { QueryOptions } from "./types";
   import { useQueryClient } from "./QueryClientProvider.svelte";
-  import type { QueryOptions, QueryResult } from "./types";
+  
+  export function useQueries<TData, TError>(
+    queries: QueryOptions[]
+    ) {
+      const client: QueryClient = useQueryClient();
+      const observer = client.watchQueries(queries);
+      
+      let { subscribe } = readable(observer.getCurrentResult(), (set) => {
+        return observer.subscribe(set);
+      });
+      
+      const setQueries = (queries:  QueryOptions[])=>{
+        observer.setQueries(queries)
+      }
+      
+      return { subscribe, setQueries };
+    }
+  </script>
 
+<script lang="ts">
+  import { onMount } from "svelte";
+  
   export let queries: QueryOptions[];
+  export let currentResult
 
-  let firstRender = true;
-  let unsubscribe;
-  const client: QueryClient = useQueryClient();
-  const observer = client.watchQueries(queries);
+  let firstRender = true
 
   onMount(() => {
     firstRender = false;
-    unsubscribe = observer.subscribe((result) => {
-      currentResult = result;
-    });
   });
+
+  const queriesStore = useQueries(queries)
+  $: currentResult = $queriesStore
 
   $: {
     if (!firstRender) {
-      queries = queries;
-      observer.setQueries(queries);
+      queriesStore.setQueries(queries);
     }
   }
-
-  export let currentResult: QueryResult[] = observer.getCurrentResult();
-
-  onDestroy(() => {
-    unsubscribe();
-  });
 </script>
 
 <slot name="queries" {currentResult} />

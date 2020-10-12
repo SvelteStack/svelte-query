@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, waitFor } from "@testing-library/svelte";
 
-import Queries from "../stories/queries/Queries.svelte";
+import Queries from "../stories/queries/App.svelte";
 
 describe("Queries", () => {
   it("should fetch 2 queries", async () => {

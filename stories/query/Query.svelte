@@ -1,44 +1,39 @@
 <script lang="ts">
   import {
-    QueryClientProvider,
     Query
   } from "../../src";
-  import type { QueryResult } from "../../src";
+  import { useQuery } from "../../src/Query.svelte";
 
-  const later = (delay, value) =>
+  const later = (delay, value): Promise<string> =>
     new Promise((resolve) => setTimeout(resolve, delay, value));
 
   // the query fn
   const queryFn = () => later(1000, "My Data");
   // the query fn 2
   const queryFn2 = () => later(500, "My Data 2");
-  
-  // The query result
-  let queryResultApp: QueryResult<string>;
-  // The query result2
-  let queryResultApp2: QueryResult<string>;
+
+  const queryResult = useQuery<string>({ queryKey: 'myQuery', queryFn })
 </script>
 
 <main>
-  <QueryClientProvider>
-    <h3>Query</h3>
-    <Query
-      bind:queryResult={queryResultApp}
-      options={{ queryKey: 'myQuery', queryFn }} />
-    {#if queryResultApp && (queryResultApp.isLoading || queryResultApp.isFetching)}
-      <p>Query loading...</p>
-    {:else}
-      <p>{queryResultApp && queryResultApp.data}</p>
-    {/if}
+  <h3>Query with useQuery</h3>
+  {#if  ($queryResult.isLoading || $queryResult.isFetching)}
+    <p>Query loading...</p>
+  {:else}
+    <p>{$queryResult && $queryResult.data}</p>
+  {/if}
 
-    <h3>Query 2 depend on Query</h3>
-    <Query
-      bind:queryResult={queryResultApp2}
-      options={{ queryKey: 'myQuery2', queryFn: queryFn2, enabled: !!(queryResultApp && queryResultApp.data)}} />
-    {#if queryResultApp2 && (queryResultApp2.isLoading || queryResultApp2.isFetching)}
-      <p>Query 2 loading...</p>
-    {:else}
-      <p>{queryResultApp2 && queryResultApp2.data}</p>
-    {/if}
-  </QueryClientProvider>
+  <h3>Query 2 depend on Query</h3>
+  <Query
+    options={{ queryKey: 'myQuery2', queryFn: queryFn2, enabled: !!($queryResult.data)}}
+    >
+    <div slot="query" let:queryResult>
+      {#if (queryResult.isLoading || queryResult.isFetching)}
+        <p>Query 2 loading...</p>
+      {:else}
+        <p>{queryResult.data}</p>
+        {/if}
+        <button on:click={() => queryResult.refetch()}>refetch Query</button>
+    </div>
+  </Query>
 </main>

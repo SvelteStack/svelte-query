@@ -1,10 +1,10 @@
-import IsFetching from './IsFetching.svelte';
+import App from './App.svelte';
 
 export default {
   title: 'Is fetching',
-  component: IsFetching,
+  component: App,
 };
 
 export const History = () => ({
-  Component: IsFetching
+  Component: App
 });

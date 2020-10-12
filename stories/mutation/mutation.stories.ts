@@ -1,10 +1,10 @@
-import Mutation from './Mutation.svelte';
+import App from './App.svelte';
 
 export default {
   title: 'Mutation',
-  component: Mutation,
+  component: App,
 };
 
 export const Default = () => ({
-  Component: Mutation
+  Component: App
 });

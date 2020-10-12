@@ -1,10 +1,10 @@
 <script lang="ts">
   import {
-    QueryClientProvider,
     Query,
     IsFetching,
   } from "../../src";
   import type { QueryResult } from "../../src";
+  import { useIsFetching } from "../../src/IsFetching.svelte";
 
   const later = (delay, value) =>
     new Promise((resolve) => setTimeout(resolve, delay, value));
@@ -24,44 +24,58 @@
   $: {
     history = [...history, isFetching];
   }
+  
+  // useIsFetching
+  const isFetchingResult = useIsFetching()
+  let useHistory = [];
+  $: {
+    useHistory = [...useHistory, $isFetchingResult];
+  }
 </script>
 
 <main>
-  <QueryClientProvider>
-    <h3>IsFetching</h3>
-    <IsFetching bind:isFetching />
-    isFetching change log:
-    <span>{JSON.stringify(history)}<span>
+  <h3>IsFetching</h3>
+  <IsFetching bind:isFetching >
+    <div slot="isFetching" >
+      isFetching change log: <span>{JSON.stringify(history)}</span>
+    </div>
+  </IsFetching>
 
-    <h3>Query</h3>
-    <Query
-      bind:queryResult={queryResultApp}
-      options={{ queryKey: 'myQuery', queryFn }} />
-    {#if queryResultApp && (queryResultApp.isLoading || queryResultApp.isFetching)}
-      <p>Query loading...</p>
-    {:else}
-      <p>{queryResultApp && queryResultApp.data}</p>
-    {/if}
+  <h3>useIsFetching</h3>
+  <div>useIsFetching change log: {JSON.stringify(useHistory)}<div>
+  <button on:click={() => {
+    queryResultApp2.refetch();
+    queryResultApp.refetch()}}>
+    refetch All
+  </button>
 
-    <h3>Query 2</h3>
-    <Query
-      bind:queryResult={queryResultApp2}
-      options={{ queryKey: 'myQuery2', queryFn: queryFn2 }} />
-    {#if queryResultApp2 && (queryResultApp2.isLoading || queryResultApp2.isFetching)}
-      <p>Query 2 loading...</p>
-    {:else}
-      <p>{queryResultApp2 && queryResultApp2.data}</p>
-    {/if}
+  <h3>Query</h3>
+  <Query
+    bind:queryResult={queryResultApp}
+    options={{ queryKey: 'myQuery', queryFn }}
+    >
+    <div slot="query" let:queryResult>
+      {#if (queryResult.isLoading || queryResult.isFetching)}
+        <p>Query loading...</p>
+      {:else}
+        <p>{queryResult.data}</p>
+        {/if}
+        <button on:click={() => queryResult.refetch()}>refetch Query</button>
+    </div>
+  </Query>
 
-    <button on:click={() => queryResultApp.refetch()}>refetch Query</button>
-
-    <button on:click={() => queryResultApp2.refetch()}>refetch Query 2</button>
-
-    <button on:click={() => {
-      queryResultApp2.refetch();
-      queryResultApp.refetch()}}>
-      refetch All
-    </button>
-
-  </QueryClientProvider>
+  <h3>Query 2</h3>
+  <Query
+    bind:queryResult={queryResultApp2}
+    options={{ queryKey: 'myQuery2', queryFn: queryFn2 }}
+    >
+    <div slot="query" let:queryResult>
+      {#if (queryResult.isLoading || queryResult.isFetching)}
+        <p>Query 2 loading...</p>
+      {:else}
+        <p>{queryResult.data}</p>
+      {/if}
+      <button on:click={() => queryResult.refetch()}>refetch Query 2</button>
+    </div>
+  </Query>
 </main>
