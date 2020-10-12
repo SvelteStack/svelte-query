@@ -1,4 +1,4 @@
-import { setLogger } from './query/core'
+import { setLogger } from './queryCore/core'
 import { logger } from './logger'
 
 if (logger) {

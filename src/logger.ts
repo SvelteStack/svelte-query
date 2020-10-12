@@ -1,3 +1,3 @@
-import type { Logger } from "./query/core/logger";
+import type { Logger } from "./queryCore/core/logger";
 
 export const logger: Logger = console;

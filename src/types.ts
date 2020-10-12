@@ -1,8 +1,22 @@
+import type { Readable } from "svelte/store";
 import type {
   MutateOptions,
   QueryObserverOptions,
   QueryObserverResult,
-} from "./query";
+  QueryFunction, QueryKey
+} from "./queryCore";
+
+export interface QueryStoreResult<
+  TData = unknown,
+  TError = unknown,
+  TQueryFnData = TData
+  > extends Readable<QueryObserverResult<TData, TError>> {
+  setOptions: {
+    (options: QueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, options?: QueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData | TData>, options?: QueryOptions<TData, TError, TQueryFnData>): any;
+  }
+}
 
 export type MutationReducer<TData, TError> = (
   state: MutationState<TData, TError>,
@@ -50,10 +64,10 @@ export type MutateFunction<
   TError = unknown,
   TVariables = unknown,
   TContext = unknown
-> = (
-  variables: TVariables,
-  options?: MutateOptions<TData, TError, TVariables, TContext>
-) => void;
+  > = (
+    variables: TVariables,
+    options?: MutateOptions<TData, TError, TVariables, TContext>
+  ) => void;
 
 export type MutationFunction<TData = unknown, TVariables = unknown> = (
   variables: TVariables
@@ -64,27 +78,27 @@ export type MutateAsyncFunction<
   TError = unknown,
   TVariables = unknown,
   TContext = unknown
-> = (
-  variables: TVariables,
-  options?: MutateOptions<TData, TError, TVariables, TContext>
-) => Promise<TData>;
+  > = (
+    variables: TVariables,
+    options?: MutateOptions<TData, TError, TVariables, TContext>
+  ) => Promise<TData>;
 
 export interface QueryOptions<
   TData = unknown,
   TError = unknown,
   TQueryFnData = TData,
   TQueryData = TQueryFnData
-> extends QueryObserverOptions<TData, TError, TQueryFnData, TQueryData> {}
+  > extends QueryObserverOptions<TData, TError, TQueryFnData, TQueryData> { }
 
 export interface QueryResult<TData = unknown, TError = unknown>
-  extends QueryObserverResult<TData, TError> {}
+  extends QueryObserverResult<TData, TError> { }
 
 export interface MutationResult<
   TData = unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
-> {
+  > {
   data: TData | undefined;
   error: TError | null;
   isError: boolean;
