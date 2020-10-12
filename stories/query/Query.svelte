@@ -12,7 +12,7 @@
   // the query fn 2
   const queryFn2 = () => later(500, "My Data 2");
 
-  const queryResult = useQuery<string>({ queryKey: 'myQuery', queryFn })
+  const queryResult = useQuery<string>('myQuery', { queryFn })
 </script>
 
 <main>

@@ -1,13 +1,21 @@
 <script context="module" lang="ts">
   import { readable } from 'svelte/store';
 
+  import { parseFilterArgs } from "./query/core/utils";
   import type { QueryFilters } from "./query/core/utils";
-  import type { QueryClient } from "./query/core";
+  import type { QueryClient, QueryKey } from "./query/core";
   import { useQueryClient } from "./QueryClientProvider.svelte";
 
+  export function useIsFetching(filters?: QueryFilters)
   export function useIsFetching(
+    queryKey?: QueryKey,
     filters?: QueryFilters
+  )
+  export function useIsFetching(
+    arg1?: QueryKey | QueryFilters,
+    arg2?: QueryFilters
   ) {
+    const [filters] = parseFilterArgs(arg1, arg2)
     const client: QueryClient = useQueryClient();
     const cache = client.getCache();
     let isFetching = client.isFetching(filters)

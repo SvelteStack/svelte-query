@@ -5,9 +5,6 @@
   import Queries from "./Queries.svelte"
 </script>
 
-<main>
-  <QueryClientProvider>
-    <Queries />
-  </QueryClientProvider>
-</main>
-  
+<QueryClientProvider>
+  <Queries />
+</QueryClientProvider>

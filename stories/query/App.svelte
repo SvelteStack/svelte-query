@@ -4,10 +4,7 @@
   } from "../../src";
   import Query from "./Query.svelte"
 </script>
-  
-<main>
-    <QueryClientProvider>
-        <Query />
-    </QueryClientProvider>
-</main>
-  
+
+<QueryClientProvider>
+  <Query />
+</QueryClientProvider>

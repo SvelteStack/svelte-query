@@ -70,9 +70,14 @@
     }
   }
 
-  export function useMutation<TData = unknown, TError = unknown>(
-    mutationFn: MutationFunction,
-    options?: MutationOptions<TData, TError>
+  export function useMutation<
+    TData = unknown,
+    TError = unknown,
+    TVariables = void,
+    TContext = unknown
+  >(
+    mutationFn: MutationFunction<TData, TVariables>,
+    options: MutationOptions<TData, TError, TVariables, TContext> = {}
   ) {
 
     const client: QueryClient = useQueryClient();
@@ -90,16 +95,16 @@
 
     let lastMutationIdRef = 0;
 
-    const mutateAsync: MutateAsyncFunction<unknown, unknown, void, unknown> = (
+    const mutateAsync: MutateAsyncFunction<TData, TError, TVariables, TContext> = (
       vars,
       mutateOpts = {}
-    ): Promise<unknown> => {
+    ): Promise<TData> => {
       const mutationId = ++lastMutationIdRef;
       const mutationOpts = defaultedOptions;
       const lastMutationFn = mutationFn;
 
-      let ctx;
-      let data;
+      let ctx: TContext | undefined
+      let data: TData
 
       safeDispatch({ type: "loading" });
 
@@ -138,7 +143,7 @@
         });
     };
 
-    const mutate: MutateFunction<unknown, unknown, void> = (
+    const mutate: MutateFunction<TData, TError, TVariables, TContext> = (
       variables,
       mutateOptions
     ) => {

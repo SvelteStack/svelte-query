@@ -4,11 +4,7 @@
   } from "../../src";
   import IsFetching from "./IsFetching.svelte"
 </script>
-  
-<main>
-  <QueryClientProvider>
-    <IsFetching />
-  </QueryClientProvider>
 
-</main>
-  
+<QueryClientProvider>
+  <IsFetching />
+</QueryClientProvider>
