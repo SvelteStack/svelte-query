@@ -83,6 +83,7 @@ export type MutateAsyncFunction<
     options?: MutateOptions<TData, TError, TVariables, TContext>
   ) => Promise<TData>;
 
+// use options.infinite = true for infinite Query
 export interface QueryOptions<
   TData = unknown,
   TError = unknown,

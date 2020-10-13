@@ -4,5 +4,6 @@ export * from "./query";
 export * from "./queries";
 export * from "./isFetching";
 export * from "./mutation";
+export * from "./hydration";
 
 export * from "./types";
