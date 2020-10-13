@@ -15,12 +15,14 @@ export default function useIsFetching(
     const [filters] = parseFilterArgs(arg1, arg2)
     const client: QueryClient = useQueryClient()
     const cache = client.getCache()
+    // isFetching is the prev value initialized on mount *
     let isFetching = client.isFetching(filters)
 
     const { subscribe } = readable(isFetching, set => {
         return cache.subscribe(() => {
             const newIsFetching = client.isFetching(filters)
             if (isFetching !== newIsFetching) {
+                // * and update with each change
                 isFetching = newIsFetching
                 set(isFetching)
             }

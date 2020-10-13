@@ -5,6 +5,7 @@
   import useQuery from './useQuery'
 
   export let options: QueryOptions
+  // useful for binding
   export let queryResult
 
   let firstRender = true

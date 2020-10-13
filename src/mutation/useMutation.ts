@@ -1,11 +1,10 @@
-import { writable, readable } from 'svelte/store'
+import { readable } from 'svelte/store'
 
 import type { QueryClient, MutationOptions } from '../queryCore/core'
 import { getStatusProps, noop } from '../queryCore/core/utils'
 import { useQueryClient } from '../queryClientProvider'
 import type {
     MutationState,
-    MutationReducer,
     MutationAction,
     MutationFunction,
     MutateFunction,
@@ -13,24 +12,9 @@ import type {
 } from '../types'
 import { getLogger } from '../queryCore/core/logger'
 import { notifyManager } from '../queryCore/core/notifyManager'
+import { reduce } from '../utils'
 
-function reduce<TData = unknown, TError = unknown>(
-    reducer: MutationReducer<TData, TError>,
-    initial?: MutationState<TData, TError>
-) {
-    const state = writable(initial)
-    const subscribe = run => state.subscribe(run)
-    const dispatch = (action: MutationAction<TData, TError>) => {
-        state.update(value => reducer(value, action))
-    }
-
-    return { subscribe, dispatch }
-}
-
-function getDefaultMutationState<TData, TError>(): MutationState<
-    TData,
-    TError
-> {
+function getDefaultMutationState<TData, TError>(): MutationState<TData, TError> {
     return {
         ...getStatusProps('idle'),
         data: undefined,
@@ -81,7 +65,7 @@ export default function useMutation<
     const defaultedOptions = client.defaultMutationOptions(options)
 
     const initial = getDefaultMutationState<TData, TError>()
-    const state = reduce<TData, TError>(mutationStateReducer, initial)
+    const state = reduce<MutationState<TData, TError>, MutationAction<TData, TError>>(mutationStateReducer, initial)
     const dispatch = state.dispatch
 
     const safeDispatch = action => {

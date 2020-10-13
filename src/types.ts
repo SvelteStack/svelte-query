@@ -18,11 +18,6 @@ export interface QueryStoreResult<
   }
 }
 
-export type MutationReducer<TData, TError> = (
-  state: MutationState<TData, TError>,
-  action: MutationAction<TData, TError>
-) => MutationState<TData, TError>;
-
 export type MutationStatus = "idle" | "loading" | "error" | "success";
 
 export interface MutationState<TData, TError> {

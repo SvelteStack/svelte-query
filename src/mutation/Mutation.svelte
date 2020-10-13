@@ -6,6 +6,7 @@
   export let mutationFn: MutationFunction
   export let options: MutationOptions
 
+  // useful for binding
   export let mutation: MutationResult
 
   const mutationResult = useMutation(mutationFn, options)

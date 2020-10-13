@@ -106,3 +106,4 @@ lib
 
 # IDE
 .DS_Store
+.vscode/
