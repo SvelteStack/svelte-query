@@ -10,12 +10,12 @@ export function useQuery<
     TData = unknown,
     TError = unknown,
     TQueryFnData = TData
->(options: QueryOptions<TData, TError, TQueryFnData>): QueryStoreResult
+>(options: QueryOptions<TData, TError, TQueryFnData>): QueryStoreResult<TData, TError, TQueryFnData>
 export function useQuery<
     TData = unknown,
     TError = unknown,
     TQueryFnData = TData
->(queryKey: QueryKey, options?: QueryOptions<TData, TError, TQueryFnData>): QueryStoreResult
+>(queryKey: QueryKey, options?: QueryOptions<TData, TError, TQueryFnData>): QueryStoreResult<TData, TError, TQueryFnData>
 export function useQuery<
     TData = unknown,
     TError = unknown,
@@ -24,14 +24,14 @@ export function useQuery<
     queryKey: QueryKey,
     queryFn: QueryFunction<TQueryFnData | TData>,
     options?: QueryOptions<TData, TError, TQueryFnData>
-): QueryStoreResult
+): QueryStoreResult<TData, TError, TQueryFnData>
 export default function useQuery<TData = unknown, TError = unknown, TQueryFnData = TData>(
     arg1: QueryKey | QueryOptions<TData, TError, TQueryFnData>,
     arg2?:
         | QueryFunction<TData | TQueryFnData>
         | QueryOptions<TData, TError, TQueryFnData>,
     arg3?: QueryOptions<TData, TError, TQueryFnData>
-): QueryStoreResult {
+): QueryStoreResult<TData, TError, TQueryFnData> {
     const options = parseQueryArgs(arg1, arg2, arg3)
     const client: QueryClient = useQueryClient()
     const defaultedOptions = client.defaultQueryObserverOptions(options)
