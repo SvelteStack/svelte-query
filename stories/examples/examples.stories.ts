@@ -1,6 +1,7 @@
 import BasicApp from './basicQuery/BasicApp.svelte';
 import GraphQLBasicApp from './basicQueryGraphQL/BasicApp.svelte';
 import PaginationApp from './pagination/PaginationApp.svelte';
+import OptimisticUpdatesApp from './optimisticUpdates/OptimisticUpdatesApp.svelte';
 
 export default {
   title: 'Examples',
@@ -17,4 +18,8 @@ export const GraphQLBasic = () => ({
 
 export const Pagination = () => ({
   Component: PaginationApp
+});
+
+export const OptimisticUpdates = () => ({
+  Component: OptimisticUpdatesApp
 });

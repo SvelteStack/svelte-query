@@ -2,6 +2,8 @@
   import axios from 'axios'
   import { Query, useQueryClient } from '../../../src'
 
+  const endPoint = 'https://931rd.sse.codesandbox.io/api'
+
   const client = useQueryClient()
 
   let page = 0
@@ -9,15 +11,8 @@
     page = newPage
   }
 
-  let page3 = 0
-  const setPage3 = (newPage: number) => {
-    page3 = newPage
-  }
-
   const fetchProjects = async (key, page = 0) => {
-    const { data } = await axios.get(
-      'https://wpndq.sse.codesandbox.io/api/projects?page=' + page
-    )
+    const { data } = await axios.get(`${endPoint}/projects?page=${page}`)
     return data
   }
 
@@ -70,5 +65,3 @@
     {/if}
   </div>
 </Query>
-
-<button on:click={() => setPage3(page3 + 1)}> Previous Page {page3} </button>
