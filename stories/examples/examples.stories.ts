@@ -1,4 +1,5 @@
 import BasicApp from './basicQuery/BasicApp.svelte';
+import GraphQLBasicApp from './basicQueryGraphQL/BasicApp.svelte';
 
 export default {
   title: 'Examples',
@@ -7,4 +8,8 @@ export default {
 
 export const Basic = () => ({
   Component: BasicApp
+});
+
+export const GraphQLBasic = () => ({
+  Component: GraphQLBasicApp
 });
