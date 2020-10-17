@@ -14,7 +14,7 @@ export default function useIsFetching(
 ): Readable<number> {
     const [filters] = parseFilterArgs(arg1, arg2)
     const client: QueryClient = useQueryClient()
-    const cache = client.getCache()
+    const cache = client.getQueryCache()
     // isFetching is the prev value initialized on mount *
     let isFetching = client.isFetching(filters)
 

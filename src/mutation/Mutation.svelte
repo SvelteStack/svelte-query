@@ -1,16 +1,30 @@
 <script lang="ts">
-  import type { MutationOptions } from '../queryCore/core'
-  import type { MutationResult, MutationFunction } from '../types'
+  import { onMount } from 'svelte'
+
+  import type { MutationFunction } from '../queryCore'
+  import type { UseMutationOptions } from '../types'
   import useMutation from './useMutation'
 
   export let mutationFn: MutationFunction
-  export let options: MutationOptions
+  export let options: UseMutationOptions<any, any, any, any>
 
   // useful for binding
-  export let mutation: MutationResult
+  export let mutationResult
 
-  const mutationResult = useMutation(mutationFn, options)
-  $: mutation = $mutationResult
+  let firstRender = true
+
+  onMount(() => {
+    firstRender = false
+  })
+
+  const mutation = useMutation(mutationFn, options)
+  $: mutationResult = $mutation
+
+  $: {
+    if (!firstRender) {
+      mutation.setOptions(mutationFn, options)
+    }
+  }
 </script>
 
-<slot name="mutation" {mutation} />
+<slot name="mutation" {mutationResult} />

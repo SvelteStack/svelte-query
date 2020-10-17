@@ -5,7 +5,6 @@
   let postId = -1
   const setPostId = (id: number) => {
     postId = id
-    console.log(id)
   }
 </script>
 

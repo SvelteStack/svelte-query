@@ -5,5 +5,5 @@ export type {
   DehydrateOptions,
   DehydratedState,
   HydrateOptions,
-  ShouldDehydrateFunction,
+  ShouldDehydrateQueryFunction,
 } from './hydration'

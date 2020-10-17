@@ -7,9 +7,12 @@
     queries: [
       {
         queryKey: 'myQuery',
-        data: 'My cached data',
+        state: {
+          data: 'My cached data',
+        },
         queryHash: hashQueryKey('myQuery'),
         config: {},
+        cacheTime: 2000,
       },
     ],
   }

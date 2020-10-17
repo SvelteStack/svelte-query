@@ -53,12 +53,12 @@
 </p>
 
 <Mutation mutationFn={addTodo} options={mutationOptions}>
-  <div slot="mutation" let:mutation>
+  <div slot="mutation" let:mutationResult>
     <form
       on:submit={e => {
         e.preventDefault()
         e.stopPropagation()
-        mutation.mutate(text)
+        mutationResult.mutate(text)
       }}>
       <input type="text" bind:value={text} />
       <button>Create</button>

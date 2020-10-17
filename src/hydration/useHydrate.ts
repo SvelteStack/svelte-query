@@ -5,8 +5,7 @@ import type { HydrateOptions } from '../queryCore/hydration';
 
 export default function useHydrate(state: DehydratedState, options?: HydrateOptions) {
     const client: QueryClient = useQueryClient();
-    const cache = client.getCache()
     if (state) {
-        hydrate(cache, state, options)
+        hydrate(client, state, options)
     }
 }

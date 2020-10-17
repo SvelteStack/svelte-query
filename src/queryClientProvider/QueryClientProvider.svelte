@@ -1,12 +1,12 @@
 <script lang="ts">
   import { setContext, onMount, onDestroy } from 'svelte'
 
-  import { QueryClient } from '../queryCore/core/queryClient'
-  import { QueryCache } from '../queryCore/core/queryCache'
+  import { MutationCache, QueryCache, QueryClient } from '../queryCore'
 
   // Props with default values
-  export let cache = new QueryCache()
-  export let client = new QueryClient({ cache })
+  export let queryCache = new QueryCache()
+  export let mutationCache = new MutationCache()
+  export let client = new QueryClient({ queryCache, mutationCache })
 
   onMount(() => {
     client.mount()

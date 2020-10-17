@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import { readable } from 'svelte/store'
 
-import type { QueryClient, QueryFunction, QueryKey } from '../queryCore/core'
+import { QueryClient, QueryFunction, QueryKey, QueryObserver } from '../queryCore/core'
 import { parseQueryArgs } from '../queryCore/core/utils'
 import { useQueryClient } from '../queryClientProvider'
 import type { QueryOptions, QueryStoreResult } from '../types'
@@ -35,9 +35,7 @@ export default function useQuery<TData = unknown, TError = unknown, TQueryFnData
     const options = parseQueryArgs(arg1, arg2, arg3)
     const client: QueryClient = useQueryClient()
     const defaultedOptions = client.defaultQueryObserverOptions(options)
-    const observer = client.watchQuery<TData, TError, TQueryFnData>(
-        defaultedOptions
-    )
+    const observer = new QueryObserver<TData, TError, TQueryFnData>(client, defaultedOptions)
 
     const { subscribe } = readable(observer.getCurrentResult(), set => {
         return observer.subscribe(set)
