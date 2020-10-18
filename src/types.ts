@@ -3,33 +3,64 @@ import type {
   MutateOptions,
   QueryObserverOptions,
   QueryObserverResult,
-  QueryFunction, QueryKey, MutationStatus, MutationKey, MutationFunction
+  QueryFunction, QueryKey, MutationStatus, MutationKey, MutationFunction,
+  InfiniteQueryObserverOptions,
+  InfiniteQueryObserverResult
 } from "./queryCore";
 import { RetryDelayValue, RetryValue } from "./queryCore/core/retryer";
 
 
-export interface QueryStoreResult<
+export interface UseQueryStoreResult<
   TData = unknown,
   TError = unknown,
   TQueryFnData = TData
-  > extends Readable<QueryObserverResult<TData, TError>> {
+  > extends Readable<UseQueryResult<TData, TError>> {
   setOptions: {
-    (options: QueryOptions<TData, TError, TQueryFnData>): any;
-    (queryKey: QueryKey, options?: QueryOptions<TData, TError, TQueryFnData>): any;
-    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData | TData>, options?: QueryOptions<TData, TError, TQueryFnData>): any;
+    (options: UseQueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, options?: UseQueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData | TData>, options?: UseQueryOptions<TData, TError, TQueryFnData>): any;
   }
 }
 
 // use options.infinite = true for infinite Query
-export interface QueryOptions<
+export interface UseQueryOptions<
   TData = unknown,
   TError = unknown,
   TQueryFnData = TData,
   TQueryData = TQueryFnData
   > extends QueryObserverOptions<TData, TError, TQueryFnData, TQueryData> { }
 
-export interface QueryResult<TData = unknown, TError = unknown>
+export interface UseQueryResult<TData = unknown, TError = unknown>
   extends QueryObserverResult<TData, TError> { }
+
+
+export interface UseInfiniteQueryStoreResult<
+  TData = unknown,
+  TError = unknown,
+  TQueryFnData = TData
+  > extends Readable<UseInfiniteQueryResult<TData, TError>> {
+  setOptions: {
+    (options: UseInfiniteQueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, options?: UseInfiniteQueryOptions<TData, TError, TQueryFnData>): any;
+    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData | TData>, options?: UseInfiniteQueryOptions<TData, TError, TQueryFnData>): any;
+  }
+}
+
+export interface UseInfiniteQueryOptions<
+  TData = unknown,
+  TError = unknown,
+  TQueryFnData = TData,
+  TQueryData = TQueryFnData
+  >
+  extends InfiniteQueryObserverOptions<
+  TData,
+  TError,
+  TQueryFnData,
+  TQueryData
+  > { }
+
+export interface UseInfiniteQueryResult<TData = unknown, TError = unknown>
+  extends InfiniteQueryObserverResult<TData, TError> { }
 
 
 export interface MutationStoreResult<

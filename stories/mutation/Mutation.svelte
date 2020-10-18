@@ -13,7 +13,7 @@
   <h3>Mutation</h3>
   <Mutation {mutationFn}>
     <div slot="mutation" let:mutationResult>
-      <button on:click={() => mutationResult.mutate()}>mutate</button>
+      <button on:click={() => mutationResult.mutate({})}>mutate</button>
       {(mutationResult && mutationResult.data) || ''}
     </div>
   </Mutation>

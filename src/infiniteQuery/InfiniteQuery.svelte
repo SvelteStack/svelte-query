@@ -1,12 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte'
 
-  import type { UseQueryOptions, UseQueryResult } from '../types'
-  import useQuery from './useQuery'
+  import type {
+    UseInfiniteQueryOptions,
+    UseInfiniteQueryResult,
+  } from '../types'
+  import useInfiniteQuery from './useInfiniteQuery'
 
-  export let options: UseQueryOptions
+  export let options: UseInfiniteQueryOptions
   // useful for binding
-  export let queryResult: UseQueryResult
+  export let queryResult: UseInfiniteQueryResult
 
   let firstRender = true
 
@@ -14,7 +17,7 @@
     firstRender = false
   })
 
-  const query = useQuery(options)
+  const query = useInfiniteQuery(options)
   $: queryResult = $query
 
   $: {

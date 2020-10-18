@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte'
 
-  import type { QueryOptions } from '../types'
+  import type { UseQueryOptions, UseQueryResult } from '../types'
   import useQueries from './useQueries'
 
-  export let queries: QueryOptions[]
+  export let queries: UseQueryOptions[]
   // useful for binding
-  export let currentResult
+  export let currentResult: UseQueryResult[]
 
   let firstRender = true
 

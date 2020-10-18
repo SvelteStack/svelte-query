@@ -1,11 +1,11 @@
 import { readable } from 'svelte/store';
 
 import { QueriesObserver, QueryClient } from "../queryCore/core";
-import type { QueryOptions } from "../types";
 import { useQueryClient } from "../queryClientProvider";
+import type { UseQueryOptions } from "../types";
 
 export default function useQueries<TData, TError>(
-    queries: QueryOptions[]
+    queries: UseQueryOptions[]
 ) {
     const client: QueryClient = useQueryClient();
     const observer = new QueriesObserver(client, queries);
@@ -14,7 +14,7 @@ export default function useQueries<TData, TError>(
         return observer.subscribe(set);
     });
 
-    const setQueries = (newQueries: QueryOptions[]) => {
+    const setQueries = (newQueries: UseQueryOptions[]) => {
         observer.setQueries(newQueries)
     }
 
