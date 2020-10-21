@@ -18,6 +18,7 @@ import type {
 import type { Query, QueryState, Action, FetchOptions } from './query'
 import type { QueryClient } from './queryClient'
 import { focusManager } from './focusManager'
+import { Subscribable } from './subscribable'
 
 type QueryObserverListener<TData, TError> = (
   result: QueryObserverResult<TData, TError>
@@ -39,7 +40,7 @@ export class QueryObserver<
   TError = unknown,
   TQueryFnData = TData,
   TQueryData = TQueryFnData
-  > {
+  > extends Subscribable<QueryObserverListener<TData, TError>> {
   options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
 
   private client: QueryClient
@@ -47,7 +48,6 @@ export class QueryObserver<
   private currentResult!: QueryObserverResult<TData, TError>
   private currentResultState?: QueryState<TQueryData, TError>
   private previousQueryResult?: QueryObserverResult<TData, TError>
-  private listeners: QueryObserverListener<TData, TError>[]
   private initialDataUpdateCount: number
   private staleTimeoutId?: number
   private refetchIntervalId?: number
@@ -56,31 +56,21 @@ export class QueryObserver<
     client: QueryClient,
     options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
   ) {
+    super()
+
     this.client = client
     this.options = options
-    this.listeners = []
     this.initialDataUpdateCount = 0
-
-    // Bind exposed methods
-    this.remove = this.remove.bind(this)
-    this.refetch = this.refetch.bind(this)
-
-    // Initialize
-    this.init(options)
-  }
-
-  protected init(
-    options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
-  ) {
-    // Set options
+    this.bindMethods()
     this.setOptions(options)
   }
 
-  subscribe(listener?: QueryObserverListener<TData, TError>): () => void {
-    const callback = listener || (() => undefined)
+  protected bindMethods(): void {
+    this.remove = this.remove.bind(this)
+    this.refetch = this.refetch.bind(this)
+  }
 
-    this.listeners.push(callback)
-
+  protected onSubscribe(): void {
     if (this.listeners.length === 1) {
       this.currentQuery.addObserver(this)
 
@@ -90,21 +80,12 @@ export class QueryObserver<
 
       this.updateTimers()
     }
-
-    return () => {
-      this.unsubscribe(callback)
-    }
   }
 
-  private unsubscribe(listener: QueryObserverListener<TData, TError>): void {
-    this.listeners = this.listeners.filter(x => x !== listener)
+  protected onUnsubscribe(): void {
     if (!this.listeners.length) {
       this.destroy()
     }
-  }
-
-  hasListeners(): boolean {
-    return this.listeners.length > 0
   }
 
   willFetchOnMount(): boolean {
@@ -290,7 +271,7 @@ export class QueryObserver<
     ) {
       return
     }
-    //@ts-ignore
+    // @ts-ignore
     this.refetchIntervalId = setInterval(() => {
       if (
         this.options.refetchIntervalInBackground ||

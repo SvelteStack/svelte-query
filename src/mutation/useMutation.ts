@@ -105,8 +105,10 @@ export default function useMutation<
             | UseMutationOptions<TData, TError, TVariables, TContext>,
         arg3?: UseMutationOptions<TData, TError, TVariables, TContext>
     ) {
-        const newOptions = parseMutationArgs(arg1, arg2, arg3)
-        observer.setOptions(newOptions)
+        if (observer.hasListeners()) {
+            const newOptions = parseMutationArgs(arg1, arg2, arg3)
+            observer.setOptions(newOptions)
+        }
     }
 
     return { subscribe, setOptions }

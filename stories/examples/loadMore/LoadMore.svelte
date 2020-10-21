@@ -18,17 +18,10 @@
     queryKey: 'projects',
     queryFn: fetchProjects,
     //@ts-ignore
-    getNextPageParam: lastGroup => lastGroup.nextId,
+    getNextPageParam: lastGroup => lastGroup.nextId || undefined,
   }
 
   const queryResult = useInfiniteQuery<Data, AxiosError>(queryOptions)
-  let hasNextPage = true
-
-  $: {
-    const pages = $queryResult.data?.pages
-    // bug with queryResult.hasNextPage (need to open an ussues)
-    hasNextPage = pages ? !!pages[pages.length - 1].nextId : true
-  }
 </script>
 
 <h1>Infinite Loading</h1>
@@ -50,10 +43,12 @@
   <div>
     <button
       on:click={() => $queryResult.fetchNextPage()}
-      disabled={!hasNextPage || $queryResult.isFetchingNextPage}>
+      disabled={!$queryResult.hasNextPage || $queryResult.isFetchingNextPage}>
       {#if $queryResult.isFetching}
         Loading more...
-      {:else if hasNextPage}Load More{:else}Nothing more to load{/if}
+      {:else if $queryResult.hasNextPage}
+        Load More
+      {:else}Nothing more to load{/if}
     </button>
   </div>
 {/if}

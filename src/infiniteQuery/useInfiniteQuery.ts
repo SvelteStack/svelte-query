@@ -64,9 +64,9 @@ export default function useInfiniteQuery<TData, TError, TQueryFnData = TData>(
             | UseInfiniteQueryOptions<TData, TError, TQueryFnData>,
         arg3?: UseInfiniteQueryOptions<TData, TError, TQueryFnData>
     ) {
-        const options = parseQueryArgs(arg1, arg2, arg3)
-        const defaultedOptions = client.defaultQueryObserverOptions(options)
         if (observer.hasListeners()) {
+            const options = parseQueryArgs(arg1, arg2, arg3)
+            const defaultedOptions = client.defaultQueryObserverOptions(options)
             observer.setOptions(defaultedOptions)
         }
     }

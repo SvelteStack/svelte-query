@@ -15,7 +15,9 @@ export default function useQueries<TData, TError>(
     });
 
     const setQueries = (newQueries: UseQueryOptions[]) => {
-        observer.setQueries(newQueries)
+        if (observer.hasListeners()) {
+            observer.setQueries(newQueries)
+        }
     }
 
     return { subscribe, setQueries };

@@ -14,11 +14,11 @@
   <Mutation {mutationFn}>
     <div slot="mutation" let:mutationResult>
       <button on:click={() => mutationResult.mutate({})}>mutate</button>
-      {(mutationResult && mutationResult.data) || ''}
+      {mutationResult.isLoading ? 'mutation loading ...' : mutationResult.data || ''}
     </div>
   </Mutation>
 
   <h3>useMutation</h3>
   <button on:click={() => $useMutationResult.mutate()}>useMutate</button>
-  {$useMutationResult.data || ''}
+  {$useMutationResult.isLoading ? 'useMutation loading ...' : $useMutationResult.data || ''}
 </main>
