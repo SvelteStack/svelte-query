@@ -300,8 +300,12 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
       if (!this.observers.length) {
         // If the transport layer does not support cancellation
         // we'll let the query continue so the result can be cached
-        if (this.retryer && this.retryer.isTransportCancelable) {
-          this.retryer.cancel()
+        if (this.retryer) {
+          if (this.retryer.isTransportCancelable) {
+            this.retryer.cancel()
+          } else {
+            this.retryer.cancelRetry()
+          }
         }
 
         this.scheduleGc()
@@ -480,7 +484,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
           fetchMeta: action.meta,
           isFetching: true,
           isPaused: false,
-          status: state.updatedAt ? 'success' : 'loading',
+          status: state.status === 'idle' ? 'loading' : state.status,
         }
       case 'success':
         return {
@@ -504,11 +508,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
             failureCount: 0,
             isFetching: false,
             isPaused: false,
-            status: state.error
-              ? 'error'
-              : state.updatedAt
-                ? 'success'
-                : 'idle',
+            status: state.status === 'loading' ? 'idle' : state.status,
           }
         }
 
