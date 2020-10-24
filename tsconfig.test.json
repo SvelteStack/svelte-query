@@ -2,5 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": ["node", "jest"]
-  }
+  },
+  "exclude": ["__sapper__/*", "public/*"]
 }

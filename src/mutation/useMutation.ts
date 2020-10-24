@@ -5,7 +5,8 @@ import { useQueryClient } from '../queryClientProvider'
 import { noop, parseMutationArgs } from '../queryCore/core/utils'
 import { MutationObserver } from '../queryCore/core/mutationObserver'
 import { MutationFunction, MutationKey } from '../queryCore/core/types'
-import {
+import { notifyManager } from '../queryCore'
+import type {
     MutationStoreResult,
     UseMutateFunction,
     UseMutationOptions,
@@ -76,9 +77,9 @@ export default function useMutation<
     const initialMutationResult: UseMutationResult<TData, TError, TVariables, TContext> = { ...initialResult, mutate, mutateAsync: initialResult.mutate }
 
     const { subscribe } = readable(initialMutationResult, set => {
-        return observer.subscribe((currentResult) => {
+        return observer.subscribe(notifyManager.batchCalls((currentResult) => {
             set({ ...currentResult, mutate, mutateAsync: currentResult.mutate })
-        })
+        }))
     })
 
     function setOptions(options: UseMutationOptions<TData, TError, TVariables, TContext>)

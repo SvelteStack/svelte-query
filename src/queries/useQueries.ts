@@ -1,6 +1,6 @@
 import { readable } from 'svelte/store';
 
-import { QueriesObserver, QueryClient } from "../queryCore/core";
+import { notifyManager, QueriesObserver, QueryClient } from "../queryCore/core";
 import { useQueryClient } from "../queryClientProvider";
 import type { UseQueryOptions } from "../types";
 
@@ -11,7 +11,7 @@ export default function useQueries<TData, TError>(
     const observer = new QueriesObserver(client, queries);
 
     const { subscribe } = readable(observer.getCurrentResult(), (set) => {
-        return observer.subscribe(set);
+        return observer.subscribe(notifyManager.batchCalls(set));
     });
 
     const setQueries = (newQueries: UseQueryOptions[]) => {
