@@ -1,10 +1,8 @@
 # svelte-query
 
-Hooks for managing, caching and syncing asynchronous and remote data in Svelte (**WIP**)
+Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 
-**src/query is copied from the react-query project (v3 beta)**
-
-## Get started
+## Get started (Devs)
 
 ```bash
 git clone git@github.com:TanStack/svelte-query.git
@@ -12,11 +10,24 @@ cd svelte-query
 yarn
 yarn storybook
 ```
-### test
+
+### Running the tests
+
 ```bash
 yarn test
 ```
-### build
+
+### Build
+
 ```bash
 yarn build
 ```
+
+## Contributing
+
+**PRs are welcome!**
+You noticed a bug, a possible improvement or whatever?
+Any help is always appreciated, so don't hesitate opening one!
+
+Be sure to check out the [contributing guidelines](CONTRIBUTING.md) to fasten
+up the merging process.
