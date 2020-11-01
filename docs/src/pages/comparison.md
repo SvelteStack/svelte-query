@@ -18,7 +18,7 @@ Feature/Capability Key:
 | Supported Query Keys                         | JSON                                   | JSON                       | GraphQL Query                         |
 | Query Key Change Detection                   | Deep Compare (Stable Serialization)    | Referential Equality (===) | Deep Compare (Unstable Serialization) |
 | Query Data Memoization Level                 | Query + Structural Sharing             | Query                      | Query + Entity + Structural Sharing   |
-| Bundle Size                                  | [![][bp-react-query]][bpl-react-query] | [![][bp-swr]][bpl-swr]     | [![][bp-apollo]][bpl-apollo]          |
+| Bundle Size                                  | [![][bp-*-query]][bpl-*-query] | [![][bp-swr]][bpl-swr]     | [![][bp-apollo]][bpl-apollo]          |
 | Queries                                      | ✅                                     | ✅                         | ✅                                    |
 | Caching                                      | ✅                                     | ✅                         | ✅                                    |
 | Polling/Intervals                            | ✅                                     | ✅                         | ✅                                    |
@@ -63,9 +63,9 @@ Feature/Capability Key:
 
 [swr]: https://github.com/vercel/swr
 [apollo]: https://github.com/apollographql/apollo-client
-[bp-react-query]: https://badgen.net/bundlephobia/minzip/react-query?label=%20
+[bp-*-query]: https://badgen.net/bundlephobia/minzip/react-query?label=%20
 [bp-swr]: https://badgen.net/bundlephobia/minzip/swr?label=%20
 [bp-apollo]: https://badgen.net/bundlephobia/minzip/@apollo/client?label=%20
-[bpl-react-query]: https://bundlephobia.com/result?p=react-query
+[bpl-*-query]: https://bundlephobia.com/result?p=react-query
 [bpl-swr]: https://bundlephobia.com/result?p=swr
 [bpl-apollo]: https://bundlephobia.com/result?p=@apollo/client

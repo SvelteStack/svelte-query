@@ -44,7 +44,7 @@ On a more technical note, Svelte Query will likely:
 
 In the example below, you can see Svelte Query in its most basic and simple form being used to fetch the GitHub stats for the Svelte Query GitHub project itself:
 
-[Open in CodeSandbox](https://codesandbox.io/s/github/tannerlinsley/react-query/tree/master/examples/simple)
+[Open in CodeSandbox](https://codesandbox.io/s/github/TanStack/svelte-query/tree/master/examples/simple)
 
 ```markdown
 <script>
@@ -66,7 +66,7 @@ In the example below, you can see Svelte Query in its most basic and simple form
   import { useQuery } from 'svelte-query'
 
   const queryResult = useQuery('repoData', () =>
-    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
+    fetch('https://api.github.com/repos/TanStack/svelte-query').then(res =>
       res.json()
     )
   )

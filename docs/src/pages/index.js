@@ -311,8 +311,8 @@ const Home = () => {
         <section className="bg-gray-900 body-font">
           <div className="container max-w-7xl px-4  mx-auto -mt-72 relative">
             <iframe
-              src="https://codesandbox.io/embed/github/tannerlinsley/react-query/tree/master/examples/basic?autoresize=1&fontsize=16&theme=dark"
-              title="tannerlinsley/react-query: basic"
+              src="https://codesandbox.io/embed/github/TanStack/svelte-query/tree/master/examples/basic?autoresize=1&fontsize=16&theme=dark"
+              title="TanStack/svelte-query: basic"
               sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
               className="shadow-2xl"
               style={{

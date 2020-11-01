@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Query, useQueryClient } from '../../../src'
+  import { QueryComp, useQueryClient } from '../../../src'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
 
@@ -36,7 +36,7 @@
   query too, so when going to previous pages, you'll see them instantaneously
   while they are also refetched invisibly in the background.
 </p>
-<Query options={queryOptions}>
+<QueryComp options={queryOptions}>
   <div slot="query" let:queryResult>
     {#if queryResult.status === 'loading'}
       Loading...
@@ -64,4 +64,4 @@
       {#if queryResult.isFetching}Loading...{/if}
     {/if}
   </div>
-</Query>
+</QueryComp>

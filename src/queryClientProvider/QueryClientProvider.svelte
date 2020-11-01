@@ -23,6 +23,7 @@
   onDestroy(() => {
     client.unmount()
   })
+  // source
 </script>
 
 <slot />

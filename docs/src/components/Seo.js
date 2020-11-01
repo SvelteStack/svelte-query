@@ -24,7 +24,7 @@ export const Seo = withRouter(
       <meta
         property="og:url"
         key="og:url"
-        content={`https://react-query.tanstack.com${router.pathname}`}
+        content={`https://svelte-query.tanstack.com${router.pathname}`}
       />
       {title != undefined && (
         <meta property="og:title" content={title} key="og:title" />
@@ -40,7 +40,7 @@ export const Seo = withRouter(
         <meta
           property="og:image"
           key="og:image"
-          content={`https://react-query.tanstack.com${image}`}
+          content={`https://svelte-query.tanstack.com${image}`}
         />
       )}
 
@@ -70,7 +70,7 @@ export const Seo = withRouter(
         <meta
           name="twitter:image"
           key="twitter:image"
-          content={`https://react-query.tanstack.com${image}`}
+          content={`https://svelte-query.tanstack.com${image}`}
         />
       )}
 
