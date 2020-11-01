@@ -1,6 +1,6 @@
 <script lang="ts">
   import { QueryComp, IsFetching } from '../../src'
-  import type { QueryResult } from '../../src'
+  import type { UseQueryResult } from '../../src'
   import { useIsFetching } from '../../src/isFetching'
 
   const later = (delay, value) =>
@@ -12,9 +12,9 @@
   const queryFn2 = () => later(500, 'My Data 2')
 
   // The query result
-  let queryResultApp: QueryResult<string>
+  let queryResultApp: UseQueryResult<string>
   // The query result2
-  let queryResultApp2: QueryResult<string>
+  let queryResultApp2: UseQueryResult<string>
 
   let isFetching = 0
   let history = []
