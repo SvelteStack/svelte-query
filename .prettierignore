@@ -1,6 +1,7 @@
 coverage/*
 config/*
 lib/*
+scripts/*
 dist/*
 node_modules/*
 svelte.config.js

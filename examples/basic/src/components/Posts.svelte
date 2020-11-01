@@ -3,7 +3,6 @@
   import axios, { AxiosError } from 'axios'
 
   export let setPostId
-  export let initialData
 
   async function getPosys() {
     const { data } = await axios.get(
@@ -16,7 +15,7 @@
   const posts = useQuery<
     { id: string; title: string; body: string }[],
     AxiosError
-  >('posts', getPosys, { initialData })
+  >('posts', getPosys)
 </script>
 
 <div>
