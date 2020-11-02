@@ -15,5 +15,5 @@ export { isCancelledError } from './retryer'
 // Types
 export * from './types'
 export type { CancelledError } from './retryer'
-export type { Query } from './query'
+export type { Query as QueryCore } from './query'
 export type { Logger } from './logger'

@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { QueryComp, useQueryClient } from 'svelte-query'
+  import { Query, useQueryClient } from 'svelte-query'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
 
@@ -36,7 +36,7 @@
   query too, so when going to previous pages, you'll see them instantaneously
   while they are also refetched invisibly in the background.
 </p>
-<QueryComp options={queryOptions}>
+<Query options={queryOptions}>
   <div slot="query" let:queryResult>
     {#if queryResult.status === 'loading'}
       Loading...
@@ -64,4 +64,4 @@
       {#if queryResult.isFetching}Loading...{/if}
     {/if}
   </div>
-</QueryComp>
+</Query>

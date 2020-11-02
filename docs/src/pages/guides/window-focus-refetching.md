@@ -33,10 +33,10 @@ useQuery('todos', fetchTodos, { refetchOnWindowFocus: false })
 
 ## Custom Window Focus Event
 
-In rare circumstances, you may want to manage your own window focus events that trigger Svelte Query to revalidate. To do this, Svelte Query provides a `focusManager.setHandler` function that supplies you the callback that should be fired when the window is focused and allows you to set up your own events. When calling `focusManager.setHandler`, the previously set handler is removed (which in most cases will be the default handler) and your new handler is used instead. For example, this is the default handler:
+In rare circumstances, you may want to manage your own window focus events that trigger Svelte Query to revalidate. To do this, Svelte Query provides a `focusManager.setEventListener` function that supplies you the callback that should be fired when the window is focused and allows you to set up your own events. When calling `focusManager.setEventListener`, the previously set handler is removed (which in most cases will be the default handler) and your new handler is used instead. For example, this is the default handler:
 
 ```js
-focusManager.setHandler(handleFocus => {
+focusManager.setEventListener(handleFocus => {
   // Listen to visibillitychange and focus
   if (typeof window !== 'undefined' && window.addEventListener) {
     window.addEventListener('visibilitychange', handleFocus, false)
@@ -59,6 +59,17 @@ A great use-case for replacing the focus handler is that of iframe events. Ifram
 import { focusManager } from 'svelte-query'
 import onWindowFocus from './onWindowFocus' // The gist above
 
-focusManager.setHandler(onWindowFocus) // Boom!
+focusManager.setEventListener(onWindowFocus) // Boom!
 ```
 
+## Managing focus state
+
+```js
+import { focusManager } from 'svelte-query'
+
+// Override the default focus state
+focusManager.setFocused(true)
+
+// Fallback to the default focus check
+focusManager.setFocused(undefined)
+```

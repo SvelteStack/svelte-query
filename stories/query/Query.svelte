@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { QueryComp } from '../../src'
+  import { Query } from '../../src'
   import { useQuery } from '../../src/query'
 
   const later = (delay, value): Promise<string> =>
@@ -22,7 +22,7 @@
   {/if}
 
   <h3>Query 2 depend on Query</h3>
-  <QueryComp
+  <Query
     options={{ queryKey: 'myQuery2', queryFn: queryFn2, enabled: !!$queryResult.data }}>
     <div slot="query" let:queryResult>
       {#if queryResult.isLoading || queryResult.isFetching}
@@ -32,5 +32,5 @@
       {/if}
       <button on:click={() => queryResult.refetch()}>refetch Query</button>
     </div>
-  </QueryComp>
+  </Query>
 </main>

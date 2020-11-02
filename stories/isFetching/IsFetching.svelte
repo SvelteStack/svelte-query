@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { QueryComp, IsFetching } from '../../src'
+  import { Query, IsFetching } from '../../src'
   import type { UseQueryResult } from '../../src'
   import { useIsFetching } from '../../src/isFetching'
 
@@ -53,7 +53,7 @@
       </button>
 
       <h3>Query</h3>
-      <QueryComp
+      <Query
         bind:queryResult={queryResultApp}
         options={{ queryKey: 'myQuery', queryFn }}>
         <div slot="query" let:queryResult>
@@ -64,10 +64,10 @@
           {/if}
           <button on:click={() => queryResult.refetch()}>refetch Query</button>
         </div>
-      </QueryComp>
+      </Query>
 
       <h3>Query 2</h3>
-      <QueryComp
+      <Query
         bind:queryResult={queryResultApp2}
         options={{ queryKey: 'myQuery2', queryFn: queryFn2 }}>
         <div slot="query" let:queryResult>
@@ -78,7 +78,7 @@
           {/if}
           <button on:click={() => queryResult.refetch()}>refetch Query 2</button>
         </div>
-      </QueryComp>
+      </Query>
     </div>
   </div>
 </main>

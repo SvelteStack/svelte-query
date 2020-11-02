@@ -293,6 +293,16 @@
           "editUrl": "/reference/QueriesObserver.md"
         },
         {
+          "title": "focusManager",
+          "path": "/reference/focusManager",
+          "editUrl": "/reference/focusManager.md"
+        },
+        {
+          "title": "onlineManager",
+          "path": "/reference/onlineManager",
+          "editUrl": "/reference/onlineManager.md"
+        },
+        {
           "title": "setLogger",
           "path": "/reference/setLogger",
           "editUrl": "/reference/setLogger.md"

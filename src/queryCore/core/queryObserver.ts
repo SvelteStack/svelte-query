@@ -10,6 +10,7 @@ import {
 import { notifyManager } from './notifyManager'
 import type {
   PlaceholderDataFunction,
+  QueryObserverBaseResult,
   QueryObserverOptions,
   QueryObserverResult,
   QueryOptions,
@@ -137,6 +138,13 @@ export class QueryObserver<
     const prevQuery = this.currentQuery
 
     this.options = this.client.defaultQueryObserverOptions(options)
+
+    if (
+      typeof this.options.enabled !== 'undefined' &&
+      typeof this.options.enabled !== 'boolean'
+    ) {
+      throw new Error('Expected enabled to be a boolean')
+    }
 
     // Keep previous query key if the user does not supply one
     if (!this.options.queryKey) {
@@ -383,7 +391,7 @@ export class QueryObserver<
       }
     }
 
-    return {
+    const result: QueryObserverBaseResult<TData, TError> = {
       ...getStatusProps(status),
       data,
       error: state.error,
@@ -391,13 +399,17 @@ export class QueryObserver<
       isFetched: state.dataUpdateCount > 0,
       isFetchedAfterMount: state.dataUpdateCount > this.initialDataUpdateCount,
       isFetching,
+      isLoadingError: status === 'error' && state.dataUpdatedAt === 0,
       isPlaceholderData,
       isPreviousData,
+      isRefetchError: status === 'error' && state.dataUpdatedAt !== 0,
       isStale: this.isStale(),
       refetch: this.refetch,
       remove: this.remove,
       updatedAt,
     }
+
+    return result as QueryObserverResult<TData, TError>
   }
 
   private updateResult(willFetch?: boolean): void {

@@ -2,21 +2,32 @@ import { Subscribable } from './subscribable'
 import { isServer } from './utils'
 
 class OnlineManager extends Subscribable {
-  private removeHandler?: () => void
+  private online?: boolean
+  private removeEventListener?: () => void
 
   protected onSubscribe(): void {
-    if (!this.removeHandler) {
-      this.setDefaultHandler()
+    if (!this.removeEventListener) {
+      this.setDefaultEventListener()
     }
   }
 
-  setHandler(init: (onOnline: () => void) => () => void): void {
-    if (this.removeHandler) {
-      this.removeHandler()
+  setEventListener(
+    setup: (setOnline: () => void) => (online?: boolean) => void
+  ): void {
+    if (this.removeEventListener) {
+      this.removeEventListener()
     }
-    this.removeHandler = init(() => {
-      this.onOnline()
+    this.removeEventListener = setup((online?: boolean) => {
+      this.setOnline(online)
     })
+  }
+
+  setOnline(online?: boolean): void {
+    this.online = online
+
+    if (online) {
+      this.onOnline()
+    }
   }
 
   onOnline(): void {
@@ -26,12 +37,16 @@ class OnlineManager extends Subscribable {
   }
 
   isOnline(): boolean {
+    if (typeof this.online === 'boolean') {
+      return this.online
+    }
+
     return navigator.onLine === undefined || navigator.onLine
   }
 
-  private setDefaultHandler() {
+  private setDefaultEventListener() {
     if (!isServer && window?.addEventListener) {
-      this.setHandler(onOnline => {
+      this.setEventListener(onOnline => {
         // Listen to online
         window.addEventListener('online', onOnline, false)
 
