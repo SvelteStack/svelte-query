@@ -32,7 +32,7 @@ async function main() {
         //src
         file,
         //des
-        file.replace("/src/", "/lib/")
+        file.replace("/src/", "/svelte/")
     ))
 
     await Promise.all(promises)

@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Mutation, Query, useQueryClient } from '../../../src'
+  import { Mutation, QueryComp, useQueryClient } from '../../../src'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
 
@@ -65,7 +65,7 @@
     </form>
   </div>
 </Mutation>
-<Query options={queryOptions}>
+<QueryComp options={queryOptions}>
   <div slot="query" let:queryResult>
     {#if queryResult.status === 'loading'}
       Loading...
@@ -85,4 +85,4 @@
       <div>{queryResult.isFetching ? 'Updating in background...' : ' '}</div>
     {/if}
   </div>
-</Query>
+</QueryComp>

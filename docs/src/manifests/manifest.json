@@ -202,11 +202,6 @@
           "editUrl": "/examples/custom-hooks.mdx"
         },
         {
-          "title": "Window Refocus Refetching",
-          "path": "/examples/focus-refetching",
-          "editUrl": "/examples/focus-refetching.mdx"
-        },
-        {
           "title": "Optimistic Updates",
           "path": "/examples/optimistic-updates",
           "editUrl": "/examples/optimistic-updates.mdx"
@@ -225,16 +220,6 @@
           "title": "Default Query Function",
           "path": "/examples/default-query-function",
           "editUrl": "/examples/default-query-function.mdx"
-        },
-        {
-          "title": "Playground",
-          "path": "/examples/playground",
-          "editUrl": "/examples/playground.mdx"
-        },
-        {
-          "title": "Prefetching",
-          "path": "/examples/prefetching",
-          "editUrl": "/examples/prefetching.mdx"
         }
       ]
     },
