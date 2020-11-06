@@ -155,7 +155,7 @@ export const Footer = props => {
               </svg>
             </a>
             <a
-              href="https://github.com/tannerlinsley"
+              href="https://github.com/TanStack"
               className="ml-6 text-gray-400 hover:text-gray-500"
             >
               <span className="sr-only">GitHub</span>
