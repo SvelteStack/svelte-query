@@ -49,7 +49,7 @@ In the example below, you can see Svelte Query in its most basic and simple form
 ```markdown
 <script>
   // App.svelte
-  import { QueryClient, QueryClientProvider } from 'svelte-query'
+  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 
   const queryClient = new QueryClient()
 </script>
@@ -63,7 +63,7 @@ In the example below, you can see Svelte Query in its most basic and simple form
 ```markdown
 <script>
   // Example.svelte
-  import { useQuery } from 'svelte-query'
+  import { useQuery } from '@tanstack/svelte-query'
 
   const queryResult = useQuery('repoData', () =>
     fetch('https://api.github.com/repos/TanStack/svelte-query').then(res =>

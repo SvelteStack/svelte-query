@@ -10,9 +10,9 @@ You can install Svelte Query with [NPM](https://npmjs.com),
 ### NPM
 
 ```bash
-$ npm i svelte-query@beta
+$ npm i @tanstack/svelte-query@beta
 # or
-$ yarn add svelte-query@beta
+$ yarn add @tanstack/svelte-query@beta
 ```
 
 > Wanna give it a spin before you download? Try out the [simple](/docs/examples/simple) or [basic](/docs/examples/basic) examples!

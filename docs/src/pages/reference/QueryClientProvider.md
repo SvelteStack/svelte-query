@@ -7,7 +7,7 @@ Use the `QueryClientProvider` component to connect and provide a `QueryClient` t
 
 ```markdown
 <script>
-import { QueryClient, QueryClientProvider } from 'svelte-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 
 const queryClient = new QueryClient()
 

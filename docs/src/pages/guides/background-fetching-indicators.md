@@ -7,7 +7,7 @@ A query's `status === 'loading'` state is sufficient enough to show the initial 
 
 ```markdown
 <script>
-  import { useQuery } from 'svelte-query';
+  import { useQuery } from '@tanstack/svelte-query';
 
   const queryResult = useQuery('todos', fetchTodos)
 </script>
@@ -32,7 +32,7 @@ In addition to individual query loading states, if you would like to show a glob
 
 ```markdown
 <script>
-  import { useIsFetching } from 'svelte-query'
+  import { useIsFetching } from '@tanstack/svelte-query'
 
   const isFetching = useIsFetching()
 </script>

@@ -68,7 +68,7 @@ function fetchTodoList({ queryKey }) {
 Anywhere the `[queryKey, queryFn, config]` signature is supported throughout Svelte Query's API, you can also use an object to express the same configuration:
 
 ```js
-import { useQuery } from 'svelte-query'
+import { useQuery } from '@tanstack/svelte-query'
 
 useQuery({
   queryKey: ['todo', 7],

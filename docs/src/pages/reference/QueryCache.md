@@ -8,7 +8,7 @@ The `QueryCache` is the storage mechanism for Svelte Query. It stores all of the
 **Normally, you will not interact with the QueryCache directly and instead use the `QueryClient` for a specific cache.**
 
 ```js
-import { QueryCache } from 'svelte-query'
+import { QueryCache } from '@tanstack/svelte-query'
 
 const queryCache = new QueryCache()
 const query = queryCache.find('posts')

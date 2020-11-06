@@ -41,7 +41,7 @@ With this information, we can create a "Load More" UI by:
 
 ```markdown
 <script>
-  import { useInfiniteQuery } from 'svelte-query'
+  import { useInfiniteQuery } from '@tanstack/svelte-query'
 
   const fetchProjects = async ({ pageParam = 0 }) => {
     const { data } = await axios.get(`/projects?cursor=${pageParam}`)
@@ -90,7 +90,7 @@ By default, the variable returned from `getNextPageParam` will be supplied to th
 
 ```markdown
 <script>
-  import { useInfiniteQuery } from 'svelte-query'
+  import { useInfiniteQuery } from '@tanstack/svelte-query'
 
   const fetchProjects = async ({ pageParam = 0 }) => {
     const { data } = await axios.get(`/projects?cursor=${pageParam}`)

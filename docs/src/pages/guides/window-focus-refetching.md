@@ -10,7 +10,7 @@ If a user leaves your application and returns to stale data, **Svelte Query auto
 ```markdown
 <script>
 // Configure for all queries
-import { QueryClient, QueryClientProvider } from 'svelte-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,7 +56,7 @@ focusManager.setEventListener(handleFocus => {
 A great use-case for replacing the focus handler is that of iframe events. Iframes present problems with detecting window focus by both double-firing events and also firing false-positive events when focusing or using iframes within your app. If you experience this, you should use an event handler that ignores these events as much as possible. I recommend [this one](https://gist.github.com/tannerlinsley/1d3a2122332107fcd8c9cc379be10d88)! It can be set up in the following way:
 
 ```js
-import { focusManager } from 'svelte-query'
+import { focusManager } from '@tanstack/svelte-query'
 import onWindowFocus from './onWindowFocus' // The gist above
 
 focusManager.setEventListener(onWindowFocus) // Boom!
@@ -65,7 +65,7 @@ focusManager.setEventListener(onWindowFocus) // Boom!
 ## Managing focus state
 
 ```js
-import { focusManager } from 'svelte-query'
+import { focusManager } from '@tanstack/svelte-query'
 
 // Override the default focus state
 focusManager.setFocused(true)

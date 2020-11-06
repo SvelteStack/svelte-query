@@ -8,7 +8,7 @@ title: QueryClient
 The `QueryClient` can be used to interact with a cache:
 
 ```js
-import { QueryClient } from 'svelte-query'
+import { QueryClient } from '@tanstack/svelte-query'
 
 const queryClient = new QueryClient({
   defaultOptions: {

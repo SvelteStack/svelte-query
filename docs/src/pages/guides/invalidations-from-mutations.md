@@ -14,7 +14,7 @@ const mutation = useMutation(postTodo)
 When a successful `postTodo` mutation happens, we likely want all `todos` queries to get invalidated and possibly refetched to show the new todo item. To do this, you can use `useMutation`'s `onSuccess` options and the `client`'s `invalidateQueries` function:
 
 ```js
-import { useMutation, useQueryClient } from 'svelte-query'
+import { useMutation, useQueryClient } from '@tanstack/svelte-query'
 
 const queryClient = useQueryClient()
 
