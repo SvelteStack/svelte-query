@@ -1,6 +1,6 @@
 {
-  "name": "svelte-query",
-  "version": "1.0.0-semantic-release",
+  "name": "@tanstack/svelte-query",
+  "version": "1.0.0-beat.1",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
   "license": "MIT",
   "svelte": "svelte/index.js",
