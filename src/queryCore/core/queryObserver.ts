@@ -10,6 +10,7 @@ import {
 import { notifyManager } from './notifyManager'
 import type {
   PlaceholderDataFunction,
+  QueryObserverBaseResult,
   QueryObserverOptions,
   QueryObserverResult,
   QueryOptions,
@@ -138,6 +139,13 @@ export class QueryObserver<
 
     this.options = this.client.defaultQueryObserverOptions(options)
 
+    if (
+      typeof this.options.enabled !== 'undefined' &&
+      typeof this.options.enabled !== 'boolean'
+    ) {
+      throw new Error('Expected enabled to be a boolean')
+    }
+
     // Keep previous query key if the user does not supply one
     if (!this.options.queryKey) {
       this.options.queryKey = prevOptions.queryKey
@@ -260,7 +268,7 @@ export class QueryObserver<
     }
 
     const time = timeUntilStale(
-      this.currentResult.updatedAt,
+      this.currentResult.dataUpdatedAt,
       this.options.staleTime
     )
 
@@ -328,7 +336,7 @@ export class QueryObserver<
     let isPreviousData = false
     let isPlaceholderData = false
     let data: TData | undefined
-    let updatedAt = state.dataUpdatedAt
+    let dataUpdatedAt = state.dataUpdatedAt
 
     // Optimistically set status to loading if we will start fetching
     if (willFetch) {
@@ -345,7 +353,7 @@ export class QueryObserver<
       this.previousQueryResult?.isSuccess
     ) {
       data = this.previousQueryResult.data
-      updatedAt = this.previousQueryResult.updatedAt
+      dataUpdatedAt = this.previousQueryResult.dataUpdatedAt
       status = this.previousQueryResult.status
       isPreviousData = true
     }
@@ -383,21 +391,26 @@ export class QueryObserver<
       }
     }
 
-    return {
+    const result: QueryObserverBaseResult<TData, TError> = {
       ...getStatusProps(status),
       data,
+      dataUpdatedAt,
       error: state.error,
+      errorUpdatedAt: state.errorUpdateCount,
       failureCount: state.fetchFailureCount,
       isFetched: state.dataUpdateCount > 0,
       isFetchedAfterMount: state.dataUpdateCount > this.initialDataUpdateCount,
       isFetching,
+      isLoadingError: status === 'error' && state.dataUpdatedAt === 0,
       isPlaceholderData,
       isPreviousData,
+      isRefetchError: status === 'error' && state.dataUpdatedAt !== 0,
       isStale: this.isStale(),
       refetch: this.refetch,
       remove: this.remove,
-      updatedAt,
     }
+
+    return result as QueryObserverResult<TData, TError>
   }
 
   private updateResult(willFetch?: boolean): void {

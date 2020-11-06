@@ -82,6 +82,7 @@ typings/
 .nuxt
 dist
 lib
+svelte
 
 # Gatsby files
 .cache/

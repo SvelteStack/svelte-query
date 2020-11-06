@@ -1,3 +1,5 @@
+<img src="./docs/src/images/svelte-query-og.png" />
+
 # svelte-query
 
 Hooks for managing, caching and syncing asynchronous and remote data in Svelte
@@ -16,6 +18,16 @@ yarn storybook
 ```bash
 yarn test
 ```
+
+### Running the Docs
+
+```bash
+cd docs
+yarn
+yarn build
+yarn start
+```
+http://localhost:3000
 
 ### Build
 

@@ -9,10 +9,10 @@ import {
 } from './utils'
 import type {
   InitialDataFunction,
-  QueryFunction,
   QueryKey,
   QueryOptions,
   QueryStatus,
+  QueryFunctionContext,
 } from './types'
 import type { QueryCache } from './queryCache'
 import type { QueryObserver } from './queryObserver'
@@ -47,11 +47,11 @@ export interface QueryState<TData = unknown, TError = unknown> {
 }
 
 export interface FetchContext<TData, TError, TQueryFnData> {
-  state: QueryState<TData, TError>
-  options: QueryOptions<TData, TError, TQueryFnData>
-  params: unknown[]
+  fetchFn: () => unknown | Promise<unknown>
   fetchOptions?: FetchOptions
-  queryFn: QueryFunction
+  options: QueryOptions<TData, TError, TQueryFnData>
+  queryKey: QueryKey
+  state: QueryState<TData, TError>
 }
 
 export interface QueryBehavior<
@@ -83,7 +83,7 @@ interface FetchAction {
 interface SuccessAction<TData> {
   data: TData | undefined
   type: 'success'
-  updatedAt?: number
+  dataUpdatedAt?: number
 }
 
 interface ErrorAction<TError> {
@@ -202,7 +202,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
     this.dispatch({
       data,
       type: 'success',
-      updatedAt: options?.updatedAt,
+      dataUpdatedAt: options?.updatedAt,
     })
 
     return data
@@ -339,25 +339,26 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
       }
     }
 
-    // Get the query function params
-    let params = ensureArray(this.queryKey)
+    // Create query function context
+    const queryKey = ensureArray(this.queryKey)
+    const queryFnContext: QueryFunctionContext = {
+      queryKey,
+      pageParam: undefined,
+    }
 
-    const filter = this.options.queryFnParamsFilter
-    params = filter ? filter(params) : params
-
-    // Get query function
-    const queryFn = () =>
+    // Create fetch function
+    const fetchFn = () =>
       this.options.queryFn
-        ? this.options.queryFn(...params)
+        ? this.options.queryFn(queryFnContext)
         : Promise.reject('Missing queryFn')
 
     // Trigger behavior hook
     const context: FetchContext<TData, TError, TQueryFnData> = {
       fetchOptions,
       options: this.options,
-      params,
+      queryKey,
       state: this.state,
-      queryFn,
+      fetchFn,
     }
 
     if (this.options.behavior?.onFetch) {
@@ -374,7 +375,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
 
     // Try to fetch the data
     this.retryer = new Retryer({
-      fn: context.queryFn,
+      fn: context.fetchFn,
       onFail: () => {
         this.dispatch({ type: 'failed' })
       },
@@ -483,7 +484,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
           ...state,
           data: action.data,
           dataUpdateCount: state.dataUpdateCount + 1,
-          dataUpdatedAt: action.updatedAt ?? Date.now(),
+          dataUpdatedAt: action.dataUpdatedAt ?? Date.now(),
           error: null,
           fetchFailureCount: 0,
           isFetching: false,
