@@ -44,7 +44,7 @@ On a more technical note, Svelte Query will likely:
 
 In the example below, you can see Svelte Query in its most basic and simple form being used to fetch the GitHub stats for the Svelte Query GitHub project itself:
 
-[Open in CodeSandbox](https://codesandbox.io/s/github/TanStack/svelte-query/tree/master/examples/simple)
+[Open in CodeSandbox](https://codesandbox.io/s/github/TanStack/svelte-query/tree/main/examples/simple)
 
 ```markdown
 <script>
