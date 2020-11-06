@@ -7,7 +7,7 @@
 
   const endpoint = 'https://graphqlzero.almansi.me/api'
 
-  const getPostById = async (key, id) => {
+  const getPostById = async id => {
     const { post } = await request(
       endpoint,
       gql`
@@ -25,7 +25,7 @@
 
   const post = useQuery<{ title: string; body: string }, { message: string }>(
     ['post', postId],
-    getPostById,
+    () => getPostById(postId),
     {
       enabled: !!postId,
     }

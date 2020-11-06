@@ -9,8 +9,8 @@ If you find yourself wishing for whatever reason that you could just share the s
 <script>
   import { QueryClientProvider } from 'svelte-query';
   // Define a default query function that will receive the query key
-  const defaultQueryFn = async key => {
-    const { data } = await axios.get(`https://jsonplaceholder.typicode.com${key}`)
+  const defaultQueryFn = async ({ queryKey }) => {
+    const { data } = await axios.get(`https://jsonplaceholder.typicode.com${queryKey[0]}`)
     return data
   }
 

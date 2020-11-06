@@ -27,10 +27,10 @@ Consider the following example where we would ideally want to increment a pageIn
 <script>
   let page = 0
 
-  const fetchProjects = (key, page = 0) => fetch('/api/projects?page=' + page)
+  const fetchProjects = (page = 0) => fetch('/api/projects?page=' + page)
 </script>
 
-<Query options={{ queryKey: ['projects', page], queryFn: fetchProjects }}>
+<Query options={{ queryKey: ['projects', page], queryFn: () => fetchProjects(page) }}>
   <div slot="query" let:queryResult>
     {#if queryResult.status === 'loading'}
       Loading...

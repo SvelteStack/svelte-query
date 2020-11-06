@@ -5,7 +5,7 @@
   export let postId
   export let setPostId
 
-  const getPostById = async (key, id) => {
+  const getPostById = async id => {
     const { data } = await axios.get(
       `https://jsonplaceholder.typicode.com/posts/${id}`
     )
@@ -13,7 +13,7 @@
   }
   const post = useQuery<{ title: string; body: string }, AxiosError>(
     ['post', postId],
-    getPostById,
+    () => getPostById(postId),
     {
       enabled: !!postId,
     }

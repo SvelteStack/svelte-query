@@ -5,7 +5,14 @@ import type { QueryFilters } from './utils'
 
 export type QueryKey = string | unknown[]
 
-export type QueryFunction<T = unknown> = (...args: any[]) => T | Promise<T>
+export type QueryFunction<T = unknown> = (
+  context: QueryFunctionContext
+) => T | Promise<T>
+
+export interface QueryFunctionContext<TPageParam = any> {
+  queryKey: QueryKey
+  pageParam?: TPageParam
+}
 
 export type InitialDataFunction<T> = () => T | undefined
 
@@ -18,12 +25,12 @@ export type QueryKeyHashFunction = (queryKey: QueryKey) => string
 export type GetPreviousPageParamFunction<TQueryFnData = unknown> = (
   firstPage: TQueryFnData,
   allPages: TQueryFnData[]
-) => unknown | undefined
+) => unknown
 
 export type GetNextPageParamFunction<TQueryFnData = unknown> = (
   lastPage: TQueryFnData,
   allPages: TQueryFnData[]
-) => unknown | undefined
+) => unknown
 
 export interface InfiniteData<TData> {
   pages: TData[]
@@ -49,7 +56,6 @@ export interface QueryOptions<
   queryHash?: string
   queryKey?: QueryKey
   queryKeyHashFn?: QueryKeyHashFunction
-  queryFnParamsFilter?: (args: unknown[]) => unknown[]
   initialData?: TData | InitialDataFunction<TData>
   behavior?: QueryBehavior<TData, TError, TQueryFnData>
   /**
@@ -219,7 +225,9 @@ export type QueryStatus = 'idle' | 'loading' | 'error' | 'success'
 
 export interface QueryObserverBaseResult<TData = unknown, TError = unknown> {
   data: TData | undefined
+  dataUpdatedAt: number
   error: TError | null
+  errorUpdatedAt: number
   failureCount: number
   isError: boolean
   isFetched: boolean
@@ -238,7 +246,6 @@ export interface QueryObserverBaseResult<TData = unknown, TError = unknown> {
   ) => Promise<QueryObserverResult<TData, TError>>
   remove: () => void
   status: QueryStatus
-  updatedAt: number
 }
 
 export interface QueryObserverIdleResult<TData = unknown, TError = unknown>

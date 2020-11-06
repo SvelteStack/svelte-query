@@ -9,8 +9,8 @@
     nextId: number | null
   }
 
-  const fetchProjects = async (key, nextId = 0): Promise<Data> => {
-    const { data } = await axios.get(`${endPoint}/projects?cursor=${nextId}`)
+  const fetchProjects = async ({ pageParam = 0 }): Promise<Data> => {
+    const { data } = await axios.get(`${endPoint}/projects?cursor=${pageParam}`)
     return data
   }
 

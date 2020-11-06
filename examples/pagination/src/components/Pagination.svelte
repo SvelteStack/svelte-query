@@ -11,20 +11,22 @@
     page = newPage
   }
 
-  const fetchProjects = async (key, page = 0) => {
+  const fetchProjects = async (page = 0) => {
     const { data } = await axios.get(`${endPoint}/projects?page=${page}`)
     return data
   }
 
   const prefetchNextPage = data => {
     if (data && data.hasMore) {
-      client.prefetchQuery(['projects', page + 1], fetchProjects)
+      client.prefetchQuery(['projects', page + 1], () =>
+        fetchProjects(page + 1)
+      )
     }
   }
 
   $: queryOptions = {
     queryKey: ['projects', page],
-    queryFn: fetchProjects,
+    queryFn: () => fetchProjects(page),
     onSuccess: prefetchNextPage,
   }
 </script>

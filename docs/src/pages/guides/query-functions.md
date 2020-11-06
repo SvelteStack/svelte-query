@@ -50,25 +50,14 @@ useQuery(['todos', todoId], async () => {
 
 ## Query Function Variables
 
-Query keys are not just for uniquely identifying the data you are fetching, but are also conveniently passed as variables for your query function and while not always necessary, this makes it possible to extract your query functions if needed. The individual parts of the query key get passed through to your query function as parameters in the same order they appear in the array key:
+Query keys are not just for uniquely identifying the data you are fetching, but are also conveniently passed into your query function and while not always necessary, this makes it possible to extract your query functions if needed:
 
 ```js
 const queryResult = useQuery(['todos', { status, page }], fetchTodoList)
 
 // Access the key, status and page variables in your query function!
-function fetchTodoList(key, { status, page }) {
-  return new Promise()
-  // ...
-}
-```
-
-If you send through more items in your query key, they will also be available in your query function:
-
-```js
-const queryResult = useQuery(['todo', todoId, { preview }], fetchTodoById)
-
-// Access status and page in your query function!
-function fetchTodoById(key, todoId, { preview }) {
+function fetchTodoList({ queryKey }) {
+  const { status, page } = queryKey[1]
   return new Promise()
   // ...
 }

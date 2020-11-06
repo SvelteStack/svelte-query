@@ -43,8 +43,8 @@ With this information, we can create a "Load More" UI by:
 <script>
   import { useInfiniteQuery } from 'svelte-query'
 
-  const fetchProjects = async (key, nextId = 0) => {
-    const { data } = await axios.get(`/projects?cursor=${nextId}`)
+  const fetchProjects = async ({ pageParam = 0 }) => {
+    const { data } = await axios.get(`/projects?cursor=${pageParam}`)
     return data
   }
 
@@ -92,8 +92,8 @@ By default, the variable returned from `getNextPageParam` will be supplied to th
 <script>
   import { useInfiniteQuery } from 'svelte-query'
 
-  const fetchProjects = async (key, nextId = 0) => {
-    const { data } = await axios.get(`/projects?cursor=${nextId}`)
+  const fetchProjects = async ({ pageParam = 0 }) => {
+    const { data } = await axios.get(`/projects?cursor=${pageParam}`)
     return data
   }
 

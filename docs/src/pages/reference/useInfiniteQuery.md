@@ -5,9 +5,7 @@ title: useInfiniteQuery
 
 ```js
 
-const queryFn = (...queryKey, pageParam) // => Promise
-
-const queryResult = useInfiniteQuery(queryKey, queryFn, {
+const queryResult = useInfiniteQuery(queryKey, ({ pageParam = 1 }) => fetchPage(pageParam), {
   ...options,
   getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
   getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor
@@ -28,6 +26,13 @@ const {
 
 The options for `useInfiniteQuery` are identical to the [`useQuery` hook](#usequery) with the addition of the following:
 
+- `queryFn: (context: QueryFunctionContext) => Promise<TData>`
+  - **Required, but only if no default query function has been defined**
+  - The function that the query will use to request data.
+  - Receives a `QueryFunctionContext` object with the following variables:
+    - `queryKey: QueryKey`
+    - `pageParam: unknown | undefined`
+  - Must return a promise that will either resolves data or throws an error.
 - `getNextPageParam: (lastPage, allPages) => unknown | undefined`
   - When new data is received for this query, this function receives both the last page of the infinite list of data and the full array of all pages.
   - It should return a **single variable** that will be passed as the last optional parameter to your query function.
