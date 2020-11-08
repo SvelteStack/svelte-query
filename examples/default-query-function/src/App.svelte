@@ -4,10 +4,11 @@
 
   import BasicQuery from './BasicQuery.svelte'
 
-  const defaultQueryFn = async key => {
+  const defaultQueryFn = async ({ queryKey }) => {
     const { data } = await axios.get(
-      `https://jsonplaceholder.typicode.com${key}`
+      `https://jsonplaceholder.typicode.com${queryKey[0]}`
     )
+
     return data
   }
 
