@@ -1,7 +1,7 @@
 <script>
   import { QueryClientProvider } from '@reactstack/svelte-query'
 
-  import BasicQuery from '../../basic/src/BasicQuery.svelte'
+  import BasicQuery from './BasicQuery.svelte'
 
   const defaultQueryFn = async key => {
     const { data } = await axios.get(
