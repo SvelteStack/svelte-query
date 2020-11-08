@@ -220,6 +220,11 @@
           "title": "Default Query Function",
           "path": "/examples/default-query-function",
           "editUrl": "/examples/default-query-function.mdx"
+        },
+        {
+          "title": "Sapper / SSR",
+          "path": "/examples/sapper",
+          "editUrl": "/examples/sapper.mdx"
         }
       ]
     },
