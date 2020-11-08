@@ -1,6 +1,6 @@
 <script>
   import axios from 'axios'
-  import { useInfiniteQuery } from '@tanstack/svelte-query'
+  import { useInfiniteQuery } from '@reactstack/svelte-query'
 
   const endPoint = 'https://s8dfj.sse.codesandbox.io/api'
 

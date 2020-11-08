@@ -1,5 +1,5 @@
 <script>
-  import { QueryClientProvider } from '@tanstack/svelte-query'
+  import { QueryClientProvider } from '@reactstack/svelte-query'
 
   import Simple from './Simple.svelte'
 </script>

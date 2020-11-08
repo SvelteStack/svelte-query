@@ -1,6 +1,6 @@
 <script>
   import axios from 'axios'
-  import { useQuery } from '@tanstack/svelte-query'
+  import { useQuery } from '@reactstack/svelte-query'
 
   export let postId
   export let setPostId

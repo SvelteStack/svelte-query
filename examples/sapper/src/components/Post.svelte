@@ -1,6 +1,6 @@
 <script lang="ts">
   import { request, gql } from 'graphql-request'
-  import { useQuery } from '@tanstack/svelte-query'
+  import { useQuery } from '@reactstack/svelte-query'
 
   export let postId
   export let setPostId

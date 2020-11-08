@@ -1,5 +1,5 @@
 <script>
-  import { useQueryClient } from '@tanstack/svelte-query'
+  import { useQueryClient } from '@reactstack/svelte-query'
   import usePosts from './usePosts'
 
   export let setPostId

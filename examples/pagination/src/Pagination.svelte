@@ -1,6 +1,6 @@
 <script>
   import axios from 'axios'
-  import { Query, useQueryClient } from '@tanstack/svelte-query'
+  import { Query, useQueryClient } from '@reactstack/svelte-query'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
 

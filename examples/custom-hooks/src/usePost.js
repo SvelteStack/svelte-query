@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/svelte-query'
+import { useQuery } from '@reactstack/svelte-query'
 import axios from 'axios'
 
 const getPostById = async (id) => {
