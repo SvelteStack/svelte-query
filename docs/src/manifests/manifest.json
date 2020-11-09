@@ -161,7 +161,7 @@
           "editUrl": "/guides/query-filters.md"
         },
         {
-          "title": "SSR & Next.js",
+          "title": "SSR & Sapper",
           "path": "/guides/ssr",
           "editUrl": "/guides/ssr.md"
         },
@@ -192,7 +192,7 @@
           "editUrl": "/examples/basic.mdx"
         },
         {
-          "title": "Basic w/ GraphQL-Request",
+          "title": "Basic / GraphQL-Request",
           "path": "/examples/basic-graphql-request",
           "editUrl": "/examples/basic-graphql-request.mdx"
         },
@@ -220,11 +220,6 @@
           "title": "Default Query Function",
           "path": "/examples/default-query-function",
           "editUrl": "/examples/default-query-function.mdx"
-        },
-        {
-          "title": "Sapper / SSR",
-          "path": "/examples/sapper",
-          "editUrl": "/examples/sapper.mdx"
         }
       ]
     },
