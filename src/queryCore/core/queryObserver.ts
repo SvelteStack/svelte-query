@@ -42,7 +42,7 @@ export class QueryObserver<
   TError = unknown,
   TQueryFnData = TData,
   TQueryData = TQueryFnData
-  > extends Subscribable<QueryObserverListener<TData, TError>> {
+> extends Subscribable<QueryObserverListener<TData, TError>> {
   options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
 
   private client: QueryClient
@@ -288,9 +288,10 @@ export class QueryObserver<
     // @ts-ignore
     this.staleTimeoutId = setTimeout(() => {
       if (!this.currentResult.isStale) {
+        const prevResult = this.currentResult
         this.updateResult()
         this.notify({
-          listeners: this.options.notifyOnStaleChange === true,
+          listeners: this.shouldNotifyListeners(prevResult, this.currentResult),
           cache: true,
         })
       }
@@ -329,7 +330,7 @@ export class QueryObserver<
   }
 
   private clearStaleTimeout(): void {
-    clearInterval(this.staleTimeoutId)
+    clearTimeout(this.staleTimeoutId)
     this.staleTimeoutId = undefined
   }
 
@@ -423,6 +424,42 @@ export class QueryObserver<
     return result as QueryObserverResult<TData, TError>
   }
 
+  private shouldNotifyListeners(
+    prevResult: QueryObserverResult,
+    result: QueryObserverResult
+  ): boolean {
+    const { notifyOnChangeProps, notifyOnChangePropsExclusions } = this.options
+
+    if (prevResult === result) {
+      return false
+    }
+
+    if (!notifyOnChangeProps && !notifyOnChangePropsExclusions) {
+      return true
+    }
+
+    const keys = Object.keys(result)
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i] as keyof QueryObserverResult
+      const changed = prevResult[key] !== result[key]
+      const isIncluded = notifyOnChangeProps?.some(x => x === key)
+      const isExcluded = notifyOnChangePropsExclusions?.some(x => x === key)
+
+      if (changed) {
+        if (notifyOnChangePropsExclusions && isExcluded) {
+          continue
+        }
+
+        if (!notifyOnChangeProps || isIncluded) {
+          return true
+        }
+      }
+    }
+
+    return false
+  }
+
   private updateResult(willFetch?: boolean): void {
     const result = this.getNewResult(willFetch)
 
@@ -466,7 +503,9 @@ export class QueryObserver<
     prevQuery?.removeObserver(this)
     this.currentQuery.addObserver(this)
 
-    if (this.options.notifyOnStatusChange !== false) {
+    if (
+      this.shouldNotifyListeners(this.previousQueryResult, this.currentResult)
+    ) {
       this.notify({ listeners: true })
     }
   }
@@ -494,13 +533,7 @@ export class QueryObserver<
       notifyOptions.onError = true
     }
 
-    if (
-      // Always notify if notifyOnStatusChange is set
-      this.options.notifyOnStatusChange !== false ||
-      // Otherwise only notify on data or error change
-      currentResult.data !== prevResult.data ||
-      currentResult.error !== prevResult.error
-    ) {
+    if (this.shouldNotifyListeners(prevResult, currentResult)) {
       notifyOptions.listeners = true
     }
 
