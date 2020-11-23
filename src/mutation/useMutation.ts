@@ -4,7 +4,7 @@ import { readable } from 'svelte/store'
 import { useQueryClient } from '../queryClientProvider'
 import { noop, parseMutationArgs } from '../queryCore/core/utils'
 import { MutationObserver } from '../queryCore/core/mutationObserver'
-import { MutationFunction, MutationKey } from '../queryCore/core/types'
+import { MutationFunction, MutationKey, MutationObserverResult } from '../queryCore/core/types'
 import { notifyManager } from '../queryCore'
 import type {
     MutationStoreResult,
@@ -77,9 +77,16 @@ export default function useMutation<
     const initialMutationResult: UseMutationResult<TData, TError, TVariables, TContext> = { ...initialResult, mutate, mutateAsync: initialResult.mutate }
 
     const { subscribe } = readable(initialMutationResult, set => {
-        return observer.subscribe(notifyManager.batchCalls((currentResult) => {
-            set({ ...currentResult, mutate, mutateAsync: currentResult.mutate })
-        }))
+        return observer.subscribe(notifyManager.batchCalls(
+            (
+                result: MutationObserverResult<TData, TError, TVariables, TContext>
+            ) => {
+                // Check if the component is still mounted
+                if (observer.hasListeners()) {
+                    set({ ...result, mutate, mutateAsync: result.mutate })
+                }
+            }
+        ))
     })
 
     function setOptions(options: UseMutationOptions<TData, TError, TVariables, TContext>)
