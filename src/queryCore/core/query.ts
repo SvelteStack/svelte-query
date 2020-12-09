@@ -440,7 +440,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
       errorUpdateCount: 0,
       errorUpdatedAt: 0,
       fetchFailureCount: 0,
-      fetchMeta: undefined,
+      fetchMeta: null,
       isFetching: false,
       isInvalidated: false,
       isPaused: false,
@@ -472,7 +472,7 @@ export class Query<TData = unknown, TError = unknown, TQueryFnData = TData> {
         return {
           ...state,
           fetchFailureCount: 0,
-          fetchMeta: action.meta,
+          fetchMeta: action.meta ?? null,
           isFetching: true,
           isPaused: false,
           status: state.status === 'idle' ? 'loading' : state.status,
