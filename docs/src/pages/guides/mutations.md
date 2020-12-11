@@ -37,9 +37,9 @@ Here's an example of a mutation that adds a new todo the server:
 A mutation can only be in one of the following states at any given moment:
 
 - `isIdle` or `status === 'idle' - The mutation is currently idle or in a fresh/reset state
-- `isLoading` or `status === 'loading' - The mutation is currently running
+- `isLoading` or `status === 'loading' -` The mutation is currently running
 - `isError` or `status === 'error'` - The mutation encountered an error
-- `isSuccess` or `status === 'success' - The mutation was successful and mutation data is available
+- `isSuccess` or `status === 'success'` - The mutation was successful and mutation data is available
 
 Beyond those primary state, more information is available depending on the state the mutation:
 

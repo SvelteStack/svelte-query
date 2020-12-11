@@ -30,7 +30,7 @@ Consider the following example where we would ideally want to increment a pageIn
   const fetchProjects = (page = 0) => fetch('/api/projects?page=' + page)
 </script>
 
-<Query options={{ queryKey: ['projects', page], queryFn: () => fetchProjects(page) }}>
+<Query options={{ queryKey: ['projects', page], queryFn: () => fetchProjects(page), keepPreviousData: true }}>
   <div slot="query" let:queryResult>
     {#if queryResult.status === 'loading'}
       Loading...
