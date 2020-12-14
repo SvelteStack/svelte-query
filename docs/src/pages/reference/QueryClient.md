@@ -32,6 +32,7 @@ Its available methods are:
 - [`refetchQueries`](#queryclientrefetchqueries)
 - [`cancelQueries`](#queryclientcancelqueries)
 - [`removeQueries`](#queryclientremovequeries)
+- [`resetQueries`](#queryclientresetqueries)
 - [`isFetching`](#queryclientisfetching)
 - [`getDefaultOptions`](#queryclientsetdefaultoptions)
 - [`setDefaultOptions`](#queryclientgetdefaultoptions)
@@ -263,6 +264,33 @@ The `removeQueries` method can be used to remove queries from the cache based on
 
 ```js
 queryClient.removeQueries(queryKey, { exact: true })
+```
+
+**Options**
+
+- `queryKey?: QueryKey`: [Query Keys](../guides/query-keys)
+- `filters?: QueryFilters`: [Query Filters](../guides/query-filters)
+- `resetOptions?: ResetOptions`:
+  - `throwOnError?: boolean`
+    - When set to `true`, this method will throw if any of the query refetch tasks fail.
+
+**Returns**
+
+This method returns a promise that resolves when all active queries have been refetched.
+
+## `queryClient.resetQueries`
+
+The `resetQueries` method can be used to reset queries in the cache to their
+initial state based on their query keys or any other functionally accessible
+property/state of the query.
+
+This will notify subscribers &mdash; unlike `clear`, which removes all
+subscribers &mdash; and reset the query to its pre-loaded state &mdash; unlike
+`invalidateQueries`. If a query has `initialData`, the query's data will be
+reset to that. If a query is active, it will be refetched.
+
+```js
+queryClient.resetQueries(queryKey, { exact: true })
 ```
 
 **Options**

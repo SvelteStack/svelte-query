@@ -25,7 +25,7 @@ interface Options {
 export function persistWithLocalStorage(
   queryClient: QueryClient,
   {
-    localStorageKey = `REACT_QUERY_OFFLINE_CACHE`,
+    localStorageKey = `SVELTE_QUERY_OFFLINE_CACHE`,
     throttleTime = 1000,
     maxAge = 1000 * 60 * 60 * 24,
     buster = '',
@@ -73,6 +73,7 @@ function throttle(func: (...args: any[]) => any, wait = 100) {
 
   return function (...args: any[]) {
     if (timer === null) {
+      // @ts-ignore
       timer = setTimeout(() => {
         func(...args)
         timer = null
