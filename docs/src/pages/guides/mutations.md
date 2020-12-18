@@ -11,7 +11,7 @@ Here's an example of a mutation that adds a new todo the server:
 <script>
   import { useMutation } from '@tanstack/svelte-query'
 
-  const mutation = useMutation(newTodo => axios.post('/todods', newTodo))
+  const mutation = useMutation(newTodo => axios.post('/todos', newTodo))
 </script>
 
 <div>
@@ -19,7 +19,7 @@ Here's an example of a mutation that adds a new todo the server:
     <p>Adding todo...</p>
   {:else if $mutation.isError}
     <div>An error occurred: {$mutation.error.message}</div>
-  {:else if !$mutation.isError}
+  {:else if $mutation.isSuccess}
     <div>Todo added!</div>
   {:else}
     <button

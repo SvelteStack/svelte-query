@@ -4,7 +4,7 @@ import { notifyManager, QueriesObserver, QueryClient } from "../queryCore/core";
 import { useQueryClient } from "../queryClientProvider";
 import type { UseQueryOptions } from "../types";
 
-export default function useQueries<TData, TError>(
+export default function useQueries(
     queries: UseQueryOptions[]
 ) {
     const client: QueryClient = useQueryClient();

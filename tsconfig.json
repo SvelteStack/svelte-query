@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "lib": ["dom", "ESNext", "es2018.promise"],
     "sourceMap": true,
     "importsNotUsedAsValues": "preserve"
   },

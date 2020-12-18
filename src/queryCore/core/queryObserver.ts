@@ -38,15 +38,15 @@ export interface ObserverFetchOptions extends FetchOptions {
 }
 
 export class QueryObserver<
-  TData = unknown,
+  TQueryFnData = unknown,
   TError = unknown,
-  TQueryFnData = TData,
+  TData = TQueryFnData,
   TQueryData = TQueryFnData
 > extends Subscribable<QueryObserverListener<TData, TError>> {
-  options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
+  options: QueryObserverOptions<TQueryFnData, TError, TData, TQueryData>
 
   private client: QueryClient
-  private currentQuery!: Query<TQueryData, TError, TQueryFnData>
+  private currentQuery!: Query<TQueryFnData, TError, TQueryData>
   private currentResult!: QueryObserverResult<TData, TError>
   private currentResultState?: QueryState<TQueryData, TError>
   private previousQueryResult?: QueryObserverResult<TData, TError>
@@ -57,7 +57,7 @@ export class QueryObserver<
 
   constructor(
     client: QueryClient,
-    options: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
+    options: QueryObserverOptions<TQueryFnData, TError, TData, TQueryData>
   ) {
     super()
 
@@ -144,7 +144,7 @@ export class QueryObserver<
   }
 
   setOptions(
-    options?: QueryObserverOptions<TData, TError, TQueryFnData, TQueryData>
+    options?: QueryObserverOptions<TQueryFnData, TError, TData, TQueryData>
   ): void {
     const prevOptions = this.options
     const prevQuery = this.currentQuery
@@ -220,7 +220,7 @@ export class QueryObserver<
     })
   }
 
-  getCurrentQuery(): Query<TQueryData, TError, TQueryFnData> {
+  getCurrentQuery(): Query<TQueryFnData, TError, TQueryData> {
     return this.currentQuery
   }
 
@@ -257,7 +257,7 @@ export class QueryObserver<
 
     // Fetch
     let promise: Promise<TQueryData | undefined> = this.currentQuery.fetch(
-      this.options as unknown as QueryOptions<TQueryData, TError, TQueryFnData>,
+      this.options as unknown as QueryOptions<TQueryFnData, TError, TQueryData>,
       fetchOptions
     )
 
@@ -287,7 +287,7 @@ export class QueryObserver<
     // The timeout is sometimes triggered 1 ms before the stale time expiration.
     // To mitigate this issue we always add 1 ms to the timeout.
     const timeout = time + 1
-
+    // @ts-ignore
     this.staleTimeoutId = setTimeout(() => {
       if (!this.currentResult.isStale) {
         const prevResult = this.currentResult
@@ -310,7 +310,7 @@ export class QueryObserver<
     ) {
       return
     }
-
+    // @ts-ignore
     this.refetchIntervalId = setInterval(() => {
       if (
         this.options.refetchIntervalInBackground ||
@@ -483,7 +483,7 @@ export class QueryObserver<
       .getQueryCache()
       .build(
         this.client,
-        this.options as unknown as QueryOptions<TQueryData, TError, TQueryFnData>
+        this.options as unknown as QueryOptions<TQueryFnData, TError, TQueryData>
       )
 
     if (query === prevQuery) {
