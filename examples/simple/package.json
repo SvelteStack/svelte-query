@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "svelte": "^3.18.1",
-    "@reactstack/svelte-query": "1.0.0-beat.6"
+    "@reactstack/svelte-query": "1.0.0"
   },
   "scripts": {
     "build": "rollup -c",

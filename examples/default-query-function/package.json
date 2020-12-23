@@ -35,7 +35,7 @@
     "svelte": "^3.17.3",
     "svelte-check": "^1.0.46",
     "svelte-preprocess": "^4.3.0",
-    "@reactstack/svelte-query": "1.0.0-beat.6",
+    "@reactstack/svelte-query": "1.0.0",
     "tslib": "^2.0.1",
     "typescript": "^4.0.3"
   }

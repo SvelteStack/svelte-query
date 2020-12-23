@@ -22,24 +22,12 @@ export class InfiniteQueryObserver<
   TError = unknown,
   TData = TQueryFnData,
   TQueryData = TQueryFnData
-> extends QueryObserver<
+  > extends QueryObserver<
   TQueryFnData,
   TError,
   InfiniteData<TData>,
   InfiniteData<TQueryData>
-> {
-  // Type override
-  subscribe!: (
-    listener?: InfiniteQueryObserverListener<TData, TError>
-  ) => () => void
-
-  // Type override
-  getCurrentResult!: () => InfiniteQueryObserverResult<TData, TError>
-
-  // Type override
-  protected fetch!: (
-    fetchOptions?: ObserverFetchOptions
-  ) => Promise<InfiniteQueryObserverResult<TData, TError>>
+  > {
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
@@ -52,6 +40,18 @@ export class InfiniteQueryObserver<
     >
   ) {
     super(client, options)
+  }
+
+  subscribe(listener?: InfiniteQueryObserverListener<TData, TError>) {
+    return super.subscribe(listener)
+  }
+
+  getCurrentResult() {
+    return super.getCurrentResult() as InfiniteQueryObserverResult<TData, TError>
+  }
+
+  protected fetch(fetchOptions?: ObserverFetchOptions) {
+    return super.fetch(fetchOptions) as Promise<InfiniteQueryObserverResult<TData, TError>>
   }
 
   protected bindMethods(): void {

@@ -171,7 +171,7 @@ export class Query<
     this.clearGcTimeout()
 
     if (isValidTimeout(this.cacheTime)) {
-      // @ts-ignore
+     // @ts-ignore
       this.gcTimeout = setTimeout(() => {
         this.optionalRemove()
       }, this.cacheTime)
@@ -413,19 +413,31 @@ export class Query<
           })
         }
 
-        // Log error
         if (!isCancelledError(error)) {
+          // Notify cache callback
+          if (this.cache.config.onError) {
+            this.cache.config.onError(error, this as Query)
+          }
+
+          // Log error
           getLogger().error(error)
+        }
+
+        // Remove query after fetching if cache time is 0
+        if (this.cacheTime === 0) {
+          this.optionalRemove()
         }
 
         // Propagate error
         throw error
       })
-      .finally(() => {
+      .then(data => {
         // Remove query after fetching if cache time is 0
         if (this.cacheTime === 0) {
           this.optionalRemove()
         }
+
+        return data
       })
 
     return this.promise
@@ -451,12 +463,20 @@ export class Query<
         ? (options.initialData as InitialDataFunction<TData>)()
         : options.initialData
 
+    const hasInitialData = typeof options.initialData !== 'undefined'
+
+    const initialDataUpdatedAt =
+      hasInitialData &&
+      (typeof options.initialDataUpdatedAt === 'function'
+        ? (options.initialDataUpdatedAt as () => number | undefined)()
+        : options.initialDataUpdatedAt)
+
     const hasData = typeof data !== 'undefined'
 
     return {
       data,
       dataUpdateCount: 0,
-      dataUpdatedAt: hasData ? Date.now() : 0,
+      dataUpdatedAt: hasData ? initialDataUpdatedAt || Date.now() : 0,
       error: null,
       errorUpdateCount: 0,
       errorUpdatedAt: 0,
@@ -496,7 +516,7 @@ export class Query<
           fetchMeta: action.meta ?? null,
           isFetching: true,
           isPaused: false,
-          status: state.status === 'idle' ? 'loading' : state.status,
+          status: !state.dataUpdatedAt ? 'loading' : state.status,
         }
       case 'success':
         return {
@@ -515,12 +535,22 @@ export class Query<
         const error = action.error as unknown
 
         if (isCancelledError(error) && error.revert) {
+          let previousStatus: QueryStatus
+
+          if (!state.dataUpdatedAt && !state.errorUpdatedAt) {
+            previousStatus = 'idle'
+          } else if (state.dataUpdatedAt > state.errorUpdatedAt) {
+            previousStatus = 'success'
+          } else {
+            previousStatus = 'error'
+          }
+
           return {
             ...state,
             fetchFailureCount: 0,
             isFetching: false,
             isPaused: false,
-            status: state.status === 'loading' ? 'idle' : state.status,
+            status: previousStatus,
           }
         }
 

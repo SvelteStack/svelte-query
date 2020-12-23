@@ -60,6 +60,7 @@ export interface QueryOptions<
   queryKey?: QueryKey
   queryKeyHashFn?: QueryKeyHashFunction
   initialData?: TData | InitialDataFunction<TData>
+  initialDataUpdatedAt?: number | (() => number | undefined)
   behavior?: QueryBehavior<TQueryFnData, TError, TData>
   /**
    * Set this to `false` to disable structural sharing between query results.
@@ -127,6 +128,11 @@ export interface QueryObserverOptions<
    * Defaults to `true`.
    */
   refetchOnMount?: boolean | 'always'
+  /**
+   * If set to `false`, the query will not be retried on mount if it contains an error.
+   * Defaults to `true`.
+   */
+  retryOnMount?: boolean
   /**
    * If set, the component will only re-render if any of the listed properties change.
    * When set to `['data', 'error']`, the component will only re-render when the `data` or `error` properties change.
