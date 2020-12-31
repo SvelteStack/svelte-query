@@ -13,7 +13,7 @@ You can configure retries both on a global level and an individual query level.
 - Setting `retry = (failureCount, error) => ...` allows for custom logic based on why the request failed.
 
 ```js
-import { useQuery } from '@tanstack/svelte-query'
+import { useQuery } from '@sveltestack/svelte-query'
 
 // Make a specific query retry a certain number of times
 const queryResult = useQuery(['todos', 1], fetchTodoListPage, {
@@ -30,7 +30,7 @@ The default `retryDelay` is set to double (starting at `1000`ms) with each attem
 ```markdown
 <script>
 // Configure for all queries
-import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
+import { QueryCache, QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
 
 const queryClient = new QueryClient({
   defaultOptions: {

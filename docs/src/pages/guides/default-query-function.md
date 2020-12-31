@@ -7,7 +7,7 @@ If you find yourself wishing for whatever reason that you could just share the s
 
 ```markdown
 <script>
-  import { QueryClientProvider } from '@tanstack/svelte-query';
+  import { QueryClientProvider } from '@sveltestack/svelte-query';
   // Define a default query function that will receive the query key
   const defaultQueryFn = async ({ queryKey }) => {
     const { data } = await axios.get(`https://jsonplaceholder.typicode.com${queryKey[0]}`)

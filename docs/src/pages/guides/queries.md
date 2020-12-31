@@ -15,7 +15,7 @@ To subscribe to a query in your components or custom hooks, call the `useQuery` 
   - Throws an error
 
 ```js
-import { useQuery } from '@tanstack/svelte-query'
+import { useQuery } from '@sveltestack/svelte-query'
 
 const info = useQuery('todos', fetchTodoList)
 ```
@@ -46,7 +46,7 @@ For **most** queries, it's usually sufficient to check for the `isLoading` state
 ```markdown
 
 <script>
-  import { useQuery } from '@tanstack/svelte-query';
+  import { useQuery } from '@sveltestack/svelte-query';
 
   const queryResult = useQuery('todos', fetchTodos)
 </script>
@@ -69,7 +69,7 @@ If booleans aren't your thing, you can always use the `status` state as well:
 
 ```markdown
 <script>
-  import { useQuery } from '@tanstack/svelte-query';
+  import { useQuery } from '@sveltestack/svelte-query';
 
   const queryResult = useQuery('todos', fetchTodos)
 </script>

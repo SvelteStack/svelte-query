@@ -12,7 +12,7 @@ This example very briefly illustrates the 3 core concepts of Svelte Query:
 ```markdown
 <script>
   //App.svelte
-  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
+  import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
   import Todo from 'Todo.svelte'
 
   // Create a client
@@ -29,7 +29,7 @@ This example very briefly illustrates the 3 core concepts of Svelte Query:
 ```markdown
 <script>
   // Todos.svelte
-  import { useQuery, useMutation, useQueryClient } from '@tanstack/svelte-query'
+  import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
   import { getTodos, postTodo } from '../my-api'
   // Access the client
   const queryClient = useQueryClient()

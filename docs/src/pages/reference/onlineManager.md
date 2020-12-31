@@ -19,7 +19,7 @@ Its available methods are:
 
 ```js
 import CustomInfo from 'my-custom-info'
-import { onlineManager } from '@tanstack/svelte-query'
+import { onlineManager } from '@sveltestack/svelte-query'
 
 onlineManager.setEventListener(setOnline => {
   return CustomInfo.addEventListener(state => {
@@ -33,7 +33,7 @@ onlineManager.setEventListener(setOnline => {
 `setOnline` can be used to manually set the online state. Set `undefined` to fallback to the default online check.
 
 ```js
-import { onlineManager } from '@tanstack/svelte-query'
+import { onlineManager } from '@sveltestack/svelte-query'
 
 // Set to online
 onlineManager.setOnline(true)

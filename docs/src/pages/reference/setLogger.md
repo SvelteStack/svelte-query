@@ -10,7 +10,7 @@ title: setLogger
 Examples:
 
 ```js
-import { setLogger } from '@tanstack/svelte-query'
+import { setLogger } from '@sveltestack/svelte-query'
 import { printLog, printWarn, printError } from 'custom-logger'
 
 // Custom logger

@@ -8,7 +8,7 @@ The `MutationCache` is the storage for mutations.
 **Normally, you will not interact with the MutationCache directly and instead use the `QueryClient`.**
 
 ```js
-import { MutationCache } from '@tanstack/svelte-query'
+import { MutationCache } from '@sveltestack/svelte-query'
 
 const mutationCache = new MutationCache()
 ```

@@ -1,5 +1,6 @@
 {
   "name": "@sveltestack/svelte-query",
+  "private": false,
   "version": "1.0.0",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
   "license": "MIT",

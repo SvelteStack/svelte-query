@@ -9,7 +9,7 @@ Here's an example of a mutation that adds a new todo the server:
 
 ```markdown
 <script>
-  import { useMutation } from '@tanstack/svelte-query'
+  import { useMutation } from '@sveltestack/svelte-query'
 
   const mutation = useMutation(newTodo => axios.post('/todos', newTodo))
 </script>
