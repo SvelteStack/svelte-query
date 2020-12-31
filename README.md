@@ -32,6 +32,14 @@ yarn
 yarn storybook
 ```
 
+**Installation**
+
+```bash
+$ npm i @sveltestack/svelte-query
+# or
+$ yarn add @sveltestack/svelte-query
+```
+
 **Running the tests**
 
 ```bash
