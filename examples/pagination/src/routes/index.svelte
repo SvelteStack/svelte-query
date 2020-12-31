@@ -1,5 +1,5 @@
 <script>
-  import { QueryClientProvider } from '@reactstack/svelte-query'
+  import { QueryClientProvider } from '@sveltestack/svelte-query'
 
   import Pagination from '../components/Pagination.svelte'
 </script>

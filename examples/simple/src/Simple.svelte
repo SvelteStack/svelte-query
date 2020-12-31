@@ -1,5 +1,5 @@
 <script>
-  import { useQuery } from '@reactstack/svelte-query'
+  import { useQuery } from '@sveltestack/svelte-query'
 
   const queryResult = useQuery('repoData', () => {
     return fetch(

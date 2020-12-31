@@ -1,4 +1,4 @@
-import { useQuery } from '@reactstack/svelte-query'
+import { useQuery } from '@sveltestack/svelte-query'
 import axios, { AxiosError } from 'axios'
 
 

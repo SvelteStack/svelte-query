@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useQueryClient } from '@reactstack/svelte-query'
+  import { useQueryClient } from '@sveltestack/svelte-query'
 
   import usePosts from './usePosts'
 

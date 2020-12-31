@@ -1,5 +1,5 @@
 <script>
-  import { QueryClientProvider } from '@reactstack/svelte-query'
+  import { QueryClientProvider } from '@sveltestack/svelte-query'
   import axios from 'axios'
 
   import BasicQuery from '../components/BasicQuery.svelte'

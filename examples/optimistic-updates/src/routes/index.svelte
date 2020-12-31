@@ -1,5 +1,5 @@
 <script>
-  import { QueryClientProvider } from '@reactstack/svelte-query'
+  import { QueryClientProvider } from '@sveltestack/svelte-query'
 
   import OptimisticUpdates from '../components/OptimisticUpdates.svelte'
 </script>
