@@ -2,6 +2,8 @@
 
 Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 
+## Visit [svelte-query.vercel.app](https://svelte-query.vercel.app) for docs, guides, API and more!
+
 ## Quick Features
 
 - Transport/protocol/backend agnostic data fetching (REST, GraphQL, promises, whatever!)
@@ -30,14 +32,6 @@ git clone git@github.com:TanStack/svelte-query.git
 cd svelte-query
 yarn
 yarn storybook
-```
-
-**Installation**
-
-```bash
-$ npm i @sveltestack/svelte-query
-# or
-$ yarn add @sveltestack/svelte-query
 ```
 
 **Running the tests**
