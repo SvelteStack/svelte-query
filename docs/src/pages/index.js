@@ -25,7 +25,7 @@ const Home = () => {
       <Head>
         <title>
           Svelte Query - Hooks for fetching, caching and updating asynchronous
-          data in React
+          data in Svelte
         </title>
       </Head>
       <div className="bg-gray-50 h-full min-h-full">
