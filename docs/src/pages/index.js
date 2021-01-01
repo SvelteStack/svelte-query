@@ -20,7 +20,7 @@ const Home = () => {
     <>
       <Seo
         title="Svelte Query"
-        description="Hooks for fetching, caching and updating asynchronous data in React"
+        description="Hooks for fetching, caching and updating asynchronous data in Svelte"
       />
       <Head>
         <title>
