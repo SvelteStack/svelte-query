@@ -7,14 +7,14 @@ title: Persist - LocalStorage (Experimental)
 
 ## Installation
 
-This plugin comes packaged with `react-query` and is available under the `react-query/persist-localstorage-experimental` import.
+This plugin comes packaged with `svelte-query` and is available under the `@sveltestack/svelte-query` import.
 
 ## Usage
 
 Import the `persistWithLocalStorage` function, and pass it your `QueryClient` instance!
 
 ```js
-import { persistWithLocalStorage } from 'react-query/persist-localstorage-experimental'
+import { persistWithLocalStorage } from '@sveltestack/svelte-query'
 
 const queryClient = new QueryClient()
 
