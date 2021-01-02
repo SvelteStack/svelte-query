@@ -1,30 +1,22 @@
-<script lang="ts">
-  import axios, { AxiosError } from 'axios'
-  import {
-    UseInfiniteQueryOptions,
-    useInfiniteQuery,
-  } from '@sveltestack/svelte-query'
+<script>
+  import axios from 'axios'
+  import { useInfiniteQuery } from '@sveltestack/svelte-query'
 
   const endPoint = 'https://s8dfj.sse.codesandbox.io/api'
 
-  type Data = {
-    data: { name: string }[]
-    nextId: number | null
-  }
-
-  const fetchProjects = async ({ pageParam = 0 }): Promise<Data> => {
+  const fetchProjects = async ({ pageParam = 0 }) => {
     const { data } = await axios.get(`${endPoint}/projects?cursor=${pageParam}`)
     return data
   }
 
-  const queryOptions: UseInfiniteQueryOptions<Data> = {
+  const queryOptions = {
     queryKey: 'projects',
     queryFn: fetchProjects,
     //@ts-ignore
     getNextPageParam: lastGroup => lastGroup.nextId || undefined,
   }
 
-  const queryResult = useInfiniteQuery<Data, AxiosError>(queryOptions)
+  const queryResult = useInfiniteQuery(queryOptions)
 </script>
 
 <h1>Infinite Loading</h1>
