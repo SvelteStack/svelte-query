@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Mutation, Query, useQueryClient } from '@reactstack/svelte-query'
+  import { Mutation, Query, useQueryClient } from '@sveltestack/svelte-query'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
 

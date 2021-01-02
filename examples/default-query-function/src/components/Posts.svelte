@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useQuery, useQueryClient } from '@reactstack/svelte-query'
+  import { useQuery, useQueryClient } from '@sveltestack/svelte-query'
   import { AxiosError } from 'axios'
 
   export let setPostId

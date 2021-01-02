@@ -3,7 +3,7 @@
   import {
     UseInfiniteQueryOptions,
     useInfiniteQuery,
-  } from '@reactstack/svelte-query'
+  } from '@sveltestack/svelte-query'
 
   const endPoint = 'https://s8dfj.sse.codesandbox.io/api'
 
