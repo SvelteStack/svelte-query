@@ -11,7 +11,7 @@
 <p>
   This example is exactly the same as the basic example, but each query has been
   refactored to be it's own custom hook. This design is the suggested way to use
-  React Query, as it makes it much easier to manage query keys and shared query
+  Svelte Query, as it makes it much easier to manage query keys and shared query
   logic.
 </p>
 {#if postId > -1}
