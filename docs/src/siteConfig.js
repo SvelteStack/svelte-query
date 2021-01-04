@@ -5,9 +5,9 @@ export const siteConfig = {
   copyright: `Copyright © ${new Date().getFullYear()} Tanner Linsley. All Rights Reserved.`,
   repoUrl: 'https://github.com/TanStack/svelte-query',
   algolia: {
-    appId: 'todo',
-    apiKey: 'todo',
-    indexName: 'tanstack_svelte-query', // algoliaOptions: {
+    appId: '8NOICX8O43',
+    apiKey: '4380d594e0557c5da5bf7b6b4bb116a9',
+    indexName: 'svelte', // algoliaOptions: {
     //   facetFilters: ['version:VERSION'],
     // },
   },
