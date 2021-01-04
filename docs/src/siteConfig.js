@@ -6,7 +6,7 @@ export const siteConfig = {
   repoUrl: 'https://github.com/TanStack/svelte-query',
   algolia: {
     appId: '8NOICX8O43',
-    apiKey: '4380d594e0557c5da5bf7b6b4bb116a9',
+    apiKey: 'cd4a9d86e391e08aff19fc8b3baebce8',
     indexName: 'svelte', // algoliaOptions: {
     //   facetFilters: ['version:VERSION'],
     // },
