@@ -128,8 +128,7 @@ const Home = ({ sponsors }) => {
                     <p className="mt-2  lg:mt-4 text-base xl:text-lg lg:leading-normal leading-6 text-gray-600">
                       Svelte Query is configurable down to each observer instance
                       of a query with knobs and options to fit every use-case.
-                      It comes wired up with dedicated devtools,
-                      infinite-loading APIs, and first class mutation tools that
+                      It comes wired up with infinite-loading APIs, and first class mutation tools that
                       make updating your data a breeze. Don't worry though,
                       everything is pre-configured for success!
                     </p>
@@ -256,7 +255,6 @@ const Home = ({ sponsors }) => {
               <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4 text-white max-w-screen-lg mx-auto text-lg">
                 {[
                   'Backend agnostic',
-                  'Dedicated Devtools',
                   'Auto Caching',
                   'Auto Refetching',
                   'Window Focus Refetching',
