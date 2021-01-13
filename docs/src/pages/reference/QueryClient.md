@@ -23,8 +23,10 @@ await queryClient.prefetchQuery('posts', fetchPosts)
 
 Its available methods are:
 
-- [`fetchQuery`](#queryclientfetchquerydata)
+- [`fetchQuery`](#queryclientfetchquery)
+- [`fetchInfiniteQuery`](#queryclientfetchinfinitequery)
 - [`prefetchQuery`](#queryclientprefetchquery)
+- [`prefetchInfiniteQuery`](#queryclientprefetchinfinitequery)
 - [`getQueryData`](#queryclientgetquerydata)
 - [`setQueryData`](#queryclientsetquerydata)
 - [`getQueryState`](#queryclientgetquerystate)
@@ -86,11 +88,32 @@ try {
 
 **Options**
 
-The options for `fetchQuery` are exactly the same as those of [`useQuery`](#usequery).
+The options for `fetchQuery` are exactly the same as those of [`useQuery`](./useQuery), except the following: `enabled, refetchInterval, refetchIntervalInBackground, refetchOnWindowFocus, refetchOnReconnect, notifyOnChangeProps, notifyOnChangePropsExclusions, onSuccess, onError, onSettled, useErrorBoundary, select, suspense, keepPreviousData, placeholderData`; which are stictly for useQuery and useInfiniteQuery. You can check the [source code](https://github.com/TanStack/svelte-query/blob/864cd6e31b19cea5483d1809d6e3afc1499b48d6/src/queryCore/core/types.ts#L83) for more clarity.
 
 **Returns**
 
 - `Promise<TData>`
+
+## `queryClient.fetchInfiniteQuery`
+
+`fetchInfiniteQuery` is similar to `fetchQuery` but can be used to fetch and cache an infinite query.
+
+```js
+try {
+  const data = await queryClient.fetchInfiniteQuery(queryKey, queryFn)
+  console.log(data.pages)
+} catch (error) {
+  console.log(error)
+}
+```
+
+**Options**
+
+The options for `fetchInfiniteQuery` are exactly the same as those of [`fetchQuery`](#queryclientfetchquery).
+
+**Returns**
+
+- `Promise<InfiniteData<TData>>`
 
 ## `queryClient.prefetchQuery`
 
@@ -108,7 +131,24 @@ await queryClient.prefetchQuery(queryKey)
 
 **Options**
 
-The options for `prefetchQuery` are exactly the same as those of [`useQuery`](#usequery).
+The options for `prefetchQuery` are exactly the same as those of [`fetchQuery`](#queryclientfetchquery).
+
+**Returns**
+
+- `Promise<void>`
+  - A promise is returned that will either immediately resolve if no fetch is needed or after the query has been executed. It will not return any data or throw any errors.
+
+## `queryClient.prefetchInfiniteQuery`
+
+`prefetchInfiniteQuery` is similar to `prefetchQuery` but can be used to prefetch and cache an infinite query.
+
+```js
+await queryClient.prefetchInfiniteQuery(queryKey, queryFn)
+```
+
+**Options**
+
+The options for `prefetchInfiniteQuery` are exactly the same as those of [`fetchQuery`](#queryclientfetchquery).
 
 **Returns**
 
@@ -270,13 +310,10 @@ queryClient.removeQueries(queryKey, { exact: true })
 
 - `queryKey?: QueryKey`: [Query Keys](../guides/query-keys)
 - `filters?: QueryFilters`: [Query Filters](../guides/query-filters)
-- `resetOptions?: ResetOptions`:
-  - `throwOnError?: boolean`
-    - When set to `true`, this method will throw if any of the query refetch tasks fail.
 
 **Returns**
 
-This method returns a promise that resolves when all active queries have been refetched.
+This method does not return anything
 
 ## `queryClient.resetQueries`
 
@@ -297,10 +334,13 @@ queryClient.resetQueries(queryKey, { exact: true })
 
 - `queryKey?: QueryKey`: [Query Keys](../guides/query-keys)
 - `filters?: QueryFilters`: [Query Filters](../guides/query-filters)
+- `resetOptions?: ResetOptions`:
+  - `throwOnError?: boolean`
+    - When set to `true`, this method will throw if any of the query refetch tasks fail.
 
 **Returns**
 
-This method does not return anything
+This method returns a promise that resolves when all active queries have been refetched.
 
 ## `queryClient.isFetching`
 
