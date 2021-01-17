@@ -228,7 +228,7 @@ export class Query<
 
   destroy(): void {
     this.clearGcTimeout()
-    this.cancel()
+    this.cancel({ silent: true })
   }
 
   reset(): void {
