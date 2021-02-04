@@ -28,7 +28,7 @@ up the merging process.
 **Get started (Devs)**
 
 ```bash
-git clone git@github.com:TanStack/svelte-query.git
+git clone git@github.com:SvelteStack/svelte-query.git
 cd svelte-query
 yarn
 yarn storybook

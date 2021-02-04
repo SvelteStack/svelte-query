@@ -3,7 +3,7 @@
 
   const queryResult = useQuery('repoData', () => {
     return fetch(
-      'https://api.github.com/repos/TanStack/svelte-query'
+      'https://api.github.com/repos/SvelteStack/svelte-query'
     ).then(res => res.json())
   })
 </script>

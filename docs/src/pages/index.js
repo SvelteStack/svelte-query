@@ -1,5 +1,5 @@
 import * as React from 'react'
-import axios from 'axios'
+import { ParentSize } from '@visx/responsive'
 import { Banner } from 'components/Banner'
 import { Sticky } from 'components/Sticky'
 import { Nav } from 'components/Nav'
@@ -9,21 +9,8 @@ import { Footer } from 'components/Footer'
 import { ClientsMarquee } from 'components/clients/ClientsMarquee'
 import { Seo } from 'components/Seo'
 import Head from 'next/head'
-import SponsorPack from 'components/SponsorPack'
 
-export const getStaticProps = async () => {
-  const {
-    data: { sponsors, tiers },
-  } = await axios.get('https://tanstack.com/api/github-sponsors')
 
-  return {
-    props: {
-      sponsors,
-      tiers,
-    },
-    revalidate: 60, // In seconds
-  }
-}
 
 const Home = ({ sponsors }) => {
   return (
@@ -185,8 +172,22 @@ const Home = ({ sponsors }) => {
             <h3 className="text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 lg:leading-none mt-8">
               Sponsors
             </h3>
-            <div className="py-4 flex flex-wrap">
-              <SponsorPack sponsors={sponsors} height={700} />
+            <div className="py-4 flex flex-wrap max-w-screen-md mx-auto">
+              <ParentSize>
+                {({ width }) => {
+                  return (
+                    <iframe
+                      title="sponsors"
+                      src="https://tanstack.com/sponsors-embed"
+                      style={{
+                        width: width,
+                        height: width,
+                        overflow: 'hidden',
+                      }}
+                    />
+                  )
+                }}
+              </ParentSize>
             </div>
             <div className="text-center mb-8">
               <a
@@ -222,8 +223,8 @@ const Home = ({ sponsors }) => {
         <section className="bg-gray-900 body-font">
           <div className="container max-w-7xl px-4  mx-auto -mt-72 relative">
             <iframe
-              src="https://codesandbox.io/embed/github/TanStack/svelte-query/tree/main/examples/basic?autoresize=1&fontsize=16&theme=dark"
-              title="TanStack/svelte-query: basic"
+              src="https://codesandbox.io/embed/github/SvelteStack/svelte-query/tree/main/examples/basic?autoresize=1&fontsize=16&theme=dark"
+              title="SvelteStack/svelte-query: basic"
               sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
               className="shadow-2xl"
               style={{

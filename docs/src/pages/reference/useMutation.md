@@ -5,6 +5,7 @@ title: useMutation
 
 ```js
 const mutation = useMutation(mutationFn, {
+  mutationKey,
   onError,
   onMutate,
   onSettled,

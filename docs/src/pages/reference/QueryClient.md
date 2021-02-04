@@ -88,7 +88,7 @@ try {
 
 **Options**
 
-The options for `fetchQuery` are exactly the same as those of [`useQuery`](./useQuery), except the following: `enabled, refetchInterval, refetchIntervalInBackground, refetchOnWindowFocus, refetchOnReconnect, notifyOnChangeProps, notifyOnChangePropsExclusions, onSuccess, onError, onSettled, useErrorBoundary, select, suspense, keepPreviousData, placeholderData`; which are stictly for useQuery and useInfiniteQuery. You can check the [source code](https://github.com/TanStack/svelte-query/blob/864cd6e31b19cea5483d1809d6e3afc1499b48d6/src/queryCore/core/types.ts#L83) for more clarity.
+The options for `fetchQuery` are exactly the same as those of [`useQuery`](./useQuery), except the following: `enabled, refetchInterval, refetchIntervalInBackground, refetchOnWindowFocus, refetchOnReconnect, notifyOnChangeProps, notifyOnChangePropsExclusions, onSuccess, onError, onSettled, useErrorBoundary, select, suspense, keepPreviousData, placeholderData`; which are stictly for useQuery and useInfiniteQuery. You can check the [source code](https://github.com/SvelteStack/svelte-query/blob/864cd6e31b19cea5483d1809d6e3afc1499b48d6/src/queryCore/core/types.ts#L83) for more clarity.
 
 **Returns**
 
@@ -185,7 +185,7 @@ queryClient.setQueryData(queryKey, updater)
 
 **Options**
 
-- `queryKey: QueryKey` [Query Keys](./guides/query-keys)
+- `queryKey: QueryKey`: [Query Keys](../guides/query-keys)
 - `updater: unknown | (oldData: TData | undefined) => TData`
   - If non-function is passed, the data will be updated to this value
   - If a function is passed, it will receive the old data value and be expected to return a new one.
@@ -228,8 +228,8 @@ The `invalidateQueries` method can be used to invalidate and refetch single or m
 ```js
 await queryClient.invalidateQueries('posts', {
   exact,
-  refetchActive = true,
-  refetchInactive = false
+  refetchActive: true,
+  refetchInactive: false
 }, { throwOnError })
 ```
 

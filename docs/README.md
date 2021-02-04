@@ -1,6 +1,6 @@
 # Svelte Query Docs
 
-This is source code to svelte-query.tanstack.com. It is forked from the [Formik](https://formik.org) docs and is built with:
+This is source code to svelte-query.sveltestack.com. It is forked from the [Formik](https://formik.org) docs and is built with:
 
 - Next.js
 - MDX

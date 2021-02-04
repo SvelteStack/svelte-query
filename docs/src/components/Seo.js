@@ -11,7 +11,7 @@ export const Seo = withRouter(
       {/* DEFAULT */}
 
       {title != undefined && (
-        <title key="title">{title} | Svelte Query | TanStack</title>
+        <title key="title">{title} | Svelte Query | SvelteStack</title>
       )}
       {description != undefined && (
         <meta name="description" key="description" content={description} />

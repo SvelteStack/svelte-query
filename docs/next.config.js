@@ -22,7 +22,7 @@ const remarkPlugins = [
   require('remark-images'),
   [
     require('remark-github'),
-    { repository: 'https://github.com/TanStack/svelte-query' },
+    { repository: 'https://github.com/SvelteStack/svelte-query' },
   ],
   require('remark-unwrap-images'),
   [

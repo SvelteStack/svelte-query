@@ -8,6 +8,7 @@ const queryResult = useQuery(queryKey, queryFn?, {
   cacheTime,
   enabled,
   initialData,
+  initialDataUpdatedAt,
   isDataEqual,
   keepPreviousData,
   notifyOnChangeProps,
@@ -31,15 +32,19 @@ const queryResult = useQuery(queryKey, queryFn?, {
 
 const {
   data,
+  dataUpdatedAt,
   error,
+  errorUpdatedAt,
   failureCount,
   isError,
   isFetchedAfterMount,
   isFetching,
   isIdle,
   isLoading,
+  isLoadingError,
   isPlaceholderData,
   isPreviousData,
+  isRefetchError,
   isStale,
   isSuccess,
   refetch,
@@ -136,6 +141,9 @@ const result = useQuery({
   - If set to a function, the function will be called **once** during the shared/root query initialization, and be expected to synchronously return the initialData
   - Initial data is considered stale by default unless a `staleTime` has been set.
   - `initialData` **is persisted** to the cache
+- `initialDataUpdatedAt: number | (() => number | undefined)`
+  - Optional
+  - If set, this value will be used as the time (in milliseconds) of when the `initialData` itself was last updated.
 - `placeholderData: TData | () => TData`
   - Optional
   - If set, this value will be used as the placeholder data for this particular query observer while the query is still in the `loading` data and no initialData has been provided.
@@ -172,9 +180,13 @@ const result = useQuery({
 - `data: TData`
   - Defaults to `undefined`.
   - The last successfully resolved data for the query.
+- `dataUpdatedAt: number`
+  - The timestamp for when the query most recently returned the `status` as `"success"`.
 - `error: null | TError`
   - Defaults to `null`
   - The error object for the query, if an error was thrown.
+- `errorUpdatedAt: number`
+  - The timestamp for when the query most recently returned the `status` as `"error"`.
 - `isStale: boolean`
   - Will be `true` if the data in the cache is invalidated or if the data is older than the given `staleTime`.
 - `isPlaceholderData: boolean`
