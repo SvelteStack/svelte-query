@@ -7,7 +7,7 @@
   // Props with default values
   export let queryCache = new QueryCache()
   export let mutationCache = new MutationCache()
-  export let defaultOptions: DefaultOptions
+  export let defaultOptions: DefaultOptions = {}
   export let client = new QueryClient({
     queryCache,
     mutationCache,
