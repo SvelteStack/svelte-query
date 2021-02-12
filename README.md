@@ -2,7 +2,7 @@
 
 Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 
-## Visit [svelte-query.vercel.app](https://svelte-query.vercel.app) for docs, guides, API and more!
+## Visit [sveltequery.vercel.app](https://sveltequery.vercel.app) for docs, guides, API and more!
 
 ## Quick Features
 
