@@ -42,7 +42,7 @@ export const Footer = props => {
                 <ul className="mt-4">
                   <li className="mt-4">
                     <a
-                      href="https://github.com/TanStack/svelte-query/discussions"
+                      href="https://github.com/SvelteStack/svelte-query/discussions"
                       className="text-base leading-6 text-gray-500 hover:text-gray-900"
                     >
                       Forum & Support
@@ -50,10 +50,10 @@ export const Footer = props => {
                   </li>
                   <li className="mt-4">
                     <a
-                      href="https://discord.gg/WrRKjPJ"
+                      href="https://discord.gg/5sK7CPKf"
                       className="text-base leading-6 text-gray-500 hover:text-gray-900"
                     >
-                      #TanStack Discord
+                      #SvelteStack Discord
                     </a>
                   </li>
                   <li className="mt-4">
@@ -66,7 +66,7 @@ export const Footer = props => {
                   </li>
                   <li className="mt-4">
                     <a
-                      href="https://github.com/TanStack/svelte-query/releases"
+                      href="https://github.com/SvelteStack/svelte-query/releases"
                       className="text-base leading-6 text-gray-500 hover:text-gray-900"
                     >
                       Releases
@@ -75,12 +75,12 @@ export const Footer = props => {
                   <li className="mt-4">
                     <a
                       className="github-button"
-                      href="https://github.com/TanStack/svelte-query"
+                      href="https://github.com/SvelteStack/svelte-query"
                       data-color-scheme="no-preference: light; light: light; dark: dark;"
                       data-icon="octicon-star"
                       data-size="large"
                       data-show-count="true"
-                      aria-label="Star TanStack/svelte-query on GitHub"
+                      aria-label="Star SvelteStack/svelte-query on GitHub"
                     >
                       Star
                     </a>
@@ -155,7 +155,7 @@ export const Footer = props => {
               </svg>
             </a>
             <a
-              href="https://github.com/TanStack"
+              href="https://github.com/SvelteStack"
               className="ml-6 text-gray-400 hover:text-gray-500"
             >
               <span className="sr-only">GitHub</span>
