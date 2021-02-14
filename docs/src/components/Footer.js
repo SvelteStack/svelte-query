@@ -50,7 +50,7 @@ export const Footer = props => {
                   </li>
                   <li className="mt-4">
                     <a
-                      href="https://discord.gg/5sK7CPKf"
+                      href="https://discord.gg/7VTWQwrBZZ"
                       className="text-base leading-6 text-gray-500 hover:text-gray-900"
                     >
                       #SvelteStack Discord

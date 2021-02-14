@@ -293,7 +293,7 @@ const Home = ({ sponsors }) => {
               Feeling Chatty?
             </h3>
             <a
-              href="https://discord.gg/5sK7CPKf"
+              href="https://discord.gg/7VTWQwrBZZ"
               target="_blank"
               className="inline-block bg-gray-800 p-5 text-2xl mx-auto leading-tight font-extrabold tracking-tight text-white mt-12 rounded-full"
             >
