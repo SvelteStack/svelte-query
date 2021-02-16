@@ -45,6 +45,10 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
         return observer.subscribe(notifyManager.batchCalls(set))
     })
 
+    // Update result to make sure we did not miss any query updates
+    // between creating the observer and subscribing to it.
+    observer.updateResult()
+
     function setOptions(options: UseQueryOptions<TQueryFnData, TError, TData>)
     function setOptions(
         queryKey: QueryKey,

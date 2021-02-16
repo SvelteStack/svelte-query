@@ -50,6 +50,9 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
         return observer.subscribe(notifyManager.batchCalls(set))
     })
 
+    // between creating the observer and subscribing to it.
+    observer.updateResult()
+
     function setOptions(options: UseInfiniteQueryOptions<TQueryFnData, TError, TData>)
     function setOptions(
         queryKey: QueryKey,

@@ -1,3 +1,4 @@
 export * from './core'
 export * from './hydration'
-export * from './persist-localstorage-experimental'
+export * from './persistQueryClient-experimental'
+export * from './createLocalStoragePersistor-experimental'
