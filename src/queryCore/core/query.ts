@@ -106,6 +106,7 @@ interface ContinueAction {
 interface SetStateAction<TData, TError> {
   type: 'setState'
   state: QueryState<TData, TError>
+  setStateOptions?: SetStateOptions
 }
 
 export type Action<TData, TError> =
@@ -117,6 +118,10 @@ export type Action<TData, TError> =
   | PauseAction
   | SetStateAction<TData, TError>
   | SuccessAction<TData>
+
+export interface SetStateOptions {
+  meta?: any
+}
 
 // CLASS
 
@@ -217,8 +222,11 @@ export class Query<
     return data
   }
 
-  setState(state: QueryState<TData, TError>): void {
-    this.dispatch({ type: 'setState', state })
+  setState(
+    state: QueryState<TData, TError>,
+    setStateOptions?: SetStateOptions
+  ): void {
+    this.dispatch({ type: 'setState', state, setStateOptions })
   }
 
   cancel(options?: CancelOptions): Promise<void> {
@@ -290,7 +298,7 @@ export class Query<
       // Stop the query from being garbage collected
       this.clearGcTimeout()
 
-      this.cache.notify(this)
+      this.cache.notify({ type: 'observerAdded', query: this, observer })
     }
   }
 
@@ -316,7 +324,7 @@ export class Query<
         }
       }
 
-      this.cache.notify(this)
+      this.cache.notify({ type: 'observerRemoved', query: this, observer })
     }
   }
 
@@ -402,7 +410,7 @@ export class Query<
           this.optionalRemove()
         }
       },
-      onError: error => {
+      onError: (error: TError | { silent?: boolean }) => {
         // Optimistically update state if needed
         if (!(isCancelledError(error) && error.silent)) {
           this.dispatch({
@@ -452,7 +460,7 @@ export class Query<
         observer.onQueryUpdate(action)
       })
 
-      this.cache.notify(this)
+      this.cache.notify({ query: this, type: 'queryUpdated', action })
     })
   }
 

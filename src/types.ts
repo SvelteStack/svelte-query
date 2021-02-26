@@ -95,7 +95,7 @@ export interface UseMutationOptions<TData, TError, TVariables, TContext> {
     context: TContext | undefined
   ) => Promise<void> | void
   retry?: RetryValue<TError>
-  retryDelay?: RetryDelayValue
+  retryDelay?: RetryDelayValue<TError>
   useErrorBoundary?: boolean
 }
 
