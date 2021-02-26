@@ -1153,6 +1153,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.6.2":
+  version "7.13.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.4.tgz#a2f5b5304d6f98a94053e6737321501347325617"
+  integrity sha512-pZLFG10nRL1hPF9J0/WdxjVuLEanSge8W3Ct+Kls9fNhD4vOi9bhuAU8DdNARvBE9GTg6UhQFcEIF1XhIZd9ZA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.12.7":
   version "7.12.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.12.7.tgz#c817233696018e39fbb6c491d2fb684e05ed43bc"
@@ -1705,6 +1712,19 @@
     invariant "^2.2.3"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
+
+"@rollup/plugin-commonjs@^17.1.0":
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-17.1.0.tgz#757ec88737dffa8aa913eb392fade2e45aef2a2d"
+  integrity sha512-PoMdXCw0ZyvjpCMT5aV4nkL0QywxP29sODQsSGeDpr/oI49Qq9tRtAsb/LbYbDzFlOydVEqHmmZWFtXJEAX9ew==
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    commondir "^1.0.1"
+    estree-walker "^2.0.1"
+    glob "^7.1.6"
+    is-reference "^1.2.1"
+    magic-string "^0.25.7"
+    resolve "^1.17.0"
 
 "@rollup/plugin-node-resolve@^6.0.0":
   version "6.1.0"
@@ -3784,6 +3804,11 @@ better-opn@^2.0.0:
   dependencies:
     open "^7.0.3"
 
+big-integer@^1.6.16:
+  version "1.6.48"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.48.tgz#8fd88bd1632cba4a1c8c3e3d7159f08bb95b4b9e"
+  integrity sha512-j51egjPa7/i+RdiRuJbPdJ2FIUYYPhvYLjzoYbcMMm62ooO6F94fETG4MTs46zPAF9Brs04OajboA/qTGuz78w==
+
 big.js@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
@@ -3886,6 +3911,19 @@ braces@^3.0.1, braces@~3.0.2:
   integrity sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
   dependencies:
     fill-range "^7.0.1"
+
+broadcast-channel@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.4.1.tgz#65b63068d0a5216026a19905c9b2d5e9adf0928a"
+  integrity sha512-VXYivSkuBeQY+pL5hNQQNvBdKKQINBAROm4G8lAbWQfOZ7Yn4TMcgLNlJyEqlkxy5G8JJBsI3VJ1u8FUTOROcg==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    detect-node "^2.0.4"
+    js-sha3 "0.8.0"
+    microseconds "0.2.0"
+    nano-time "1.0.0"
+    rimraf "3.0.2"
+    unload "2.2.0"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -5011,6 +5049,11 @@ detect-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
+detect-node@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
+  integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
+
 detect-port-alt@1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/detect-port-alt/-/detect-port-alt-1.1.6.tgz#24707deabe932d4a3cf621302027c2b266568275"
@@ -5660,6 +5703,11 @@ estree-walker@^1.0.1:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-1.0.1.tgz#31bc5d612c96b704106b477e6dd5d8aa138cb700"
   integrity sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==
 
+estree-walker@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
+  integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
+
 esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
@@ -6222,6 +6270,11 @@ fsevents@~2.1.2:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
   integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
+
+fsevents@~2.3.1:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -7334,6 +7387,13 @@ is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
+is-reference@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/is-reference/-/is-reference-1.2.1.tgz#8b2dac0b371f4bc994fdeaba9eb542d03002d0b7"
+  integrity sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==
+  dependencies:
+    "@types/estree" "*"
+
 is-regex@^1.0.4, is-regex@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/is-regex/-/is-regex-1.1.1.tgz#c6f98aacc546f6cec5468a07b7b153ab564a57b9"
@@ -7953,6 +8013,11 @@ jest@^25.2.7:
     import-local "^3.0.2"
     jest-cli "^25.5.4"
 
+js-sha3@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
+
 js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
@@ -8299,6 +8364,13 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+magic-string@^0.25.7:
+  version "0.25.7"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
+  integrity sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
+  dependencies:
+    sourcemap-codec "^1.4.4"
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -8522,6 +8594,11 @@ micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
+microseconds@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/microseconds/-/microseconds-0.2.0.tgz#233b25f50c62a65d861f978a4a4f8ec18797dc39"
+  integrity sha512-n7DHHMjR1avBbSpsTBj6fmMGh2AGrifVV4e+WYc3Q9lO+xnSZ3NyhcBND3vzzatt05LFhoKFRxrIyklmLlUtyA==
+
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
@@ -8708,6 +8785,13 @@ nan@^2.12.1, nan@^2.14.1:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
+
+nano-time@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nano-time/-/nano-time-1.0.0.tgz#b0554f69ad89e22d0907f7a12b0993a5d96137ef"
+  integrity sha1-sFVPaa2J4i0JB/ehKwmTpdlhN+8=
+  dependencies:
+    big-integer "^1.6.16"
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -10428,17 +10512,17 @@ reusify@^1.0.4:
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
+rimraf@3.0.2, rimraf@^3.0.0, rimraf@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
+  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
+  dependencies:
+    glob "^7.1.3"
+
 rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.3:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
   integrity sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
-  dependencies:
-    glob "^7.1.3"
-
-rimraf@^3.0.0, rimraf@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
-  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   dependencies:
     glob "^7.1.3"
 
@@ -10477,14 +10561,12 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^1.20.0:
-  version "1.32.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.32.1.tgz#4480e52d9d9e2ae4b46ba0d9ddeaf3163940f9c4"
-  integrity sha512-/2HA0Ec70TvQnXdzynFffkjA6XN+1e2pEv/uKS5Ulca40g2L7KuOE3riasHoNVHOsFD5KKZgDsMk1CP3Tw9s+A==
-  dependencies:
-    "@types/estree" "*"
-    "@types/node" "*"
-    acorn "^7.1.0"
+rollup@^2.39.1:
+  version "2.39.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.39.1.tgz#7afd4cefd8a332c5102a8063d301fde1f31a9173"
+  integrity sha512-9rfr0Z6j+vE+eayfNVFr1KZ+k+jiUl2+0e4quZafy1x6SFCjzFspfRSO2ZZQeWeX9noeDTUDgg6eCENiEPFvQg==
+  optionalDependencies:
+    fsevents "~2.3.1"
 
 rsvp@^4.8.4:
   version "4.8.5"
@@ -10893,7 +10975,7 @@ source-map@^0.7.3:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
 
-sourcemap-codec@^1.4.8:
+sourcemap-codec@^1.4.4, sourcemap-codec@^1.4.8:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
@@ -11875,6 +11957,14 @@ universalify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
+
+unload@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/unload/-/unload-2.2.0.tgz#ccc88fdcad345faa06a92039ec0f80b488880ef7"
+  integrity sha512-B60uB5TNBLtN6/LsgAf3udH9saB5p7gqJwcFfbOEZ8BcBHnGwCf6G/TGiEqkRAxX7zAFIUtzdrXQSdL3Q/wqNA==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    detect-node "^2.0.4"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"

@@ -2,6 +2,7 @@ import svelte from 'rollup-plugin-svelte';
 import autoPreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
@@ -22,6 +23,7 @@ export default {
 			preprocess: autoPreprocess()
 		}),
 		typescript(),
-		resolve()
+		resolve(),
+		commonjs()
 	]
 };
