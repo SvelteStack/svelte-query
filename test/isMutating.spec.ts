@@ -6,7 +6,7 @@ import { fireEvent, render, waitFor, screen } from "@testing-library/svelte";
 import IsMutating from "../stories/isMutating/App.svelte";
 
 describe("IsMutating", () => {
-  it("should render the fetching history", async () => {
+  it("should render the mutating history", async () => {
     render(IsMutating);
     expect(screen.getByText("[0]")).toBeInTheDocument();
     // mutate
