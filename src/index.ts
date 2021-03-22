@@ -5,6 +5,7 @@ export * from "./query";
 export * from "./infiniteQuery";
 export * from "./queries";
 export * from "./isFetching";
+export * from "./isMutating";
 export * from "./mutation";
 export * from "./hydration";
 
