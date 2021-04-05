@@ -75,5 +75,9 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
         }
     }
 
-    return { subscribe, setOptions }
+    function setEnabled(enabled: boolean): void {
+        observer.setOptions({ ...observer.options, enabled })
+    }
+
+    return { subscribe, setOptions, setEnabled }
 }

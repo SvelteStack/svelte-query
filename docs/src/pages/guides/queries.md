@@ -86,3 +86,32 @@ If booleans aren't your thing, you can always use the `status` state as well:
   </ul>
 {/if}
 ```
+
+## What if I want to enable/disable queries reactively?
+
+Sometimes you may want to enable or disable a Query by using a svelte [reactive statement](https://svelte.dev/tutorial/reactive-statements). In this case, you can use the `setEnabled` function:
+
+```markdown
+<script>
+  import { useQuery } from '@sveltestack/svelte-query';
+
+  export let isEnabled = false;
+
+  const queryResult = useQuery('todos', fetchTodos)
+  $: queryResult.setEnabled(isEnabled)
+</script>
+
+{#if $queryResult.isIdle}
+  <button on:click={() => isEnabled = true}>Enable</button>
+{:else if $queryResult.isLoading}
+  <span>Loading...</span>
+{:else if $queryResult.isError}
+  <span>Error: {$queryResult.error.message}</span>
+{:else}
+  <ul>
+    {#each $queryResult.data as todo}
+      <li>{todo.title}</li>
+    {/each}
+  </ul>
+{/if}
+```

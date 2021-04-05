@@ -20,6 +20,7 @@ export interface UseQueryStoreResult<
     (queryKey: QueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData>): any;
     (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData>, options?: UseQueryOptions<TQueryFnData, TError, TData>): any;
   }
+  setEnabled(enabled: boolean): void
 }
 
 // use options.infinite = true for infinite Query
@@ -43,6 +44,7 @@ TData = TQueryFnData,
     (queryKey: QueryKey, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>): any;
     (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData>, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>): any;
   }
+  setEnabled(enabled: boolean): void
 }
 
 export interface UseInfiniteQueryOptions<

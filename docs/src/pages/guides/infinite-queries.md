@@ -141,3 +141,48 @@ queryClient.setQueryData('projects', data => ({
   pageParams: data.pageParams.slice(1),
 }))
 ```
+
+## What if I want to enable/disable infinite queries reactively?
+
+Sometimes you may want to enable or disable a Query by using a svelte [reactive statement](https://svelte.dev/tutorial/reactive-statements). In this case, you can use the `setEnabled` function:
+
+```markdown
+<script>
+  import { useInfiniteQuery } from '@sveltestack/svelte-query'
+
+  export let isEnabled = false;
+
+  const queryResult = useInfiniteQuery('projects', fetchProjects, {
+    getNextPageParam: lastGroup => lastGroup.nextId || undefined,
+  })
+
+  $: queryResult.setEnabled(isEnabled)
+</script>
+
+{#if $queryResult.status === 'idle'}
+  <button on:click={() => isEnabled = true}>Enable</button>
+{#if $queryResult.status === 'loading'}
+  Loading...
+{:else if $queryResult.status === 'error'}
+  <span>Error: {$queryResult.error.message}</span>
+{:else}
+  <div>
+    {#each $queryResult.data.pages as page}
+      {#each page.data as project}
+        <p>{project.name}</p>
+      {/each}
+    {/each}
+  </div>
+  <div>
+    <button
+      on:click={() => $queryResult.fetchNextPage()}
+      disabled={!$queryResult.hasNextPage || $queryResult.isFetchingNextPage}>
+      {#if $queryResult.isFetching}
+        Loading more...
+      {:else if $queryResult.hasNextPage}
+        Load More
+      {:else}Nothing more to load{/if}
+    </button>
+  </div>
+{/if}
+```
