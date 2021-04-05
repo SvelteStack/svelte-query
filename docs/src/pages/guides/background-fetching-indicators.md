@@ -37,7 +37,7 @@ In addition to individual query loading states, if you would like to show a glob
   const isFetching = useIsFetching()
 </script>
 
-{#if $isFetchingResult}
+{#if $isFetching}
   <div>Queries are fetching in the background...</div>
 {/if}
 ```
