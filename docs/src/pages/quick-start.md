@@ -13,7 +13,7 @@ This example very briefly illustrates the 3 core concepts of Svelte Query:
 <script>
   //App.svelte
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
-  import Todo from 'Todo.svelte'
+  import Todos from 'Todos.svelte'
 
   // Create a client
   const queryClient = new QueryClient()
