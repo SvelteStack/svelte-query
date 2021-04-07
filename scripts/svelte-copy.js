@@ -2,7 +2,7 @@ const fss = require('fs')
 const fsPromises = require('fs').promises
 const path = require('path')
 const svelte = require('svelte/compiler')
-const svelteConfig = require('../svelte.config')
+const autoPreprocess = require('svelte-preprocess')
 
 main()
 
@@ -40,7 +40,13 @@ async function main() {
 
 async function preprocessSvelte(src, dest) {
     const srcCode = await fsPromises.readFile(src, { encoding: 'utf-8' })
-    let { code } = await svelte.preprocess(srcCode, svelteConfig.preprocess, {
+    const preprocess = autoPreprocess({
+        sourceMap: false,
+        typescript: {
+            tsconfigFile: "./tsconfig.lib.json"
+        }
+    })
+    let { code } = await svelte.preprocess(srcCode, preprocess, {
         filename: src
     })
     // oups !
