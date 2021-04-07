@@ -22,8 +22,7 @@ Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 You noticed a bug, a possible improvement or whatever?
 Any help is always appreciated, so don't hesitate opening one!
 
-Be sure to check out the [contributing guidelines](CONTRIBUTING.md) to fasten
-up the merging process.
+Be sure to check out the [contributing guidelines](CONTRIBUTING.md) to fasten up the merging process.
 
 **Get started (Devs)**
 
@@ -32,6 +31,14 @@ git clone git@github.com:SvelteStack/svelte-query.git
 cd svelte-query
 yarn
 yarn storybook
+```
+
+**Running Storybook**
+
+```bash
+cd storybook
+yarn
+yarn start
 ```
 
 **Running the tests**
