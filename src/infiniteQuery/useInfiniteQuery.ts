@@ -79,9 +79,13 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
         }
     }
 
-    function setEnabled(enabled: boolean): void {
-        observer.setOptions({ ...observer.options, enabled })
+    function updateOptions(options: Partial<UseInfiniteQueryOptions<TQueryFnData, TError, TData>>): void {
+        observer.setOptions({ ...observer.options, ...options })
     }
 
-    return { subscribe, setOptions, setEnabled }
+    function setEnabled(enabled: boolean): void {
+        updateOptions({ enabled })
+    }
+
+    return { subscribe, setOptions, updateOptions, setEnabled }
 }
