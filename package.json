@@ -28,8 +28,8 @@
     "test:ci": "yarn test:types && yarn test:eslint && jest",
     "test:eslint": "eslint --ext .ts ./src",
     "test:types": "tsc --b ./tsconfig.types.json --dry --force",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "cd storybook && npx start-storybook -p 6006",
+    "build-storybook": "cd storybook && npx build-storybook"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
