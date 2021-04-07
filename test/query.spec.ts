@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, waitFor } from "@testing-library/svelte";
 
-import Query from "../stories/query/App.svelte";
+import Query from "../storybook/stories/query/App.svelte";
 
 describe("Query", () => {
   it("should render the first query result before the second query result", async () => {

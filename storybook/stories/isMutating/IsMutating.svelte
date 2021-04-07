@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { IsMutating, useMutation } from '../../src'
-  import { useIsMutating } from '../../src/isMutating'
+  import { IsMutating, useMutation } from '../../../src'
+  import { useIsMutating } from '../../../src/isMutating'
 
   const later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))

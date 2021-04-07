@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Mutation } from '../../src'
-  import { useMutation } from '../../src/mutation'
+  import { Mutation } from '../../../src'
+  import { useMutation } from '../../../src/mutation'
 
   const later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))

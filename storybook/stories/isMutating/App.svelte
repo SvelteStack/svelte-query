@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { QueryClientProvider } from '../../src'
+  import { QueryClientProvider } from '../../../src'
   import IsFetching from './IsMutating.svelte'
 </script>
 

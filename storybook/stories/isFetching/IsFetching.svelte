@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Query, IsFetching } from '../../src'
-  import type { UseQueryResult } from '../../src'
-  import { useIsFetching } from '../../src/isFetching'
+  import { Query, IsFetching } from '../../../src'
+  import type { UseQueryResult } from '../../../src'
+  import { useIsFetching } from '../../../src/isFetching'
 
   const later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Queries } from '../../src'
-  import { useQueries } from '../../src/queries'
+  import { Queries } from '../../../src'
+  import { useQueries } from '../../../src/queries'
 
   const later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))

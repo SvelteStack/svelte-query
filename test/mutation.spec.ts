@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, waitFor } from "@testing-library/svelte";
 
-import Mutation from "../stories/mutation/App.svelte";
+import Mutation from "../storybook/stories/mutation/App.svelte";
 
 describe("Mutation", () => {
   it("should return a response on mutate", async () => {
