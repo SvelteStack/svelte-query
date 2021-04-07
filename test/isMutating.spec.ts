@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, waitFor, screen } from "@testing-library/svelte";
 
-import IsMutating from "../stories/isMutating/App.svelte";
+import IsMutating from "../storybook/stories/isMutating/App.svelte";
 
 describe("IsMutating", () => {
   it("should render the mutating history", async () => {

@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, waitFor } from "@testing-library/svelte";
 
-import Hydration from "../stories/hydration/App.svelte";
+import Hydration from "../storybook/stories/hydration/App.svelte";
 
 describe("Hydration", () => {
     it("should render the first query with the cached data", async () => {

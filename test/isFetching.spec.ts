@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, waitFor } from "@testing-library/svelte";
 
-import IsFetching from "../stories/isFetching/App.svelte";
+import IsFetching from "../storybook/stories/isFetching/App.svelte";
 
 describe("IsFetching", () => {
   it("should render the fetching history", async () => {
