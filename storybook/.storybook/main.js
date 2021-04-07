@@ -1,3 +1,6 @@
+const sveltePreprocess = require("svelte-preprocess");
+const path = require("path");
+
 module.exports = {
   "stories": [
     "../stories/**/*.stories.mdx",
@@ -7,19 +10,21 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials"
   ],
+
+  // From https://github.com/storybookjs/storybook/blob/master/examples/svelte-kitchen-sink/.storybook/main.js
+  svelteOptions: {
+    preprocess: sveltePreprocess(),
+  },
   webpackFinal: async (config) => {
-    const svelteLoaderIndex = config.module.rules.findIndex(rule => rule.loader && rule.loader.includes('svelte-loader'));
-    // include svelte-preprocess (must be detected by the storybook project)
-    config.module.rules[svelteLoaderIndex] = {
-      test: /\.(svelte|html)$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'svelte-loader',
-        options: {
-          preprocess: require('svelte-preprocess')({})
-        },
-      },
-    };
+    config.module.rules.push({
+      test: [/\.stories\.js$/, /index\.js$/],
+      use: [require.resolve("@storybook/source-loader")],
+      include: [path.resolve(__dirname, "../src")],
+      enforce: "pre",
+    });
     return config;
-  }
+  },
+  core: {
+    builder: "webpack4",
+  },
 }

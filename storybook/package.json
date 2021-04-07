@@ -7,10 +7,10 @@
         "build": "build-storybook"
     },
     "devDependencies": {
-        "@storybook/addon-actions": "^6.2.4",
-        "@storybook/addon-essentials": "^6.2.4",
-        "@storybook/addon-links": "^6.2.4",
-        "@storybook/addons": "^6.2.4",
+        "@storybook/addon-actions": "^6.2.5",
+        "@storybook/addon-essentials": "^6.2.5",
+        "@storybook/addon-links": "^6.2.5",
+        "@storybook/addons": "^6.2.5",
         "@storybook/svelte": "^6.2.4",
         "svelte-loader": "^3.1.0",
         "svelte-preprocess": "^4.7.0"
