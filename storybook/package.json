@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "license": "MIT",
     "scripts": {
-        "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "start": "start-storybook -p 6006",
+        "build": "build-storybook"
     },
     "devDependencies": {
         "@storybook/addon-actions": "^6.2.4",
