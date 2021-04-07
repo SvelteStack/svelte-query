@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Query, useQueryClient } from '../../../src'
+  import { Query, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
 

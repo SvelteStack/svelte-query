@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Mutation, Query, useQueryClient } from '../../../src'
+  import { Mutation, Query, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
 

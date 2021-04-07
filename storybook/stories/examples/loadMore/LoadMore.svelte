@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios, { AxiosError } from 'axios'
-  import { UseInfiniteQueryOptions, useInfiniteQuery } from '../../../src'
+  import { UseInfiniteQueryOptions, useInfiniteQuery } from '../../../../src'
 
   const endPoint = 'https://s8dfj.sse.codesandbox.io/api'
 

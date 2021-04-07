@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios, { AxiosError } from 'axios'
-  import { useQuery, useQueryClient } from '../../../src'
+  import { useQuery, useQueryClient } from '../../../../src'
 
   export let setPostId
 

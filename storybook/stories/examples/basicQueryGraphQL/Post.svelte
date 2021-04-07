@@ -1,6 +1,6 @@
 <script lang="ts">
   import { request, gql } from 'graphql-request'
-  import { useQuery } from '../../../src'
+  import { useQuery } from '../../../../src'
 
   export let postId
   export let setPostId
