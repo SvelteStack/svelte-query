@@ -78,5 +78,13 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
         }
     }
 
-    return { subscribe, setOptions }
+    function updateOptions(options: Partial<UseQueryOptions<TQueryFnData, TError, TData>>): void {
+        observer.setOptions({ ...observer.options, ...options })
+    }
+
+    function setEnabled(enabled: boolean): void {
+        updateOptions({ enabled })
+    }
+
+    return { subscribe, setOptions, updateOptions, setEnabled }
 }

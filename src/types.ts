@@ -16,11 +16,13 @@ export interface UseQueryStoreResult<
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey
   > extends Readable<UseQueryResult<TData, TError>> {
+  setEnabled(enabled: boolean): void
   setOptions: {
     (options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
     (queryKey: TQueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
     (queryKey: TQueryKey, queryFn: QueryFunction<TQueryFnData, TQueryKey>, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
   }
+  updateOptions(options: Partial<UseQueryOptions<TQueryFnData, TError, TData>>): void
 }
 
 // use options.infinite = true for infinite Query
@@ -46,11 +48,13 @@ export interface UseInfiniteQueryStoreResult<
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey
   > extends Readable<UseInfiniteQueryResult<TData, TError>> {
+  setEnabled(enabled: boolean): void
   setOptions: {
     (options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
     (queryKey: TQueryKey, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
     (queryKey: TQueryKey, queryFn: QueryFunction<TQueryFnData, TQueryKey>, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
   }
+  updateOptions(options: Partial<UseInfiniteQueryOptions<TQueryFnData, TError, TData>>): void
 }
 
 export interface UseInfiniteQueryOptions<
