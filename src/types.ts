@@ -13,12 +13,13 @@ import { RetryDelayValue, RetryValue } from "./queryCore/core/retryer";
 export interface UseQueryStoreResult<
   TQueryFnData = unknown,
   TError = unknown,
-  TData = TQueryFnData
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
   > extends Readable<UseQueryResult<TData, TError>> {
   setOptions: {
-    (options: UseQueryOptions<TQueryFnData, TError, TData>): any;
-    (queryKey: QueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData>): any;
-    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData>, options?: UseQueryOptions<TQueryFnData, TError, TData>): any;
+    (options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
+    (queryKey: TQueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
+    (queryKey: TQueryKey, queryFn: QueryFunction<TQueryFnData, TQueryKey>, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): any;
   }
 }
 
@@ -27,21 +28,28 @@ export interface UseQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryData = TQueryFnData
-  > extends QueryObserverOptions<TQueryFnData, TError, TData, TQueryData> { }
+  TQueryKey extends QueryKey = QueryKey
+  >
+  extends QueryObserverOptions<
+  TQueryFnData,
+  TError,
+  TData,
+  TQueryFnData,
+  TQueryKey
+  > { }
 
 export type UseQueryResult<TData = unknown, TError = unknown> = QueryObserverResult<TData, TError>
 
-
 export interface UseInfiniteQueryStoreResult<
-TQueryFnData = unknown,
-TError = unknown,
-TData = TQueryFnData,
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
   > extends Readable<UseInfiniteQueryResult<TData, TError>> {
   setOptions: {
-    (options: UseInfiniteQueryOptions<TQueryFnData, TError, TData>): any;
-    (queryKey: QueryKey, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>): any;
-    (queryKey: QueryKey, queryFn: QueryFunction<TQueryFnData>, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>): any;
+    (options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
+    (queryKey: TQueryKey, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
+    (queryKey: TQueryKey, queryFn: QueryFunction<TQueryFnData, TQueryKey>, options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>): any;
   }
 }
 
@@ -49,14 +57,17 @@ export interface UseInfiniteQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryData = TQueryFnData
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
   >
   extends InfiniteQueryObserverOptions<
   TQueryFnData,
   TError,
   TData,
-  TQueryData
+  TQueryData,
+  TQueryKey
   > { }
+
 
 export type UseInfiniteQueryResult<TData = unknown, TError = unknown> = InfiniteQueryObserverResult<TData, TError>
 

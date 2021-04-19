@@ -12,38 +12,41 @@ export function useInfiniteQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(
-        options: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
-    ): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData>
+    TQueryKey extends QueryKey = QueryKey
+>(
+    options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useInfiniteQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(
-        queryKey: QueryKey,
-        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
-    ): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData>
+    TQueryKey extends QueryKey = QueryKey
+>(
+    queryKey: TQueryKey,
+    options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useInfiniteQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(
-        queryKey: QueryKey,
-        queryFn: QueryFunction<TQueryFnData>,
-        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
-    ): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData>
-export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnData>(
-    arg1: QueryKey | UseInfiniteQueryOptions<TQueryFnData, TError, TData>,
+    TQueryKey extends QueryKey = QueryKey
+>(
+    queryKey: TQueryKey,
+    queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+    options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
+export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(
+    arg1: TQueryKey | UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
     arg2?:
-        | QueryFunction<TQueryFnData>
-        | UseInfiniteQueryOptions<TQueryFnData, TError, TData>,
-    arg3?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
-): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData> {
+        | QueryFunction<TQueryFnData, TQueryKey>
+        | UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
+    arg3?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey> {
     const options = parseQueryArgs(arg1, arg2, arg3)
     const client: QueryClient = useQueryClient()
     let defaultedOptions = client.defaultQueryObserverOptions(options)
     // Include callbacks in batch renders
-    defaultedOptions = setBatchCalls<UseInfiniteQueryOptions<TQueryFnData, TError, TData>>(defaultedOptions)
+    defaultedOptions = setBatchCalls<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>(defaultedOptions)
     const observer = new InfiniteQueryObserver<TQueryFnData, TError, TData>(client, defaultedOptions)
 
     const { subscribe } = readable(observer.getCurrentResult(), set => {
@@ -53,28 +56,28 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
     // between creating the observer and subscribing to it.
     observer.updateResult()
 
-    function setOptions(options: UseInfiniteQueryOptions<TQueryFnData, TError, TData>)
+    function setOptions(options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>)
     function setOptions(
-        queryKey: QueryKey,
-        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
+        queryKey: TQueryKey,
+        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
     )
     function setOptions(
-        queryKey: QueryKey,
-        queryFn: QueryFunction<TQueryFnData>,
-        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
+        queryKey: TQueryKey,
+        queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+        options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
     )
     function setOptions(
-        arg1: QueryKey | UseInfiniteQueryOptions<TQueryFnData, TError, TData>,
+        arg1: TQueryKey | UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
         arg2?:
-            | QueryFunction<TQueryFnData>
-            | UseInfiniteQueryOptions<TQueryFnData, TError, TData>,
-        arg3?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>
+            | QueryFunction<TQueryFnData, TQueryKey>
+            | UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
+        arg3?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
     ) {
         if (observer.hasListeners()) {
             const options = parseQueryArgs(arg1, arg2, arg3)
             let defaultedOptions = client.defaultQueryObserverOptions(options)
             // Include callbacks in batch renders
-            defaultedOptions = setBatchCalls<UseInfiniteQueryOptions<TQueryFnData, TError, TData>>(defaultedOptions)
+            defaultedOptions = setBatchCalls<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>(defaultedOptions)
             observer.setOptions(defaultedOptions)
         }
     }

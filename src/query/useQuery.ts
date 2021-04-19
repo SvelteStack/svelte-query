@@ -12,34 +12,37 @@ export function useQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(options: UseQueryOptions<TQueryFnData, TError, TData>): UseQueryStoreResult<TQueryFnData, TError, TData>
+    TQueryKey extends QueryKey = QueryKey
+>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(queryKey: QueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData>): UseQueryStoreResult<TQueryFnData, TError, TData>
+    TQueryKey extends QueryKey = QueryKey
+>(queryKey: TQueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useQuery<
     TQueryFnData = unknown,
     TError = unknown,
     TData = TQueryFnData,
-    >(
-        queryKey: QueryKey,
-        queryFn: QueryFunction<TQueryFnData>,
-        options?: UseQueryOptions<TQueryFnData, TError, TData>
-    ): UseQueryStoreResult<TQueryFnData, TError, TData>
-export default function useQuery<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData>(
-    arg1: QueryKey | UseQueryOptions<TQueryFnData, TError, TData>,
+    TQueryKey extends QueryKey = QueryKey
+>(
+    queryKey: TQueryKey,
+    queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+    options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
+export default function useQuery<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(
+    arg1: TQueryKey | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     arg2?:
-        | QueryFunction<TQueryFnData>
-        | UseQueryOptions<TQueryFnData, TError, TData>,
-    arg3?: UseQueryOptions<TQueryFnData, TError, TData>
-): UseQueryStoreResult<TQueryFnData, TError, TData> {
+        | QueryFunction<TQueryFnData, TQueryKey>
+        | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    arg3?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey> {
     const options = parseQueryArgs(arg1, arg2, arg3)
     const client: QueryClient = useQueryClient()
     let defaultedOptions = client.defaultQueryObserverOptions(options)
     // Include callbacks in batch renders
-    defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData>>(defaultedOptions)
-    const observer = new QueryObserver<TQueryFnData, TError, TData>(client, defaultedOptions)
+    defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>(defaultedOptions)
+    const observer = new QueryObserver<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>(client, defaultedOptions)
 
     const { subscribe } = readable(observer.getCurrentResult(), set => {
         return observer.subscribe(notifyManager.batchCalls(set))
@@ -49,27 +52,27 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
     // between creating the observer and subscribing to it.
     observer.updateResult()
 
-    function setOptions(options: UseQueryOptions<TQueryFnData, TError, TData>)
+    function setOptions(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>)
     function setOptions(
-        queryKey: QueryKey,
-        options?: UseQueryOptions<TQueryFnData, TError, TData>
+        queryKey: TQueryKey,
+        options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
     )
     function setOptions(
-        queryKey: QueryKey,
-        queryFn: QueryFunction<TQueryFnData>,
-        options?: UseQueryOptions<TQueryFnData, TError, TData>
+        queryKey: TQueryKey,
+        queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+        options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
     )
     function setOptions(
-        arg1: QueryKey | UseQueryOptions<TQueryFnData, TError, TData>,
+        arg1: TQueryKey | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
         arg2?:
-            | QueryFunction<TQueryFnData>
-            | UseQueryOptions<TQueryFnData, TError, TData>,
-        arg3?: UseQueryOptions<TQueryFnData, TError, TData>
+            | QueryFunction<TQueryFnData, TQueryKey>
+            | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+        arg3?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
     ) {
         const options = parseQueryArgs(arg1, arg2, arg3)
         let defaultedOptions = client.defaultQueryObserverOptions(options)
         // Include callbacks in batch renders
-        defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData>>(defaultedOptions)
+        defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>(defaultedOptions)
         if (observer.hasListeners()) {
             observer.setOptions(defaultedOptions)
         }

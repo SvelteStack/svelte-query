@@ -5,9 +5,10 @@ import type { QueryFilters } from './utils'
 
 export type QueryKey = string | readonly unknown[]
 
-export type QueryFunction<T = unknown> = (
-  context: QueryFunctionContext<any>
-) => T | Promise<T>
+export type QueryFunction<
+  T = unknown,
+  TQueryKey extends QueryKey = QueryKey
+> = (context: QueryFunctionContext<TQueryKey>) => T | Promise<T>
 
 export interface QueryFunctionContext<
   TQueryKey extends QueryKey = QueryKey,
@@ -23,7 +24,9 @@ export type InitialStaleFunction = () => boolean
 
 export type PlaceholderDataFunction<TResult> = () => TResult | undefined
 
-export type QueryKeyHashFunction = (queryKey: QueryKey) => string
+export type QueryKeyHashFunction<TQueryKey extends QueryKey> = (
+  queryKey: TQueryKey
+) => string
 
 export type GetPreviousPageParamFunction<TQueryFnData = unknown> = (
   firstPage: TQueryFnData,
@@ -43,7 +46,8 @@ export interface InfiniteData<TData> {
 export interface QueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
-  TData = TQueryFnData
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
 > {
   /**
    * If `false`, failed queries will not retry by default.
@@ -55,10 +59,10 @@ export interface QueryOptions<
   retryDelay?: RetryDelayValue<TError>
   cacheTime?: number
   isDataEqual?: (oldData: TData | undefined, newData: TData) => boolean
-  queryFn?: QueryFunction<TQueryFnData>
+  queryFn?: QueryFunction<TQueryFnData, TQueryKey>
   queryHash?: string
-  queryKey?: QueryKey
-  queryKeyHashFn?: QueryKeyHashFunction
+  queryKey?: TQueryKey
+  queryKeyHashFn?: QueryKeyHashFunction<TQueryKey>
   initialData?: TData | InitialDataFunction<TData>
   initialDataUpdatedAt?: number | (() => number | undefined)
   behavior?: QueryBehavior<TQueryFnData, TError, TData>
@@ -84,8 +88,9 @@ export interface QueryObserverOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryData = TQueryFnData
-> extends QueryOptions<TQueryFnData, TError, TData> {
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
+> extends QueryOptions<TQueryFnData, TError, TQueryData, TQueryKey> {
   /**
    * Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
    * To refetch the query, use the `refetch` method returned from the `useQuery` instance.
@@ -191,20 +196,23 @@ export interface InfiniteQueryObserverOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryData = TQueryFnData
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
 >
   extends QueryObserverOptions<
     TQueryFnData,
     TError,
     InfiniteData<TData>,
-    InfiniteData<TQueryData>
+    InfiniteData<TQueryData>,
+    TQueryKey
   > {}
 
 export interface FetchQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
-  TData = TQueryFnData
-> extends QueryOptions<TQueryFnData, TError, TData> {
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
+> extends QueryOptions<TQueryFnData, TError, TData, TQueryKey> {
   /**
    * The time in milliseconds after data is considered stale.
    * If the data is fresh it will be returned from the cache.
@@ -215,8 +223,9 @@ export interface FetchQueryOptions<
 export interface FetchInfiniteQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
-  TData = TQueryFnData
-> extends FetchQueryOptions<TQueryFnData, TError, InfiniteData<TData>> {}
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey
+> extends FetchQueryOptions<TQueryFnData, TError, InfiniteData<TData>, TQueryKey> {}
 
 export interface ResultOptions {
   throwOnError?: boolean
@@ -465,7 +474,7 @@ export interface MutationOptions<
   mutationFn?: MutationFunction<TData, TVariables>
   mutationKey?: MutationKey
   variables?: TVariables
-  onMutate?: (variables: TVariables) => Promise<TContext> | TContext
+  onMutate?: (variables: TVariables) => Promise<TContext> | Promise<undefined> | TContext | undefined
   onSuccess?: (
     data: TData,
     variables: TVariables,
