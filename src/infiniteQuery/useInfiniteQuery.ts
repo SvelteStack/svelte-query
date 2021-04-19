@@ -82,7 +82,7 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
         }
     }
 
-    function updateOptions(options: Partial<UseInfiniteQueryOptions<TQueryFnData, TError, TData>>): void {
+    function updateOptions(options: Partial<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>): void {
         observer.setOptions({ ...observer.options, ...options })
     }
 
