@@ -2047,13 +2047,13 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-broadcast-channel@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.5.3.tgz#c75c39d923ae8af6284a893bfdc8bd3996d2dd2d"
-  integrity sha512-OLOXfwReZa2AAAh9yOUyiALB3YxBe0QpThwwuyRHLgpl8bSznSDmV6Mz7LeBJg1VZsMcDcNMy7B53w12qHrIhQ==
+broadcast-channel@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.6.0.tgz#7843ffd86529be300dd1d03668a35301626ed03f"
+  integrity sha512-0x87tKJULniTOfECZP/LCsqWyMEbz0Oa+4yJ4i5dosOMxWUjx6mZ6nt9QmD2ox0r3MaCPojHrTQ2dj4ASZupeA==
   dependencies:
     "@babel/runtime" "^7.7.2"
-    detect-node "^2.0.4"
+    detect-node "^2.1.0"
     js-sha3 "0.8.0"
     microseconds "0.2.0"
     nano-time "1.0.0"
@@ -2577,6 +2577,11 @@ detect-node@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
+
+detect-node@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
+  integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
 diff-sequences@^26.6.2:
   version "26.6.2"
