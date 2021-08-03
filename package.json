@@ -87,7 +87,7 @@
     "react-query"
   ],
   "dependencies": {
-    "broadcast-channel": "^3.6.0"
+    "broadcast-channel": "^4.2.0"
   },
   "husky": {
     "hooks": {
