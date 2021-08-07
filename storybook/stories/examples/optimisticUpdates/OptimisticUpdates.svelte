@@ -1,46 +1,48 @@
 <script lang="ts">
   import axios from 'axios'
+  import { writable } from 'svelte/store'
   import { useMutation, useQuery, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
 
   const client = useQueryClient()
 
-  let text
+  let text = ''
 
   // Query
-  const fetchTodos = async () => {
+  const queryResult = useQuery('todos', async () => {
     const { data } = await axios.get(endPoint)
     return data
-  }
-
-  const queryResult = useQuery("todos", fetchTodos);
+  })
 
   // Mutation
-  const addTodo = text => axios.post(endPoint, { text })
+  const addTodoMutation = useMutation(
+    'mutation',
+    text => axios.post(endPoint, { text }),
+    {
+      onMutate: async todo => {
+        text = ''
+        client.cancelQueries('todos')
 
-  const mutationResult = useMutation("mutation", addTodo, {
-    onMutate: todo => {
-      text = ''
-      client.cancelQueries('todos')
+        const previousValue = client.getQueryData('todos')
 
-      const previousValue = client.getQueryData('todos')
+        client.setQueryData('todos', (old: any) => ({
+          ...old,
+          items: [...old.items, todo],
+        }))
 
-      client.setQueryData('todos', (old: any) => ({
-        ...old,
-        items: [...old.items, todo],
-      }))
-
-      return previousValue
-    },
-    // On failure, roll back to the previous value
-    onError: (err, variables, { data }) =>
-      client.setQueryData('todos', data),
-    // After success or failure, refetch the todos query
-    onSettled: () => {
-      client.invalidateQueries('todos')
-    },
-  });
+        return previousValue
+      },
+      // On failure, roll back to the previous value
+      onError: (err, variables, previousValue) => {
+        client.setQueryData('todos', previousValue)
+      },
+      // After success or failure, refetch the todos query
+      onSettled: () => {
+        client.invalidateQueries('todos')
+      },
+    }
+  )
 </script>
 
 <p>
@@ -51,16 +53,14 @@
   of items is restored and the list is again refetched from the server.
 </p>
 
-
 <div>
   <form
-    on:submit={e => {
-      e.preventDefault()
-      e.stopPropagation()
-      $mutationResult.mutate(text)
-    }}>
+    on:submit|preventDefault={e => {
+      $addTodoMutation.mutate(text)
+    }}
+  >
     <input type="text" bind:value={text} />
-    <button>Create</button>
+    <button>{$addTodoMutation.isLoading ? 'Creating...' : 'Create'}</button>
   </form>
 </div>
 

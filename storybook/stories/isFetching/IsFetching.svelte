@@ -9,8 +9,8 @@
   // the query fn 2
   const queryFn2 = () => later(500, 'My Data 2')
 
-  const queryResult = useQuery("myQuery", queryFn);
-  const queryResult2 = useQuery("myQuery2", queryFn2);
+  const queryResult = useQuery('myQuery', queryFn)
+  const queryResult2 = useQuery('myQuery2', queryFn2)
 
   // useIsFetching
   const isFetching = useIsFetching()
@@ -31,7 +31,8 @@
         on:click={() => {
           $queryResult.refetch()
           $queryResult2.refetch()
-        }}>
+        }}
+      >
         refetch All
       </button>
 
@@ -52,7 +53,8 @@
         {:else}
           <p>{$queryResult2.data}</p>
         {/if}
-        <button on:click={() => $queryResult2.refetch()}>refetch Query 2</button>
+        <button on:click={() => $queryResult2.refetch()}>refetch Query 2</button
+        >
       </div>
     </div>
   </div>

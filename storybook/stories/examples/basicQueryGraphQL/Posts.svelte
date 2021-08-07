@@ -2,7 +2,7 @@
   import { request, gql } from 'graphql-request'
   import { useQuery, useQueryClient } from '../../../../src'
 
-  export let setPostId
+  export let setPostId: any
 
   const client = useQueryClient()
   const endpoint = 'https://graphqlzero.almansi.me/api'
@@ -45,10 +45,10 @@
               on:click={() => setPostId(post.id)}
               style={// We can use the queryCache here to show bold links for
               // ones that are cached
-              client.getQueryData([
-                'post',
-                post.id,
-              ]) ? 'color: green; font-weight: bold; cursor: pointer;' : 'cursor: pointer;'}>
+              client.getQueryData(['post', post.id])
+                ? 'color: green; font-weight: bold; cursor: pointer;'
+                : 'cursor: pointer;'}
+            >
               {post.title}
             </span>
           </p>

@@ -3,23 +3,23 @@
   import { useQuery } from '../../../../src'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
-  
-	// if the api (like in this example) just have a simple numeric pagination
-  let page = 0;
+
+  // if the api (like in this example) just have a simple numeric pagination
+  let page = 0
 
   const setPage = (newPage: number) => {
     page = newPage
   }
 
-  const fetchProjects = async (page) => {
+  const fetchProjects = async page => {
     const { data } = await axios.get(`${endPoint}/projects?page=${page}`)
     return data
   }
 
-  const queryResult = useQuery(["projects", page], () => fetchProjects(page))
+  const queryResult = useQuery(['projects', page], () => fetchProjects(page))
 
   $: {
-    $queryResult.refetch({ page });
+    $queryResult.refetch({ page })
   }
 </script>
 
@@ -45,18 +45,22 @@
     <span>Current Page: {page + 1}</span>
     <button
       on:click={() => {
-        setPage(Math.max(page - 1, 0));
+        setPage(Math.max(page - 1, 0))
       }}
-      disabled={page === 0}>
+      disabled={page === 0}
+    >
       Previous Page
     </button>
     <button
       on:click={() => {
         // Here, we use `latestData` so the Next Page
         // button isn't relying on potentially old data
-        setPage($queryResult.data && !$queryResult.data.hasMore ? page : page + 1);
+        setPage(
+          $queryResult.data && !$queryResult.data.hasMore ? page : page + 1
+        )
       }}
-      disabled={$queryResult.data && !$queryResult.data.hasMore}>
+      disabled={$queryResult.data && !$queryResult.data.hasMore}
+    >
       Next Page
     </button>
   {/if}

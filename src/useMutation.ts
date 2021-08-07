@@ -1,22 +1,21 @@
-import {
-  MutationObserver,
-  MutationObserverResult,
-  notifyManager,
-} from 'react-query/core'
-import type { MutationFunction, MutationKey } from 'react-query/types/core'
+import { MutationObserver } from 'react-query/core'
 import type {
-  UseMutateFunction,
+  MutationFunction,
+  MutationKey,
+  MutationObserverResult,
+} from 'react-query/types/core'
+import type {
   UseMutationOptions,
-  UseMutationResult,
+  UseMutateFunction,
+  UseMutateAsyncFunction,
 } from 'react-query/types/react/types'
-import type { Readable } from 'svelte/store'
-import { readable } from 'svelte/store'
+import { Readable, writable } from 'svelte/store'
 import { useQueryClient } from './useQueryClient'
 import { noop, parseMutationArgs } from './utils'
 
 type MutationResult<TData, TError, TVariables, TContext> = Omit<
   MutationObserverResult<TData, TError, TVariables, TContext>,
-  'mutate'
+  'mutate' | 'mutateAsyc'
 >
 
 export type UseMutationReturnType<
@@ -25,9 +24,12 @@ export type UseMutationReturnType<
   TVariables,
   TContext,
   Result = MutationResult<TData, TError, TVariables, TContext>
-> = Readable<Readonly<Result>> & {
-  mutate: UseMutateFunction<TData, TError, TVariables, TContext>
-}
+> = Readable<
+  Result & {
+    mutate: UseMutateFunction<TData, TError, TVariables, TContext>
+    mutateAsync: UseMutateAsyncFunction<TData, TError, TVariables, TContext>
+  }
+>
 
 export function useMutation<
   TData = unknown,
@@ -82,44 +84,29 @@ export function useMutation<
 ): UseMutationReturnType<TData, TError, TVariables, TContext> {
   const options = parseMutationArgs(arg1, arg2, arg3)
   const queryClient = useQueryClient()
-  const observer = new MutationObserver(queryClient, options)
+  const observer = new MutationObserver<TData, TError, TVariables, TContext>(
+    queryClient,
+    options
+  )
 
-  /**  */
+  const currentResult = observer.getCurrentResult()
+
+  const state = writable(currentResult)
+
+  observer.subscribe(() => {
+    state.set(observer.getCurrentResult())
+  })
+
   const mutate: UseMutateFunction<TData, TError, TVariables, TContext> = (
     variables,
-    mutateOptions
+    mutateOptions = {}
   ) => {
     observer.mutate(variables, mutateOptions).catch(noop)
   }
-  const initialResult = observer.getCurrentResult()
-  const initialMutationResult: UseMutationResult<
-    TData,
-    TError,
-    TVariables,
-    TContext
-  > = {
-    ...initialResult,
-    mutate,
-    mutateAsync: initialResult.mutate,
-  }
-
-  const store = readable(initialMutationResult, set => {
-    return observer.subscribe(
-      notifyManager.batchCalls(
-        (
-          result: MutationObserverResult<TData, TError, TVariables, TContext>
-        ) => {
-          // Check if the component is still mounted
-          if (observer.hasListeners()) {
-            set({ ...result, mutate, mutateAsync: result.mutate })
-          }
-        }
-      )
-    )
-  })
 
   return {
-    ...store,
+    ...state,
     mutate,
+    mutateAsync: currentResult.mutate,
   }
 }

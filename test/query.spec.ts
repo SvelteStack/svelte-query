@@ -13,6 +13,6 @@ describe("Query", () => {
     await waitFor(() => getAllByText("Query 2 loading..."));
     await waitFor(() => getAllByText("My Data"));
     // doesnt seem to work/wait long enough. Dependent loading works though...
-    // await waitFor(() => getAllByText("My Data 2"));
+    await waitFor(() => getAllByText("My Data 2"));
   });
 });

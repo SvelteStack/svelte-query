@@ -28,7 +28,8 @@
     on:click={() => {
       $queriesStore[0].refetch()
       $queriesStore[1].refetch()
-    }}>
+    }}
+  >
     refetch All
   </button>
 

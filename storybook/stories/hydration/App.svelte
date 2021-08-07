@@ -15,10 +15,10 @@
         cacheTime: 2000,
       },
     ],
-    mutations: []
+    mutations: [],
   }
 
-  useHydrate(state);
+  useHydrate(state as any)
 </script>
 
 <Hydration />

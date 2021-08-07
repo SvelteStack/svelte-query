@@ -3,7 +3,7 @@
   import Posts from './Posts.svelte'
 
   let postId = -1
-  
+
   const setPostId = (id: number) => {
     postId = id
   }

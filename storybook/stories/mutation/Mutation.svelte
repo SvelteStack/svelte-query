@@ -11,5 +11,7 @@
 <main>
   <h3>useMutation</h3>
   <button on:click={() => $mutationResult.mutate()}>mutate</button>
-  {$mutationResult.isLoading ? 'useMutation loading ...' : $mutationResult.data || ''}
+  {$mutationResult.isLoading
+    ? 'useMutation loading ...'
+    : $mutationResult.data || ''}
 </main>

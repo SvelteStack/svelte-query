@@ -14,9 +14,13 @@
     return data
   }
 
-  const queryResult = useInfiniteQuery<Data, AxiosError>("projects", fetchProjects, {
-    getNextPageParam: lastGroup => lastGroup.nextId || undefined,
-  })
+  const queryResult = useInfiniteQuery<Data, AxiosError>(
+    'projects',
+    fetchProjects,
+    {
+      getNextPageParam: lastGroup => lastGroup.nextId || undefined,
+    }
+  )
 </script>
 
 <h1>Infinite Loading</h1>
@@ -29,7 +33,8 @@
     {#each $queryResult.data.pages as page}
       {#each page.data as project}
         <p
-          style="border: 1px solid gray; border-radius: 5px; padding: 10rem 1rem">
+          style="border: 1px solid gray; border-radius: 5px; padding: 10rem 1rem"
+        >
           {project.name}
         </p>
       {/each}
@@ -38,7 +43,8 @@
   <div>
     <button
       on:click={() => $queryResult.fetchNextPage()}
-      disabled={!$queryResult.hasNextPage || $queryResult.isFetchingNextPage}>
+      disabled={!$queryResult.hasNextPage || $queryResult.isFetchingNextPage}
+    >
       {#if $queryResult.isFetching}
         Loading more...
       {:else if $queryResult.hasNextPage}

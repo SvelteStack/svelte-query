@@ -1,16 +1,28 @@
-import type { DefaultOptions } from 'react-query/core'
-import { MutationCache, QueryCache, QueryClient } from 'react-query/core'
+import { QueryClient } from 'react-query/core'
+import { writable, get } from 'svelte/store'
 
-// Props with default values
-export const queryCache = new QueryCache()
-export const mutationCache = new MutationCache()
-export const defaultOptions: DefaultOptions = {}
-export const client = new QueryClient({
-  queryCache,
-  mutationCache,
-  defaultOptions,
-})
+let client = new QueryClient()
 
 client.mount()
 
-export const queryClient = client
+const clientStore = writable(client, () => {
+  return client.unmount()
+})
+
+export const resetClientStore = (queryclient?: QueryClient) => {
+  console.log('STORE RESET')
+  const client = queryclient || new QueryClient()
+
+  client.getQueryCache().clear()
+  client.getMutationCache().clear()
+
+  clientStore.set(client)
+
+  client.mount()
+
+  return client
+}
+
+export const queryClient = clientStore
+
+export default clientStore

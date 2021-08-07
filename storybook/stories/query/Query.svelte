@@ -10,24 +10,32 @@
   const queryFn2 = () => later(500, 'My Data 2')
 
   const queryResult = useQuery<string>('myQuery', { queryFn })
-  const queryResult2 = useQuery<string>('myQuery2', { queryFn: queryFn2, enabled: !!$queryResult.data })
+  const queryResult2 = useQuery<string>('myQuery2', {
+    queryFn: queryFn2,
+    enabled: !!$queryResult.data,
+  })
+
+  $: queryResult2.updateOptions({
+    enabled: !!$queryResult.data,
+  })
 </script>
 
 <main>
   <h3>Query with useQuery</h3>
-  {#if $queryResult.isFetched !== true}
+  {#if $queryResult.isLoading === true}
     <p>Query loading...</p>
   {:else}
     <p>{$queryResult.data}</p>
   {/if}
 
   <h3>Query 2 depend on Query</h3>
-    <div>
-      {#if $queryResult2.isFetched !== true}
-        <p>Query 2 loading...</p>
-      {:else}
-        <p>{$queryResult2.data}</p>
-      {/if}
-      <button on:click={() => $queryResult2.refetch()}>refetch Query</button>
-    </div>
+  <div>
+    {#if $queryResult2.isIdle === true}
+      <p>Query 2 idle...</p>
+    {:else if $queryResult2.isLoading === true}
+      <p>Query 2 loading...</p>
+    {:else}
+      <p>{$queryResult2.data}</p>
+    {/if}
+  </div>
 </main>
