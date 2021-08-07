@@ -1,11 +1,12 @@
-import { useQueryClient } from "../queryClientProvider";
-import { DehydratedState, hydrate } from '../queryCore/hydration';
-import type { QueryClient } from "../queryCore/core";
-import type { HydrateOptions } from '../queryCore/hydration';
+import { useQueryClient } from '../useQueryClient'
+import { hydrate } from './hydration'
+import type { QueryClient } from 'react-query/core'
+import type { DehydratedState, HydrateOptions } from './hydration'
 
-export default function useHydrate(state: DehydratedState, options?: HydrateOptions) {
-    const client: QueryClient = useQueryClient();
-    if (state) {
-        hydrate(client, state, options)
-    }
+export function useHydrate(state: DehydratedState, options?: HydrateOptions) {
+  const client: QueryClient = useQueryClient()
+
+  if (state) {
+    hydrate(client, state, options)
+  }
 }

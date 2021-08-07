@@ -7,12 +7,15 @@
         "build": "build-storybook"
     },
     "devDependencies": {
-        "@storybook/addon-actions": "^6.2.5",
-        "@storybook/addon-essentials": "^6.2.5",
-        "@storybook/addon-links": "^6.2.5",
-        "@storybook/addons": "^6.2.5",
-        "@storybook/svelte": "^6.2.4",
-        "svelte-loader": "^3.1.0",
-        "svelte-preprocess": "^4.7.0"
+        "@storybook/addon-actions": "^6.3.6",
+        "@storybook/addon-essentials": "^6.3.6",
+        "@storybook/addon-links": "^6.3.6",
+        "@storybook/addons": "^6.3.6",
+        "@storybook/svelte": "^6.3.6",
+        "axios": "^0.21.1",
+        "graphql": "^15.5.1",
+        "graphql-request": "^3.5.0",
+        "svelte-loader": "^3.1.2",
+        "svelte-preprocess": "^4.7.4"
     }
 }

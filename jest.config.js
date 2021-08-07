@@ -1,19 +1,19 @@
 module.exports = {
   testEnvironment: "jsdom",
-  transform: {
-    '^.+\\.svelte$': [
-      'svelte-jester',
+  "transform": {
+    "^.+\\.svelte$": [
+      "svelte-jester",
       {
-        'preprocess': true
+        "preprocess": true
       }
     ],
-    '^.+\\.ts$': [
-      'ts-jest',
-      {
-        'tsConfig': 'tsconfig.test.json'
-      }
+    "^.+\\.([t|j]s)$": [
+      "esbuild-jest"
     ]
   },
-  moduleFileExtensions: ['js', 'ts', 'svelte'],
-  moduleDirectories: ['node_modules', 'src']
+  "moduleFileExtensions": [
+    "js",
+    "ts",
+    "svelte"
+  ]
 }

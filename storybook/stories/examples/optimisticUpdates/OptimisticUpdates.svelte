@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from 'axios'
-  import { Mutation, Query, useQueryClient } from '../../../../src'
+  import { useMutation, useQuery, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
 
@@ -13,14 +13,13 @@
     const { data } = await axios.get(endPoint)
     return data
   }
-  const queryOptions = {
-    queryKey: 'todos',
-    queryFn: fetchTodos,
-  }
+
+  const queryResult = useQuery("todos", fetchTodos);
 
   // Mutation
-  $: addTodo = text => axios.post(endPoint, { text })
-  const mutationOptions = {
+  const addTodo = text => axios.post(endPoint, { text })
+
+  const mutationResult = useMutation("mutation", addTodo, {
     onMutate: todo => {
       text = ''
       client.cancelQueries('todos')
@@ -35,13 +34,13 @@
       return previousValue
     },
     // On failure, roll back to the previous value
-    onError: (err, variables, previousValue) =>
-      client.setQueryData('todos', previousValue),
+    onError: (err, variables, { data }) =>
+      client.setQueryData('todos', data),
     // After success or failure, refetch the todos query
     onSettled: () => {
       client.invalidateQueries('todos')
     },
-  }
+  });
 </script>
 
 <p>
@@ -52,37 +51,35 @@
   of items is restored and the list is again refetched from the server.
 </p>
 
-<Mutation mutationFn={addTodo} options={mutationOptions}>
-  <div slot="mutation" let:mutationResult>
-    <form
-      on:submit={e => {
-        e.preventDefault()
-        e.stopPropagation()
-        mutationResult.mutate(text)
-      }}>
-      <input type="text" bind:value={text} />
-      <button>Create</button>
-    </form>
-  </div>
-</Mutation>
-<Query options={queryOptions}>
-  <div slot="query" let:queryResult>
-    {#if queryResult.status === 'loading'}
-      Loading...
-    {:else if queryResult.status === 'error'}
-      <span>Error: {queryResult.error.message}</span>
-    {:else}
-      <br />
-      <div>
-        Updated At:
-        {new Date(queryResult.data.ts).toLocaleTimeString()}
-      </div>
-      <ul>
-        {#each queryResult.data.items as datum}
-          <li>{datum}</li>
-        {/each}
-      </ul>
-      <div>{queryResult.isFetching ? 'Updating in background...' : ' '}</div>
-    {/if}
-  </div>
-</Query>
+
+<div>
+  <form
+    on:submit={e => {
+      e.preventDefault()
+      e.stopPropagation()
+      $mutationResult.mutate(text)
+    }}>
+    <input type="text" bind:value={text} />
+    <button>Create</button>
+  </form>
+</div>
+
+<div>
+  {#if $queryResult.status === 'loading'}
+    Loading...
+  {:else if $queryResult.status === 'error'}
+    <span>Error: {$queryResult.error.message}</span>
+  {:else}
+    <br />
+    <div>
+      Updated At:
+      {new Date($queryResult.data.ts).toLocaleTimeString()}
+    </div>
+    <ul>
+      {#each $queryResult.data.items as datum}
+        <li>{datum}</li>
+      {/each}
+    </ul>
+    <div>{$queryResult.isFetching ? 'Updating in background...' : ' '}</div>
+  {/if}
+</div>

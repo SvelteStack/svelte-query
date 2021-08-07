@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useQuery } from '../../../src/query'
+  import { useQuery } from '../../../src'
 
   const later: (delay: any, value: any) => Promise<string> = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))

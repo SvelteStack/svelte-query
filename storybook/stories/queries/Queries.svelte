@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Queries } from '../../../src'
-  import { useQueries } from '../../../src/queries'
+  import { useQueries } from '../../../src'
 
   const later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))
@@ -19,44 +18,28 @@
 </script>
 
 <main>
-  <h3>Queries</h3>
-  <Queries {queries}>
-    <div slot="queries" let:currentResult>
-      {#if currentResult[0].isLoading || currentResult[0].isFetching}
-        <p>Query loading...</p>
-      {:else}
-        <p>{currentResult[0].data}</p>
-      {/if}
-
-      {#if currentResult[1].isLoading || currentResult[1].isFetching}
-        <p>Query 2 loading...</p>
-      {:else}
-        <p>{currentResult && currentResult[1].data}</p>
-      {/if}
-
-      <button on:click={() => currentResult[0].refetch()}>refetch Query</button>
-
-      <button on:click={() => currentResult[1].refetch()}>refetch Query 2</button>
-
-      <button
-        on:click={() => {
-          currentResult[0].refetch()
-          currentResult[1].refetch()
-        }}>
-        refetch All
-      </button>
-    </div>
-  </Queries>
-
   <h3>Queries with useQueries</h3>
+
+  <button on:click={() => $queriesStore[0].refetch()}>refetch Query</button>
+
+  <button on:click={() => $queriesStore[1].refetch()}>refetch Query 2</button>
+
+  <button
+    on:click={() => {
+      $queriesStore[0].refetch()
+      $queriesStore[1].refetch()
+    }}>
+    refetch All
+  </button>
+
   {#if $queriesStore[0].isLoading || $queriesStore[0].isFetching}
-    <p>useQuery loading...</p>
+    <p>Query loading...</p>
   {:else}
     <p>{$queriesStore[0].data}</p>
   {/if}
 
   {#if $queriesStore[1].isLoading || $queriesStore[1].isFetching}
-    <p>useQuery 2 loading...</p>
+    <p>Query 2 loading...</p>
   {:else}
     <p>{$queriesStore[1].data}</p>
   {/if}

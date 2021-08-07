@@ -2,16 +2,13 @@
   "name": "@sveltestack/svelte-query",
   "homepage": "https://github.com/SvelteStack/svelte-query",
   "private": false,
-  "version": "1.4.1",
+  "version": "2.0",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
   "license": "MIT",
   "svelte": "svelte/index.js",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "sideEffects": [
-    "lib/setLogger.js"
-  ],
   "files": [
     "dist",
     "lib",
@@ -46,11 +43,11 @@
     "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
-    "axios": "^0.21.1",
-    "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.2",
     "cross-env": "^7.0.3",
     "del-cli": "^4.0.1",
+    "esbuild": "^0.12.18",
+    "esbuild-jest": "^0.5.0",
     "eslint": "~7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-flowtype": "~5.9.0",
@@ -60,14 +57,13 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "fs": "^0.0.1-security",
-    "graphql": "^15.5.1",
-    "graphql-request": "^3.5.0",
     "husky": "^7.0.1",
-    "jest": "^27.0.6",
+    "jest": "^26",
     "nan": "^2.15.0",
     "path": "^0.12.7",
     "prettier": "^2.3.2",
     "prettier-plugin-svelte": "^2.3.1",
+    "react-query": "^3.19.2",
     "replace": "^1.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.0",
@@ -75,9 +71,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "svelte": "^3.42.1",
     "svelte-check": "^2.2.4",
-    "svelte-jester": "^1.8.2",
+    "svelte-jester": "^1",
     "svelte-preprocess": "^4.7.4",
-    "ts-jest": "^27.0.4",
     "type-fest": "^2.0.0",
     "typescript": "^4.3.5"
   },
@@ -85,9 +80,6 @@
     "svelte",
     "react-query"
   ],
-  "dependencies": {
-    "broadcast-channel": "^4.2.0"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn test:ci"

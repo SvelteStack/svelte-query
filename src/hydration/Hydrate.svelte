@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { DehydratedState, HydrateOptions } from '../queryCore/hydration'
-  import useHydrate from './useHydrate'
+    import type { DehydratedState, HydrateOptions } from 'react-query/hydration'
+    import { useHydrate } from './useHydrate'
 
-  export let state: DehydratedState
-  export let options: HydrateOptions
+    export let state: DehydratedState
+    export let options: HydrateOptions = {}
 
-  useHydrate(state, options)
-</script>
-
-<slot />
+    useHydrate(state, options)
+  </script>
+  
+  <slot />

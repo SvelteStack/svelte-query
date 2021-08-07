@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { QueryClientProvider, Hydrate } from '../../../src'
-  import { hashQueryKey } from '../../../src/queryCore'
+  import { useHydrate } from '../../../src'
+  import { hashQueryKey } from '../../../src'
   import Hydration from './Hydration.svelte'
 
   const state = {
@@ -15,11 +15,10 @@
         cacheTime: 2000,
       },
     ],
+    mutations: []
   }
+
+  useHydrate(state);
 </script>
 
-<QueryClientProvider>
-  <Hydrate {state}>
-    <Hydration />
-  </Hydrate>
-</QueryClientProvider>
+<Hydration />

@@ -1,44 +1,30 @@
 <script lang="ts">
-  import { IsMutating, useMutation } from '../../../src'
-  import { useIsMutating } from '../../../src/isMutating'
-
-  const later = (delay, value) =>
-    new Promise(resolve => setTimeout(resolve, delay, value))
-
+  
+  import { useIsMutating, useMutation } from '../../../src'
+  
+  const later = (delay, value) => new Promise(resolve => setTimeout(resolve, delay, value))
+  
   // the mutation
   const mutationFn = () => later(500, 'My response')
   const useMutationResult = useMutation(mutationFn)
+  
   // the mutation 2
   const mutationFn2 = () => later(500, 'My response 2')
   const useMutationResult2 = useMutation(mutationFn2)
-
-  let isMutating = 0
-  let history = []
-  $: {
-    history = [...history, isMutating]
-  }
-
+    
   // useIsMutating
-  const isMutatingResult = useIsMutating()
+  const isMutating = useIsMutating()
   let useHistory = []
   $: {
-    useHistory = [...useHistory, $isMutatingResult]
+    useHistory = [...useHistory, $isMutating]
   }
 </script>
 
 <main>
-  <h3>IsFetching</h3>
-  <IsMutating bind:isMutating>
-    <div slot="isMutating">
-      isMutating change log:
-      <span>{JSON.stringify(history)}</span>
-    </div>
-  </IsMutating>
-
   <h3>useIsMutating</h3>
   <div>
     useIsMutating change log:
-    {JSON.stringify(useHistory)}
+    <span>{JSON.stringify(useHistory)}</span>
     <div>
       <button
         on:click={() => {

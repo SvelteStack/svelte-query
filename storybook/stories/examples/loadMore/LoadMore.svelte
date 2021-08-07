@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios, { AxiosError } from 'axios'
-  import { UseInfiniteQueryOptions, useInfiniteQuery } from '../../../../src'
+  import { useInfiniteQuery } from '../../../../src'
 
   const endPoint = 'https://s8dfj.sse.codesandbox.io/api'
 
@@ -14,14 +14,9 @@
     return data
   }
 
-  const queryOptions: UseInfiniteQueryOptions<Data> = {
-    queryKey: 'projects',
-    queryFn: fetchProjects,
-    //@ts-ignore
+  const queryResult = useInfiniteQuery<Data, AxiosError>("projects", fetchProjects, {
     getNextPageParam: lastGroup => lastGroup.nextId || undefined,
-  }
-
-  const queryResult = useInfiniteQuery<Data, AxiosError>(queryOptions)
+  })
 </script>
 
 <h1>Infinite Loading</h1>

@@ -10,16 +10,16 @@ describe("IsFetching", () => {
     const { getByText, getAllByText } = render(IsFetching);
     expect(getByText("Query loading...")).toBeInTheDocument();
     expect(getByText("Query 2 loading...")).toBeInTheDocument();
-    expect(getByText("[0]")).toBeInTheDocument();
+    expect(getByText("[2]")).toBeInTheDocument();
     await waitFor(() => getAllByText("My Data"));
-    expect(getByText("[0,2,1]")).toBeInTheDocument();
+    expect(getByText("[2,1]")).toBeInTheDocument();
     await waitFor(() => getAllByText("My Data 2"));
-    expect(getByText("[0,2,1,0]")).toBeInTheDocument();
+    expect(getByText("[2,1,0]")).toBeInTheDocument();
 
     // refetch Query
     fireEvent.click(getByText("refetch Query"));
     await waitFor(() => getByText("Query loading..."));
     await waitFor(() => getAllByText("My Data"));
-    expect(getByText("[0,2,1,0,1,0]")).toBeInTheDocument();
+    expect(getByText("[2,1,0,1,0]")).toBeInTheDocument();
   });
 });
