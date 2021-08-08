@@ -1,8 +1,4 @@
-// import type { Mutation } from './mutation'
-// import type { Query } from './query'
-// import { EnsuredQueryKey } from './types'
 import type {
-  Query,
   MutationFunction,
   MutationKey,
   MutationOptions,
@@ -11,65 +7,13 @@ import type {
   QueryOptions,
 } from 'react-query/types'
 
-// TYPES
-
-export interface QueryFilters {
-  /**
-   * Include or exclude active queries
-   */
-  active?: boolean
-  /**
-   * Match query key exactly
-   */
-  exact?: boolean
-  /**
-   * Include or exclude inactive queries
-   */
-  inactive?: boolean
-  /**
-   * Include queries matching this predicate function
-   */
-  predicate?: (query: Query) => boolean
-  /**
-   * Include queries matching this query key
-   */
-  queryKey?: QueryKey
-  /**
-   * Include or exclude stale queries
-   */
-  stale?: boolean
-  /**
-   * Include or exclude fetching queries
-   */
-  fetching?: boolean
-}
-
-export interface MutationFilters {
-  /**
-   * Match mutation key exactly
-   */
-  exact?: boolean
-  /**
-   * Include mutations matching this predicate function
-   */
-  predicate?: (mutation: Mutation<any, any, any>) => boolean
-  /**
-   * Include mutations matching this mutation key
-   */
-  mutationKey?: MutationKey
-  /**
-   * Include or exclude fetching mutations
-   */
-  fetching?: boolean
-}
-
-export type DataUpdateFunction<TInput, TOutput> = (input: TInput) => TOutput
-
-export type Updater<TInput, TOutput> =
-  | TOutput
-  | DataUpdateFunction<TInput, TOutput>
-
-export type QueryStatusFilter = 'all' | 'active' | 'inactive' | 'none'
+import type {
+  QueryFilters,
+  MutationFilters,
+  DataUpdateFunction,
+  QueryStatusFilter,
+  Updater,
+} from 'react-query/types/core/utils'
 
 // UTILS
 
@@ -92,13 +36,13 @@ export function isValidTimeout(value: any): value is number {
   return typeof value === 'number' && value >= 0 && value !== Infinity
 }
 
-export function ensureQueryKeyArray<T extends QueryKey>(
-  value: T
-): EnsuredQueryKey<T> {
-  return (Array.isArray(value)
-    ? value
-    : ([value] as unknown)) as EnsuredQueryKey<T>
-}
+// export function ensureQueryKeyArray<T extends QueryKey>(
+//   value: T
+// ): EnsuredQueryKey<T> {
+//   return (Array.isArray(value)
+//     ? value
+//     : ([value] as unknown)) as EnsuredQueryKey<T>
+// }
 
 export function difference<T>(array1: T[], array2: T[]): T[] {
   return array1.filter(x => array2.indexOf(x) === -1)
@@ -193,108 +137,108 @@ export function mapQueryStatusFilter(
   }
 }
 
-export function matchQuery(
-  filters: QueryFilters,
-  query: Query<any, any, any, any>
-): boolean {
-  const {
-    active,
-    exact,
-    fetching,
-    inactive,
-    predicate,
-    queryKey,
-    stale,
-  } = filters
+// export function matchQuery(
+//   filters: QueryFilters,
+//   query: Query<any, any, any, any>
+// ): boolean {
+//   const {
+//     active,
+//     exact,
+//     fetching,
+//     inactive,
+//     predicate,
+//     queryKey,
+//     stale,
+//   } = filters
 
-  if (isQueryKey(queryKey)) {
-    if (exact) {
-      if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
-        return false
-      }
-    } else if (!partialMatchKey(query.queryKey, queryKey)) {
-      return false
-    }
-  }
+//   if (isQueryKey(queryKey)) {
+//     if (exact) {
+//       if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
+//         return false
+//       }
+//     } else if (!partialMatchKey(query.queryKey, queryKey)) {
+//       return false
+//     }
+//   }
 
-  const queryStatusFilter = mapQueryStatusFilter(active, inactive)
+//   const queryStatusFilter = mapQueryStatusFilter(active, inactive)
 
-  if (queryStatusFilter === 'none') {
-    return false
-  } else if (queryStatusFilter !== 'all') {
-    const isActive = query.isActive()
-    if (queryStatusFilter === 'active' && !isActive) {
-      return false
-    }
-    if (queryStatusFilter === 'inactive' && isActive) {
-      return false
-    }
-  }
+//   if (queryStatusFilter === 'none') {
+//     return false
+//   } else if (queryStatusFilter !== 'all') {
+//     const isActive = query.isActive()
+//     if (queryStatusFilter === 'active' && !isActive) {
+//       return false
+//     }
+//     if (queryStatusFilter === 'inactive' && isActive) {
+//       return false
+//     }
+//   }
 
-  if (typeof stale === 'boolean' && query.isStale() !== stale) {
-    return false
-  }
+//   if (typeof stale === 'boolean' && query.isStale() !== stale) {
+//     return false
+//   }
 
-  if (typeof fetching === 'boolean' && query.isFetching() !== fetching) {
-    return false
-  }
+//   if (typeof fetching === 'boolean' && query.isFetching() !== fetching) {
+//     return false
+//   }
 
-  if (predicate && !predicate(query)) {
-    return false
-  }
+//   if (predicate && !predicate(query)) {
+//     return false
+//   }
 
-  return true
-}
+//   return true
+// }
 
-export function matchMutation(
-  filters: MutationFilters,
-  mutation: Mutation<any, any>
-): boolean {
-  const { exact, fetching, predicate, mutationKey } = filters
-  if (isQueryKey(mutationKey)) {
-    if (!mutation.options.mutationKey) {
-      return false
-    }
-    if (exact) {
-      if (
-        hashQueryKey(mutation.options.mutationKey) !== hashQueryKey(mutationKey)
-      ) {
-        return false
-      }
-    } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
-      return false
-    }
-  }
+// export function matchMutation(
+//   filters: MutationFilters,
+//   mutation: Mutation<any, any>
+// ): boolean {
+//   const { exact, fetching, predicate, mutationKey } = filters
+//   if (isQueryKey(mutationKey)) {
+//     if (!mutation.options.mutationKey) {
+//       return false
+//     }
+//     if (exact) {
+//       if (
+//         hashQueryKey(mutation.options.mutationKey) !== hashQueryKey(mutationKey)
+//       ) {
+//         return false
+//       }
+//     } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
+//       return false
+//     }
+//   }
 
-  if (
-    typeof fetching === 'boolean' &&
-    (mutation.state.status === 'loading') !== fetching
-  ) {
-    return false
-  }
+//   if (
+//     typeof fetching === 'boolean' &&
+//     (mutation.state.status === 'loading') !== fetching
+//   ) {
+//     return false
+//   }
 
-  if (predicate && !predicate(mutation)) {
-    return false
-  }
+//   if (predicate && !predicate(mutation)) {
+//     return false
+//   }
 
-  return true
-}
+//   return true
+// }
 
-export function hashQueryKeyByOptions<TQueryKey extends QueryKey = QueryKey>(
-  queryKey: TQueryKey,
-  options?: QueryOptions<any, any, any, TQueryKey>
-): string {
-  const hashFn = options?.queryKeyHashFn || hashQueryKey
-  return hashFn(queryKey)
-}
+// export function hashQueryKeyByOptions<TQueryKey extends QueryKey = QueryKey>(
+//   queryKey: TQueryKey,
+//   options?: QueryOptions<any, any, any, TQueryKey>
+// ): string {
+//   const hashFn = options?.queryKeyHashFn || hashQueryKey
+//   return hashFn(queryKey)
+// }
 
 /**
  * Default query keys hash function.
  */
-export function hashQueryKey(queryKey: QueryKey): string {
-  const asArray = ensureQueryKeyArray(queryKey)
-  return stableValueHash(asArray)
-}
+// export function hashQueryKey(queryKey: QueryKey): string {
+//   const asArray = ensureQueryKeyArray(queryKey)
+//   return stableValueHash(asArray)
+// }
 
 /**
  * Hashes the value into a stable hash.
@@ -315,9 +259,9 @@ export function stableValueHash(value: any): string {
 /**
  * Checks if key `b` partially matches with key `a`.
  */
-export function partialMatchKey(a: QueryKey, b: QueryKey): boolean {
-  return partialDeepEqual(ensureQueryKeyArray(a), ensureQueryKeyArray(b))
-}
+// export function partialMatchKey(a: QueryKey, b: QueryKey): boolean {
+//   return partialDeepEqual(ensureQueryKeyArray(a), ensureQueryKeyArray(b))
+// }
 
 /**
  * Checks if `b` partially matches with `a`.

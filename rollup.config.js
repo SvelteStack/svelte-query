@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import { terser } from "rollup-plugin-terser";
 import filesize from 'rollup-plugin-filesize';
 import dts from 'rollup-plugin-dts';
 
@@ -18,7 +19,7 @@ export default [
         sourcemap: true
       }
     ],
-    plugins: [typescript(), filesize()]
+    plugins: [typescript(), terser(), filesize()]
   },
   {
     input: 'src/index.ts',

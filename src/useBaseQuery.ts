@@ -1,9 +1,9 @@
 import type {
   QueryObserver,
-  QueryKey,
   UseBaseQueryOptions,
   UseQueryOptions,
   UseBaseQueryResult,
+  QueryKey
 } from 'react-query/types'
 import type { Readable } from 'svelte/store'
 import { useQueryClient } from './useQueryClient'
@@ -12,14 +12,12 @@ import { readable } from 'svelte/store'
 export type UseQueryReturnType<
   TData,
   TError,
-  Result = UseBaseQueryResult<TData, TError>
-> = Readable<
-  Result & {
-    updateOptions: (
-      options: Partial<UseQueryOptions<unknown, TError, TData, unknown[]>>
-    ) => void
-  }
->
+  TQueryFnData
+> = Readable<UseBaseQueryResult<TData, TError>> & {
+  updateOptions?: (
+    options: Partial<UseQueryOptions<TQueryFnData, TError, TData>>
+  ) => void
+}
 
 export function useBaseQuery<
   TQueryFnData,
@@ -36,15 +34,15 @@ export function useBaseQuery<
     TQueryKey
   >,
   Observer: typeof QueryObserver
-) {
+): UseQueryReturnType<TData, TError, TQueryFnData> {
   const queryClient = useQueryClient()
   const defaultedOptions = queryClient.defaultQueryObserverOptions(options)
 
-  let observer = new Observer(queryClient, defaultedOptions)
+  const observer = new Observer<TQueryFnData, TError, TData, TQueryData, TQueryKey>(queryClient, defaultedOptions)
 
-  let currentResult = observer.getCurrentResult()
+  const currentResult = observer.getCurrentResult()
 
-  let result = readable(currentResult, (set) => {
+  const result = readable(currentResult, (set) => {
     return observer.subscribe(result => {
       // Update result to make sure we did not miss any query updates
       // between creating the observer and subscribing to it.
@@ -55,9 +53,10 @@ export function useBaseQuery<
   })
 
   const updateOptions = (
-    options: Partial<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>
+    options: Partial<UseQueryOptions<TQueryFnData, TError, TData>>
   ): void => {
     // const defaultedOptions = queryClient.defaultQueryObserverOptions(options)
+    // @ts-expect-error something fishy in type-inference here. silence for now, @TODO
     observer.setOptions({ ...observer.options, ...options })
 
     // Update result to make sure we did not miss any query updates

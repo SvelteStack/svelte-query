@@ -1,7 +1,7 @@
 import { QueryClient } from 'react-query/core'
 import { writable } from 'svelte/store'
 
-let client = new QueryClient()
+const client = new QueryClient()
 
 const clientStore = writable(client, () => {
   client.mount()

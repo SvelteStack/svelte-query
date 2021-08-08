@@ -19,7 +19,7 @@ export function useIsFetching(
 
   const [filters] = parseFilterArgs(arg1, arg2)
 
-  let isFetching = queryClient.isFetching(filters)
+  const isFetching = queryClient.isFetching(filters)
 
   return readable(isFetching, set => cache.subscribe(() => {
     set(queryClient.isFetching(filters));

@@ -2,11 +2,19 @@ import { InfiniteQueryObserver } from 'react-query/core'
 import type {
   QueryFunction,
   QueryKey,
+  QueryObserver,
   UseInfiniteQueryOptions,
-  UseInfiniteQueryResult,
+  UseInfiniteQueryResult as UseBaseInfiniteQueryResult,
 } from 'react-query/types'
+import type { Readable } from 'svelte/store'
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs } from './utils'
+
+export type UseInfiniteQueryResult<
+  TData,
+  TError
+> = Readable<UseBaseInfiniteQueryResult<TData, TError>>
+
 
 export function useInfiniteQuery<
   TQueryFnData = unknown,
@@ -89,6 +97,6 @@ export function useInfiniteQuery<
   
   return useBaseQuery(
     options,
-    InfiniteQueryObserver
+    InfiniteQueryObserver as typeof QueryObserver
   ) as UseInfiniteQueryResult<TData, TError>
 }

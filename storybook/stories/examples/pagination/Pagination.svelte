@@ -8,19 +8,20 @@ import { writable } from 'svelte/store';
   // if the api (like in this example) just have a simple numeric pagination
   let page = writable(0)
 
-  const fetchProjects = async () => {
-    
+  const fetchProjects = async () => {  
     const { data } = await axios.get(`${endPoint}/projects?page=${$page}`)
     return data
   }
 
-  const queryResult = useQuery(['projects', $page], fetchProjects, {
-    keepPreviousData: true
-  })
+  let queryResult;
 
   $: {
-    $queryResult.refetch()
+    queryResult = useQuery(['projects', $page], fetchProjects, {
+      keepPreviousData: true
+    })
   }
+
+  // $: queryResult.updateOptions({ queryKey: ['projects', $page], queryFn: fetchProjects })
 </script>
 
 <p>

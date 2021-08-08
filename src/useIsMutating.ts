@@ -3,7 +3,7 @@ import type { Readable } from 'svelte/store'
 import { readable } from 'svelte/store'
 import type { QueryClient, QueryKey } from 'react-query/types'
 import { useQueryClient } from './useQueryClient'
-import { parseMutationFilterArgs } from "./utils"
+import { parseMutationFilterArgs } from './utils'
 
 export function useIsMutating(filters?: MutationFilters): Readable<number>
 export function useIsMutating(
@@ -18,9 +18,11 @@ export function useIsMutating(
   const queryClient: QueryClient = useQueryClient()
   const cache = queryClient.getMutationCache()
 
-  let isMutating = queryClient.isMutating(filters)
+  const isMutating = queryClient.isMutating(filters)
 
-  return readable(isMutating, set => cache.subscribe(() => {
-    set(queryClient.isMutating(filters));
-  }))
+  return readable(isMutating, set =>
+    cache.subscribe(() => {
+      set(queryClient.isMutating(filters))
+    })
+  )
 }

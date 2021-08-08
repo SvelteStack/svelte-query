@@ -4,6 +4,10 @@
   "private": false,
   "version": "2.0.0",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
+  "keywords": [
+    "svelte",
+    "react-query"
+  ],
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -23,7 +27,7 @@
     "storybook": "cd storybook && npm run start",
     "build-storybook": "cd storybook && npm run build"
   },
-  "peerDependencies": {
+  "dependencies": {
     "react-query": "^3.19.2",
     "svelte": "^3.42.1"
   },
@@ -37,9 +41,9 @@
     "@typescript-eslint/parser": "^4.29.0",
     "esbuild": "^0.12.19",
     "esbuild-jest": "^0.5.0",
-		"eslint": "^7.32.0",
-		"eslint-config-prettier": "^8.3.0",
-		"eslint-plugin-svelte3": "^3.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^3.2.0",
     "husky": "^7.0.1",
     "jest": "^26.6.3",
     "prettier": "^2.3.2",
@@ -49,16 +53,13 @@
     "rollup": "^2.56.1",
     "rollup-plugin-dts": "^3.0.2",
     "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-terser": "^7.0.2",
     "svelte": "^3.42.1",
     "svelte-check": "^2.2.4",
     "svelte-jester": "^1.8.2",
     "svelte-preprocess": "^4.7.4",
     "typescript": "^4.3.5"
   },
-  "keywords": [
-    "svelte",
-    "react-query"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "yarn test:ci"
