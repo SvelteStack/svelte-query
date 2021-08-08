@@ -5,7 +5,7 @@ import type {
   QueryFunction,
   QueryKey,
   QueryOptions,
-} from 'react-query/types/core'
+} from 'react-query/types'
 import type { QueryFilters } from 'react-query/types/core/utils'
 
 export function isQueryKey(value: any): value is QueryKey {

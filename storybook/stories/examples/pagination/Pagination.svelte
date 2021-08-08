@@ -16,7 +16,9 @@
     return data
   }
 
-  const queryResult = useQuery(['projects', page], () => fetchProjects(page))
+  const queryResult = useQuery(['projects', page], () => fetchProjects(page), {
+    keepPreviousData: true
+  })
 
   $: {
     $queryResult.refetch({ page })

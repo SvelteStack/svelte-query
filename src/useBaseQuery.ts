@@ -1,11 +1,10 @@
-/* eslint-disable no-shadow */
-import type { QueryObserver } from 'react-query/core'
-import type { QueryKey } from 'react-query/types/core/types'
 import type {
+  QueryObserver,
+  QueryKey,
   UseBaseQueryOptions,
   UseQueryOptions,
   UseQueryResult,
-} from 'react-query/types/react/types'
+} from 'react-query/types'
 import type { Readable } from 'svelte/store'
 import { useQueryClient } from './useQueryClient'
 import { notifyManager } from 'react-query/core'
@@ -74,10 +73,10 @@ export function useBaseQuery<
 
   let currentResult = observer.getOptimisticResult(defaultedOptions)
 
-  let result = readable(currentResult, set => {
-    if (!observer) observer = new Observer(queryClient, defaultedOptions)
-    set(observer.getCurrentResult())
-    return observer.subscribe(set)
+  let result = readable(currentResult, (set) => {
+    return observer.subscribe(result => {
+        set(result);
+    })
   })
 
   // Handle result property usage tracking

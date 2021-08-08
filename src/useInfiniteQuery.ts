@@ -1,15 +1,11 @@
 import { InfiniteQueryObserver } from 'react-query/core'
-
 import type {
   QueryObserver,
   QueryFunction,
   QueryKey,
-} from 'react-query/types/core'
-import type {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
-} from 'react-query/types/react/types'
-
+} from 'react-query/types'
 import { useBaseQuery, UseQueryReturnType } from './useBaseQuery'
 import { parseQueryArgs } from './utils'
 

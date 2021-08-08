@@ -4,7 +4,7 @@ import { notifyManager } from 'react-query/core'
 import type { MutationFilters } from 'react-query/types/core/utils'
 import type { Readable } from 'svelte/store'
 import { readable } from 'svelte/store'
-import type { QueryClient } from '.'
+import type { QueryClient } from 'react-query/types'
 import { useQueryClient } from './useQueryClient'
 
 export function useIsMutating(filters?: MutationFilters): Readable<number> {

@@ -1,5 +1,5 @@
 import { notifyManager } from 'react-query/core'
-import type { QueryKey } from 'react-query/types/core'
+import type { QueryKey } from 'react-query/types'
 import type { QueryFilters } from 'react-query/types/core/utils'
 import type { Readable } from 'svelte/store'
 import { readable } from 'svelte/store'

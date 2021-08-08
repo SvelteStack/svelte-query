@@ -17,6 +17,11 @@ export {
   isCancelledError,
 } from 'react-query/core'
 
+export type {
+  UseQueryResult,
+  UseInfiniteQueryResult
+} from 'react-query/types';
+
 // react-query/react port
 // export { default as QueryClientProvider } from './QueryClientProvider.svelte';
 export { useQueryClient } from './useQueryClient'

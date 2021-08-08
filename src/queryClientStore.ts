@@ -10,15 +10,13 @@ const clientStore = writable(client, () => {
 })
 
 export const resetClientStore = (queryclient?: QueryClient) => {
-  console.log('STORE RESET')
   const client = queryclient || new QueryClient()
-
-  client.getQueryCache().clear()
-  client.getMutationCache().clear()
 
   clientStore.set(client)
 
   client.mount()
+
+  client.clear()
 
   return client
 }

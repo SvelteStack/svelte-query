@@ -1,6 +1,5 @@
 import { QueryObserver } from 'react-query/core'
-import type { QueryFunction, QueryKey } from 'react-query/types/core'
-import type { UseQueryOptions } from 'react-query/types/react/types'
+import type { UseQueryOptions, QueryFunction, QueryKey } from 'react-query/types'
 import type { UseQueryReturnType } from './useBaseQuery'
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs } from './utils'

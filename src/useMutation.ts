@@ -3,12 +3,10 @@ import type {
   MutationFunction,
   MutationKey,
   MutationObserverResult,
-} from 'react-query/types/core'
-import type {
   UseMutationOptions,
   UseMutateFunction,
   UseMutateAsyncFunction,
-} from 'react-query/types/react/types'
+} from 'react-query/types'
 import { Readable, writable } from 'svelte/store'
 import { useQueryClient } from './useQueryClient'
 import { noop, parseMutationArgs } from './utils'
