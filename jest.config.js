@@ -1,6 +1,7 @@
 module.exports = {
   testEnvironment: "jsdom",
-  "transform": {
+  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+  transform: {
     "^.+\\.svelte$": [
       "svelte-jester",
       {
@@ -11,7 +12,7 @@ module.exports = {
       "esbuild-jest"
     ]
   },
-  "moduleFileExtensions": [
+  moduleFileExtensions: [
     "js",
     "ts",
     "svelte"

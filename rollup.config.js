@@ -1,29 +1,31 @@
-import svelte from 'rollup-plugin-svelte';
-import autoPreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
-import pkg from './package.json';
+import filesize from 'rollup-plugin-filesize';
+import dts from 'rollup-plugin-dts';
 
-const name = pkg.name
-	.replace(/^(@\S+\/)?(svelte-)?(\S+)/, '$3')
-	.replace(/^\w/, m => m.toUpperCase())
-	.replace(/-\w/g, m => m[1].toUpperCase());
-
-export default {
-	input: 'src/index.ts',
-	output: [
-		{ file: pkg.module, 'format': 'es' },
-		{ file: pkg.main, 'format': 'umd', name },
-		{ file: pkg.main.replace('.js', '.min.js'), format: 'iife', name, plugins: [terser()] }
-	],
-	plugins: [
-		svelte({
-			preprocess: autoPreprocess()
-		}),
-		typescript(),
-		resolve(),
-		commonjs()
-	]
-};
+export default [
+  {
+    input: 'src/index.ts',
+    external: ['svelte', 'react-query'],
+    output: [
+      {
+        file: 'dist/index.es.js',
+        format: 'es',
+        sourcemap: true
+      },
+      {
+        file: 'dist/index.cjs.js',
+        format: 'cjs',
+        sourcemap: true
+      }
+    ],
+    plugins: [typescript(), filesize()]
+  },
+  {
+    input: 'src/index.ts',
+    output: {
+      file: 'dist/index.d.ts',
+      format: 'es'
+    },
+    plugins: [dts()]
+  }
+];
