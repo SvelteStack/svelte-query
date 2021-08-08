@@ -17,5 +17,5 @@
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
+	"include": ["global.d.ts", "src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }

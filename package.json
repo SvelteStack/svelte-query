@@ -1,5 +1,5 @@
 {
-  "name": "@sveltestack/svelte-query",
+  "name": "svelte-query",
   "homepage": "https://github.com/SvelteStack/svelte-query",
   "private": false,
   "version": "2.0.0",
@@ -53,9 +53,10 @@
     "rollup": "^2.56.1",
     "rollup-plugin-dts": "^3.0.2",
     "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
-    "svelte": "^3.42.1",
     "svelte-check": "^2.2.4",
+    "svelte-dts": "^0.3.3",
     "svelte-jester": "^1.8.2",
     "svelte-preprocess": "^4.7.4",
     "typescript": "^4.3.5"
