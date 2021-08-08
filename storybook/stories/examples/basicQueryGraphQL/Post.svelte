@@ -2,12 +2,12 @@
   import { request, gql } from 'graphql-request'
   import { useQuery } from '../../../../src'
 
-  export let postId
-  export let setPostId
+  export let postId: number
+  export let setPostId: (id: number) => void
 
   const endpoint = 'https://graphqlzero.almansi.me/api'
 
-  const getPostById = async id => {
+  const getPostById = async (id: number) => {
     const { post } = await request(
       endpoint,
       gql`
@@ -24,7 +24,7 @@
   }
 
   const post = useQuery<{ title: string; body: string }, { message: string }>(
-    ['post', postId],
+    ['ql-post', postId],
     () => getPostById(postId),
     {
       enabled: !!postId,

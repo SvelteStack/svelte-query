@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useQuery } from '../../../src'
 
-  const later = (delay, value): Promise<string> =>
+  const later = (delay: number, value: unknown): Promise<string> =>
     new Promise(resolve => setTimeout(resolve, delay, value))
 
   // the query fn
@@ -9,8 +9,8 @@
   // the query fn 2
   const queryFn2 = () => later(500, 'My Data 2')
 
-  const queryResult = useQuery<string>('myQuery', { queryFn })
-  const queryResult2 = useQuery<string>('myQuery2', {
+  const queryResult = useQuery<string>('dep-myQuery', { queryFn })
+  const queryResult2 = useQuery<string>('dep-myQuery2', {
     queryFn: queryFn2,
     enabled: !!$queryResult.data,
   })

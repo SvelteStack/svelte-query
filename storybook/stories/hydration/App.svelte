@@ -6,11 +6,11 @@
   const state = {
     queries: [
       {
-        queryKey: 'myQuery',
+        queryKey: 'hydration-myQuery',
         state: {
           data: 'My cached data',
         },
-        queryHash: hashQueryKey('myQuery'),
+        queryHash: hashQueryKey('hydration-myQuery'),
         config: {},
         cacheTime: 2000,
       },

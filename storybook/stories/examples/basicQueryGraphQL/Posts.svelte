@@ -10,7 +10,7 @@
   const posts = useQuery<
     { id: string; title: string; body: string }[],
     { message: string }
-  >('posts', async () => {
+  >('ql-posts', async () => {
     const {
       posts: { data },
     } = await request(
@@ -33,6 +33,9 @@
 <div>
   <h1>Posts</h1>
   <div>
+    State: {$posts.status}
+  </div>
+  <div>
     {#if $posts.status === 'loading'}
       Loading...
     {:else if $posts.status === 'error'}
@@ -45,7 +48,7 @@
               on:click={() => setPostId(post.id)}
               style={// We can use the queryCache here to show bold links for
               // ones that are cached
-              client.getQueryData(['post', post.id])
+              client.getQueryData(['ql-post', post.id])
                 ? 'color: green; font-weight: bold; cursor: pointer;'
                 : 'cursor: pointer;'}
             >

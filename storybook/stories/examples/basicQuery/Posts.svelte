@@ -13,11 +13,17 @@
       'https://jsonplaceholder.typicode.com/posts'
     )
     return data
+  }, {
+    refetchOnMount: true,
+    refetchOnWindowFocus: true
   })
 </script>
 
 <div>
   <h1>Posts</h1>
+  <div>
+    State: {$posts.status}
+  </div>
   <div>
     {#if $posts.status === 'loading'}
       Loading...

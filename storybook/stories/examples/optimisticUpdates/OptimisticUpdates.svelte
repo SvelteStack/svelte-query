@@ -1,6 +1,5 @@
 <script lang="ts">
   import axios from 'axios'
-  import { writable } from 'svelte/store'
   import { useMutation, useQuery, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://fc16z.sse.codesandbox.io/api/data'
@@ -28,7 +27,7 @@
 
         client.setQueryData('todos', (old: any) => ({
           ...old,
-          items: [...old.items, todo],
+          items: [...old.items || [], todo],
         }))
 
         return previousValue

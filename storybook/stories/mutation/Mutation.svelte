@@ -1,17 +1,17 @@
 <script lang="ts">
   import { useMutation } from '../../../src'
 
-  const later = (delay, value) =>
+  const later = (delay: number, value: unknown) =>
     new Promise(resolve => setTimeout(resolve, delay, value))
   // the async fn
   const mutationFn = () => later(500, 'My response')
-  const mutationResult = useMutation(mutationFn)
+  const testMutation = useMutation(mutationFn)
 </script>
 
 <main>
   <h3>useMutation</h3>
-  <button on:click={() => $mutationResult.mutate()}>mutate</button>
-  {$mutationResult.isLoading
+  <button on:click={() => $testMutation.mutate()}>mutate</button>
+  {$testMutation.isLoading
     ? 'useMutation loading ...'
-    : $mutationResult.data || ''}
+    : $testMutation.data || ''}
 </main>

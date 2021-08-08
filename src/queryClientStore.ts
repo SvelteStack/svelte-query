@@ -1,21 +1,21 @@
 import { QueryClient } from 'react-query/core'
-import { writable, get } from 'svelte/store'
+import { writable } from 'svelte/store'
 
 let client = new QueryClient()
 
-client.mount()
-
 const clientStore = writable(client, () => {
-  return client.unmount()
+  client.mount()
+
+  return () => client.unmount()
 })
 
+/* mostly added for debugging/testing, but its nice to have an option to clearly reset the cache */
 export const resetClientStore = (queryclient?: QueryClient) => {
   const client = queryclient || new QueryClient()
 
   clientStore.set(client)
 
   client.mount()
-
   client.clear()
 
   return client

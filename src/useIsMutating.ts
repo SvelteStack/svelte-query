@@ -1,32 +1,26 @@
-// import { onUnmounted, Ref, ref } from 'vue-demi';
-
-import { notifyManager } from 'react-query/core'
 import type { MutationFilters } from 'react-query/types/core/utils'
 import type { Readable } from 'svelte/store'
 import { readable } from 'svelte/store'
-import type { QueryClient } from 'react-query/types'
+import type { QueryClient, QueryKey } from 'react-query/types'
 import { useQueryClient } from './useQueryClient'
+import { parseMutationFilterArgs } from "./utils"
 
-export function useIsMutating(filters?: MutationFilters): Readable<number> {
-  const client: QueryClient = useQueryClient()
-  const cache = client.getMutationCache()
-  // isMutating is the prev value initialized on mount *
-  let isMutating = client.isMutating(filters)
+export function useIsMutating(filters?: MutationFilters): Readable<number>
+export function useIsMutating(
+  queryKey?: QueryKey,
+  filters?: MutationFilters
+): Readable<number>
+export function useIsMutating(
+  arg1?: QueryKey | MutationFilters,
+  arg2?: MutationFilters
+): Readable<number> {
+  const filters = parseMutationFilterArgs(arg1, arg2)
+  const queryClient: QueryClient = useQueryClient()
+  const cache = queryClient.getMutationCache()
 
-  const { subscribe } = readable(isMutating, set => {
-    return cache.subscribe(
-      notifyManager.batchCalls(() => {
-        const newIisMutating = client.isMutating(filters)
+  let isMutating = queryClient.isMutating(filters)
 
-        if (isMutating !== newIisMutating) {
-          // * and update with each change
-          isMutating = newIisMutating
-
-          set(isMutating)
-        }
-      })
-    )
-  })
-
-  return { subscribe }
+  return readable(isMutating, set => cache.subscribe(() => {
+    set(queryClient.isMutating(filters));
+  }))
 }

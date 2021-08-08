@@ -1,27 +1,25 @@
 <script lang="ts">
   import axios from 'axios'
-  import { useQuery } from '../../../../src'
+import { writable } from 'svelte/store';
+  import { useQuery, useQueryClient } from '../../../../src'
 
   const endPoint = 'https://931rd.sse.codesandbox.io/api'
 
   // if the api (like in this example) just have a simple numeric pagination
-  let page = 0
+  let page = writable(0)
 
-  const setPage = (newPage: number) => {
-    page = newPage
-  }
-
-  const fetchProjects = async page => {
-    const { data } = await axios.get(`${endPoint}/projects?page=${page}`)
+  const fetchProjects = async () => {
+    
+    const { data } = await axios.get(`${endPoint}/projects?page=${$page}`)
     return data
   }
 
-  const queryResult = useQuery(['projects', page], () => fetchProjects(page), {
+  const queryResult = useQuery(['projects', $page], fetchProjects, {
     keepPreviousData: true
   })
 
   $: {
-    $queryResult.refetch({ page })
+    $queryResult.refetch()
   }
 </script>
 
@@ -44,12 +42,12 @@
         <p>{project.name}</p>
       {/each}
     </div>
-    <span>Current Page: {page + 1}</span>
+    <span>Current Page: {$page + 1}</span>
     <button
       on:click={() => {
-        setPage(Math.max(page - 1, 0))
+        page.set(Math.max($page - 1, 0))
       }}
-      disabled={page === 0}
+      disabled={$page === 0}
     >
       Previous Page
     </button>
@@ -57,8 +55,8 @@
       on:click={() => {
         // Here, we use `latestData` so the Next Page
         // button isn't relying on potentially old data
-        setPage(
-          $queryResult.data && !$queryResult.data.hasMore ? page : page + 1
+        page.set(
+          $queryResult.data && !$queryResult.data.hasMore ? $page : $page + 1
         )
       }}
       disabled={$queryResult.data && !$queryResult.data.hasMore}

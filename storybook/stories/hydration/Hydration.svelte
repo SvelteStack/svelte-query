@@ -6,7 +6,7 @@
 
   // the query fn
   const queryFn: () => Promise<string> = () => later(500, 'My Data')
-  const queryResult = useQuery<string>('myQuery', queryFn, { enabled: false })
+  const queryResult = useQuery<string>('hydration-myQuery', queryFn, { enabled: false })
 </script>
 
 <main>

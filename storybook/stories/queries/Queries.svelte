@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useQueries } from '../../../src'
 
-  const later = (delay, value) =>
+  const later = (delay: number, value: unknown): Promise<string> =>
     new Promise(resolve => setTimeout(resolve, delay, value))
 
   // the query fn
@@ -26,8 +26,8 @@
 
   <button
     on:click={() => {
-      $queriesStore[0].refetch()
-      $queriesStore[1].refetch()
+      $queriesStore[0].refetch();
+      $queriesStore[1].refetch();
     }}
   >
     refetch All

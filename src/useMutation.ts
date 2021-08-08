@@ -7,7 +7,7 @@ import type {
   UseMutateFunction,
   UseMutateAsyncFunction,
 } from 'react-query/types'
-import { Readable, writable } from 'svelte/store'
+import { Readable, readable } from 'svelte/store'
 import { useQueryClient } from './useQueryClient'
 import { noop, parseMutationArgs } from './utils'
 
@@ -22,12 +22,10 @@ export type UseMutationReturnType<
   TVariables,
   TContext,
   Result = MutationResult<TData, TError, TVariables, TContext>
-> = Readable<
-  Result & {
+> = Readable<Result> & {
     mutate: UseMutateFunction<TData, TError, TVariables, TContext>
     mutateAsync: UseMutateAsyncFunction<TData, TError, TVariables, TContext>
   }
->
 
 export function useMutation<
   TData = unknown,
@@ -89,11 +87,9 @@ export function useMutation<
 
   const currentResult = observer.getCurrentResult()
 
-  const state = writable(currentResult)
-
-  observer.subscribe(() => {
-    state.set(observer.getCurrentResult())
-  })
+  const state = readable(currentResult, set => observer.subscribe(() => {
+    set(observer.getCurrentResult());
+  }))
 
   const mutate: UseMutateFunction<TData, TError, TVariables, TContext> = (
     variables,

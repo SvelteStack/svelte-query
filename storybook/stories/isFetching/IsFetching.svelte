@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useIsFetching, useQuery } from '../../../src'
 
-  const later = (delay, value) =>
+  const later = (delay: number, value: unknown) =>
     new Promise(resolve => setTimeout(resolve, delay, value))
 
   // the query fn
@@ -15,7 +15,7 @@
   // useIsFetching
   const isFetching = useIsFetching()
 
-  let useHistory = []
+  let useHistory: number[] = []
   $: {
     useHistory = [...useHistory, $isFetching]
   }
@@ -29,8 +29,8 @@
     <div>
       <button
         on:click={() => {
-          $queryResult.refetch()
-          $queryResult2.refetch()
+          $queryResult.refetch();
+          $queryResult2.refetch();
         }}
       >
         refetch All
