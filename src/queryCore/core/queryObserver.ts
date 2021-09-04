@@ -1,4 +1,5 @@
 import {
+  hashQueryKeyByOptions,
   isServer,
   isValidTimeout,
   noop,
@@ -194,6 +195,25 @@ export class QueryObserver<
     ) {
       this.updateRefetchInterval()
     }
+  }
+
+  updateOptions(
+    options?: Partial<QueryObserverOptions<
+      TQueryFnData,
+      TError,
+      TData,
+      TQueryData,
+      TQueryKey
+    >>,
+    notifyOptions?: NotifyOptions
+  ): void {
+    const mergedOptions = { ...this.options, ...options }
+
+    if (options.queryKey && !options.queryHash && options.queryKey !== this.options.queryKey) {
+        mergedOptions.queryHash = hashQueryKeyByOptions(options.queryKey, mergedOptions)
+    }
+
+    this.setOptions(mergedOptions, notifyOptions)
   }
 
   getOptimisticResult(

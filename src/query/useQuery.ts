@@ -2,7 +2,7 @@
 import { readable } from 'svelte/store'
 
 import { notifyManager, QueryObserver } from '../queryCore/core'
-import { hashQueryKeyByOptions, parseQueryArgs } from '../queryCore/core/utils'
+import { parseQueryArgs } from '../queryCore/core/utils'
 import { useQueryClient } from '../queryClientProvider'
 import type { QueryClient, QueryFunction, QueryKey } from '../queryCore/core'
 import type { UseQueryOptions, UseQueryStoreResult } from '../types'
@@ -79,13 +79,7 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
     }
 
     function updateOptions(options: Partial<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>): void {
-        const mergedOptions = { ...observer.options, ...options }
-
-        if (options.queryKey && !options.queryHash && options.queryKey !== observer.options.queryKey) {
-            mergedOptions.queryHash = hashQueryKeyByOptions(options.queryKey, mergedOptions)
-        }
-
-        observer.setOptions(mergedOptions)
+        observer.updateOptions(options)
     }
 
     function setEnabled(enabled: boolean): void {
