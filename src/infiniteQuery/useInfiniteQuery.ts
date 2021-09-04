@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import { readable } from 'svelte/store'
 
-import { parseQueryArgs } from '../queryCore/core/utils'
+import { hashQueryKeyByOptions, parseQueryArgs } from '../queryCore/core/utils'
 import { useQueryClient } from '../queryClientProvider'
 import { InfiniteQueryObserver } from '../queryCore/core/infiniteQueryObserver'
 import { notifyManager, QueryClient, QueryFunction, QueryKey } from '../queryCore/core'
@@ -83,7 +83,13 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
     }
 
     function updateOptions(options: Partial<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>): void {
-        observer.setOptions({ ...observer.options, ...options })
+        const mergedOptions = { ...observer.options, ...options }
+
+        if (options.queryKey && !options.queryHash && options.queryKey !== observer.options.queryKey) {
+            mergedOptions.queryHash = hashQueryKeyByOptions(options.queryKey, mergedOptions)
+        }
+
+        observer.setOptions(mergedOptions)
     }
 
     function setEnabled(enabled: boolean): void {
