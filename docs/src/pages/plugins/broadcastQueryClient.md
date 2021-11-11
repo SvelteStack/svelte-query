@@ -11,6 +11,21 @@ title: broadcastQueryClient (Experimental)
 
 This utility comes packaged with `svelte-query` and is available under the `@sveltestack/svelte-query` import.
 
+However, this utility needs the `broadcast-channel` dependency to be available but it's not provided by this package.
+
+So if you want to use this utility, you need to install it in your project:
+
+```bash
+# using npm:
+npm install broadcast-channel
+
+# using yarn:
+yarn add broadcast-channel
+
+# using pnpm:
+pnpm add broadcast-channel
+```
+
 ## Usage
 
 Import the `broadcastQueryClient` function, and pass it your `QueryClient` instance, and optionally, set a `broadcastChannel`.
@@ -20,10 +35,12 @@ import { broadcastQueryClient } from '@sveltestack/svelte-query'
 
 const queryClient = new QueryClient()
 
-broadcastQueryClient({
-  queryClient,
-  broadcastChannel: 'my-app',
-})
+onMount(async () => {
+  await broadcastQueryClient({
+    queryClient,
+    broadcastChannel: 'my-app',
+  })
+});
 ```
 
 ## API
@@ -33,7 +50,7 @@ broadcastQueryClient({
 Pass this function a `QueryClient` instance and optionally, a `broadcastChannel`.
 
 ```ts
-broadcastQueryClient({ queryClient, broadcastChannel })
+await broadcastQueryClient({ queryClient, broadcastChannel })
 ```
 
 ### `Options`

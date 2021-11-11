@@ -21,7 +21,7 @@
     "build": "rimraf ./dist && rollup -c && yarn build:types && yarn build:lib && yarn build:svelte && yarn build:svelte-types",
     "build:types": "tsc --project ./tsconfig.types.json && replace 'import type' 'import' ./dist -r --silent && replace 'export type' 'export' ./dist -r --silent",
     "build:lib": "rimraf ./lib && tsc --project tsconfig.lib.json --module 'CommonJS' --outDir ./lib",
-    "build:svelte": "rimraf ./svelte && tsc --project tsconfig.lib.json --module 'es2015' --outDir ./svelte && node scripts/svelte-copy.js",
+    "build:svelte": "rimraf ./svelte && tsc --project tsconfig.lib.json --module 'es2020' --outDir ./svelte && node scripts/svelte-copy.js",
     "build:svelte-types": "node scripts/svelte-dts.js",
     "prepublishOnly": "yarn run build",
     "test:watch": "yarn test -- --watch",
@@ -50,6 +50,7 @@
     "axios": "^0.21.1",
     "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
+    "broadcast-channel": "^4.5.0",
     "cross-env": "^7.0.2",
     "del-cli": "^3.0.0",
     "eslint": "7.x",
@@ -84,13 +85,18 @@
     "type-fest": "^0.21.1",
     "typescript": "^4.0.3"
   },
+  "peerDependencies": {
+    "broadcast-channel": "^4.5.0"
+  },
+  "peerDependenciesMeta": {
+    "broadcast-channel": {
+      "optional": true
+    }
+  },
   "keywords": [
     "svelte",
     "react-query"
   ],
-  "dependencies": {
-    "broadcast-channel": "^4.2.0"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn test:ci"
