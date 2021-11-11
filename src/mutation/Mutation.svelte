@@ -5,11 +5,20 @@
   import type { UseMutationOptions, UseMutationResult } from '../types'
   import useMutation from './useMutation'
 
-  export let mutationFn: MutationFunction
-  export let options: UseMutationOptions<any, any, any, any>
+  type TData = $$Generic<any>
+  type TError = $$Generic<any>
+  type TVariables = $$Generic<any>
+  type TContext = $$Generic<any>
+
+  export let mutationFn: MutationFunction<TData, TVariables>
+  export let options:
+    | UseMutationOptions<TData, TError, TVariables, TContext>
+    | undefined = undefined
 
   // useful for binding
-  export let mutationResult: UseMutationResult
+  export let mutationResult:
+    | UseMutationResult<TData, TError, TVariables, TContext>
+    | undefined = undefined
 
   let firstRender = true
 

@@ -2,11 +2,17 @@
   import { onMount } from 'svelte'
 
   import type { UseQueryOptions, UseQueryResult } from '../types'
+  import type { QueryKey } from '../queryCore/core'
   import useQuery from './useQuery'
 
-  export let options: UseQueryOptions
+  type TQueryFnData = $$Generic<any>
+  type TError = $$Generic<any>
+  type TData = $$Generic<TQueryFnData>
+  type TQueryKey = $$Generic<QueryKey>
+
+  export let options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
   // useful for binding
-  export let queryResult: UseQueryResult
+  export let queryResult: UseQueryResult<TData, TError> | undefined = undefined
 
   let firstRender = true
 

@@ -3,8 +3,8 @@
 
   import useIsFetching from './useIsFetching'
 
-  export let filters: QueryFilters
-  export let isFetching
+  export let filters: QueryFilters | undefined = undefined
+  export let isFetching: number | undefined = undefined
 
   $: isFetchingResult = useIsFetching(filters)
   $: isFetching = $isFetchingResult
