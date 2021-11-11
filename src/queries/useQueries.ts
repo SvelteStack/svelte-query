@@ -1,12 +1,27 @@
 import { readable } from 'svelte/store';
 
-import { notifyManager, QueriesObserver, QueryClient } from "../queryCore/core";
+import { notifyManager, QueriesObserver, QueryClient, QueryKey } from "../queryCore/core";
 import { useQueryClient } from "../queryClientProvider";
-import type { UseQueryOptions } from "../types";
+import type { UseQueryOptions, UseQueriesStoreResult } from "../types";
 
-export default function useQueries(
-    queries: UseQueryOptions[]
-) {
+export default function useQueries<
+    TQueryFnData = unknown,
+    TError = unknown,
+    TData = TQueryFnData,
+    TQueryKey extends QueryKey = QueryKey
+>(queries: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>[]): UseQueriesStoreResult<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>[]>;
+export default function useQueries<
+    TQueryFnData = unknown,
+    TError = unknown,
+    TData = TQueryFnData,
+    TQueryKey extends QueryKey = QueryKey
+>(queries: []): UseQueriesStoreResult<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>[]>;
+export default function useQueries<
+    T extends readonly [...UseQueryOptions[]]
+>(queries: T): UseQueriesStoreResult<T>;
+export default function useQueries<
+    T extends readonly [...UseQueryOptions[]]
+>(queries: T): UseQueriesStoreResult<T> {
     const client: QueryClient = useQueryClient();
     const observer = new QueriesObserver(client, queries);
 
@@ -14,7 +29,7 @@ export default function useQueries(
         return observer.subscribe(notifyManager.batchCalls(set));
     });
 
-    const setQueries = (newQueries: UseQueryOptions[]) => {
+    const setQueries = (newQueries: T) => {
         if (observer.hasListeners()) {
             observer.setQueries(newQueries)
         }

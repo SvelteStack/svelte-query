@@ -2,18 +2,23 @@
   import { Queries } from '../../../src'
   import { useQueries } from '../../../src/queries'
 
-  const later = (delay, value) =>
+  type Later = <T>(delay: number, value: T) => Promise<T>
+
+  const later: Later = (delay, value) =>
     new Promise(resolve => setTimeout(resolve, delay, value))
 
   // the query fn
   const queryFn = () => later(500, 'My Data')
   // the query fn 2
   const queryFn2 = () => later(500, 'My Data 2')
+  // the query fn 3
+  const queryFn3 = () => later(500, true)
 
   const queries = [
     { queryKey: 'myQuery', queryFn },
     { queryKey: 'myQuery2', queryFn: queryFn2 },
-  ]
+    { queryKey: 'myQuery3', queryFn: queryFn3 },
+  ] as const
 
   const queriesStore = useQueries(queries)
 </script>

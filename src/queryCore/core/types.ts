@@ -457,6 +457,18 @@ export type InfiniteQueryObserverResult<TData = unknown, TError = unknown> =
   | InfiniteQueryObserverRefetchErrorResult<TData, TError>
   | InfiniteQueryObserverSuccessResult<TData, TError>
 
+export type QueryObserverOptionsToQueryObserverResult<T extends QueryObserverOptions> =
+  T extends QueryObserverOptions<any, infer TError> & { queryFn: (...args: any[]) => infer TData | Promise<infer TData> }
+    ? QueryObserverResult<TData, TError>
+    : T extends QueryObserverOptions<any, infer TError, infer TData, any, any>
+    ? QueryObserverResult<TData, TError>
+    : never
+
+
+export type QueriesObserverResult<T extends readonly [...QueryObserverOptions[]]> = {
+    [K in keyof T]: QueryObserverOptionsToQueryObserverResult<T[K]>
+}
+
 export type MutationKey = string | readonly unknown[]
 
 export type MutationStatus = 'idle' | 'loading' | 'success' | 'error'

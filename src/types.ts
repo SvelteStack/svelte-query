@@ -5,7 +5,8 @@ import type {
   QueryObserverResult,
   QueryFunction, QueryKey, MutationStatus, MutationKey, MutationFunction,
   InfiniteQueryObserverOptions,
-  InfiniteQueryObserverResult
+  InfiniteQueryObserverResult,
+  QueriesObserverResult
 } from "./queryCore";
 import { RetryDelayValue, RetryValue } from "./queryCore/core/retryer";
 
@@ -74,6 +75,12 @@ export interface UseInfiniteQueryOptions<
 
 
 export type UseInfiniteQueryResult<TData = unknown, TError = unknown> = InfiniteQueryObserverResult<TData, TError>
+
+export interface UseQueriesStoreResult<T extends readonly [...UseQueryOptions[]]> extends Readable<UseQueriesResult<T>> {
+    setQueries(newQueries: T): void
+}
+
+export type UseQueriesResult<T extends readonly [...UseQueryOptions[]]> = QueriesObserverResult<T>
 
 
 export interface MutationStoreResult<

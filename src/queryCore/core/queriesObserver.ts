@@ -1,25 +1,25 @@
 import { difference, replaceAt } from './utils'
 import { notifyManager } from './notifyManager'
-import type { QueryObserverOptions, QueryObserverResult } from './types'
+import type { QueryObserverOptions, QueryObserverResult, QueriesObserverResult } from './types'
 import type { QueryClient } from './queryClient'
 import { NotifyOptions, QueryObserver } from './queryObserver'
 import { Subscribable } from './subscribable'
 
-type QueriesObserverListener = (result: QueryObserverResult[]) => void
+type QueriesObserverListener<T extends readonly [...QueryObserverOptions[]]> = (result: QueriesObserverResult<T>) => void
 
-export class QueriesObserver extends Subscribable<QueriesObserverListener> {
+export class QueriesObserver<T extends readonly [...QueryObserverOptions[]]> extends Subscribable<QueriesObserverListener<T>> {
   private client: QueryClient
-  private result: QueryObserverResult[]
-  private queries: QueryObserverOptions[]
+  private result: QueriesObserverResult<T>
+  private queries: T
   private observers: QueryObserver[]
   private observersMap: Record<string, QueryObserver>
 
-  constructor(client: QueryClient, queries?: QueryObserverOptions[]) {
+  constructor(client: QueryClient, queries?: T) {
     super()
 
     this.client = client
-    this.queries = []
-    this.result = []
+    this.queries = [] as any
+    this.result = [] as any
     this.observers = []
     this.observersMap = {}
 
@@ -52,24 +52,24 @@ export class QueriesObserver extends Subscribable<QueriesObserverListener> {
   }
 
   setQueries(
-    queries: QueryObserverOptions[],
+    queries: T,
     notifyOptions?: NotifyOptions
   ): void {
     this.queries = queries
     this.updateObservers(notifyOptions)
   }
 
-  getCurrentResult(): QueryObserverResult[] {
+  getCurrentResult(): QueriesObserverResult<T> {
     return this.result
   }
 
-  getOptimisticResult(queries: QueryObserverOptions[]): QueryObserverResult[] {
+  getOptimisticResult(queries: T): QueriesObserverResult<T> {
     return queries.map(options => {
       const defaultedOptions = this.client.defaultQueryObserverOptions(options)
       return this.getObserver(defaultedOptions).getOptimisticResult(
         defaultedOptions
       )
-    })
+    }) as any
   }
 
   private getObserver(options: QueryObserverOptions): QueryObserver {
@@ -117,7 +117,7 @@ export class QueriesObserver extends Subscribable<QueriesObserverListener> {
 
       this.observers = newObservers
       this.observersMap = newObserversMap
-      this.result = newResult
+      this.result = newResult as any
 
       if (!this.hasListeners()) {
         return

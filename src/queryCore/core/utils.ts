@@ -96,10 +96,10 @@ export function difference<T>(array1: T[], array2: T[]): T[] {
   return array1.filter(x => array2.indexOf(x) === -1)
 }
 
-export function replaceAt<T>(array: T[], index: number, value: T): T[] {
-  const copy = array.slice(0)
+export function replaceAt<T extends readonly V[], V>(array: T, index: number, value: V): T {
+  const copy = [...array] as const
   copy[index] = value
-  return copy
+  return copy as T
 }
 
 export function timeUntilStale(updatedAt: number, staleTime?: number): number {

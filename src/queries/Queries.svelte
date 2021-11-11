@@ -4,9 +4,9 @@
   import type { UseQueryOptions, UseQueryResult } from '../types'
   import useQueries from './useQueries'
 
-  export let queries: UseQueryOptions[]
+  export let queries: readonly UseQueryOptions[]
   // useful for binding
-  export let currentResult: UseQueryResult[]
+  export let currentResult: readonly UseQueryResult[] = []
 
   let firstRender = true
 
