@@ -18,10 +18,11 @@
     "svelte"
   ],
   "scripts": {
-    "build": "rimraf ./dist && rollup -c && yarn build:types && yarn build:lib && yarn build:svelte",
+    "build": "rimraf ./dist && rollup -c && yarn build:types && yarn build:lib && yarn build:svelte && yarn build:svelte-types",
     "build:types": "tsc --project ./tsconfig.types.json && replace 'import type' 'import' ./dist -r --silent && replace 'export type' 'export' ./dist -r --silent",
     "build:lib": "rimraf ./lib && tsc --project tsconfig.lib.json --module 'CommonJS' --outDir ./lib",
     "build:svelte": "rimraf ./svelte && tsc --project tsconfig.lib.json --module 'es2015' --outDir ./svelte && node scripts/svelte-copy.js",
+    "build:svelte-types": "node scripts/svelte-dts.js",
     "prepublishOnly": "yarn run build",
     "test:watch": "yarn test -- --watch",
     "test": "yarn build && yarn build:types && yarn test:eslint",
@@ -78,6 +79,7 @@
     "svelte": "^3.29.0",
     "svelte-check": "^1.0.55",
     "svelte-jester": "^1.0.5",
+    "svelte2tsx": "^0.4.8",
     "ts-jest": "^26.5.4",
     "type-fest": "^0.21.1",
     "typescript": "^4.0.3"

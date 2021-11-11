@@ -3,8 +3,8 @@
 
   import useIsMutating from './useIsMutating'
 
-  export let filters: MutationFilters
-  export let isMutating
+  export let filters: MutationFilters | undefined = undefined
+  export let isMutating: number | undefined = undefined
 
   $: isMutatingResult = useIsMutating(filters)
   $: isMutating = $isMutatingResult
