@@ -5,6 +5,7 @@ import {
   noop,
   replaceEqualDeep,
   timeUntilStale,
+  getAbortController,
 } from './utils'
 import type {
   InitialDataFunction,
@@ -157,8 +158,10 @@ export class Query<
   private retryer?: Retryer<TData, TError>
   private observers: QueryObserver<any, any, any, any, any>[]
   private defaultOptions?: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
+  private abortSignalConsumed: boolean
 
   constructor(config: QueryConfig<TQueryFnData, TError, TData, TQueryKey>) {
+    this.abortSignalConsumed = false
     this.defaultOptions = config.defaultOptions
     this.setOptions(config.options)
     this.observers = []
@@ -325,7 +328,7 @@ export class Query<
         // If the transport layer does not support cancellation
         // we'll let the query continue so the result can be cached
         if (this.retryer) {
-          if (this.retryer.isTransportCancelable) {
+          if (this.retryer.isTransportCancelable || this.abortSignalConsumed) {
             this.retryer.cancel({ revert: true })
           } else {
             this.retryer.cancelRetry()
@@ -377,17 +380,33 @@ export class Query<
       }
     }
 
+    const abortController = getAbortController()
+
     // Create query function context
     const queryFnContext: QueryFunctionContext<TQueryKey> = {
       queryKey: this.queryKey,
       pageParam: undefined,
     }
 
+    Object.defineProperty(queryFnContext, 'signal', {
+      enumerable: true,
+      get: () => {
+        if (abortController) {
+          this.abortSignalConsumed = true
+          return abortController.signal
+        }
+        return undefined
+      },
+    })
+
     // Create fetch function
-    const fetchFn = () =>
-      this.options.queryFn
-        ? this.options.queryFn(queryFnContext)
-        : Promise.reject('Missing queryFn')
+    const fetchFn = () => {
+      if (!this.options.queryFn) {
+        return Promise.reject('Missing queryFn')
+      }
+      this.abortSignalConsumed = false
+      return this.options.queryFn(queryFnContext)
+    }
 
     // Trigger behavior hook
     const context: FetchContext<TQueryFnData, TError, TData, any> = {
@@ -416,6 +435,7 @@ export class Query<
     // Try to fetch the data
     this.retryer = new Retryer({
       fn: context.fetchFn as () => TData,
+      abort: abortController?.abort?.bind(abortController),
       onSuccess: data => {
         this.setData(data as TData)
 

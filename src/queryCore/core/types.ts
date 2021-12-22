@@ -15,6 +15,7 @@ export interface QueryFunctionContext<
   TPageParam = any
 > {
   queryKey: TQueryKey
+  signal?: AbortSignal
   pageParam?: TPageParam
 }
 

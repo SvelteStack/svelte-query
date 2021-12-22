@@ -412,3 +412,9 @@ export function scheduleMicrotask(callback: () => void): void {
       })
     )
 }
+
+export function getAbortController(): AbortController | undefined {
+  if (typeof AbortController === 'function') {
+    return new AbortController()
+  }
+}
