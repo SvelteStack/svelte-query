@@ -79,6 +79,7 @@ function asyncThrottle<Args extends readonly unknown[], Result>(
       } else {
         if (queue.length > 0) {
           const lastArgs = queue[queue.length - 1]!
+          // @ts-ignore
           timeout = setTimeout(async () => {
             if (!running.current) {
               running.current = true
