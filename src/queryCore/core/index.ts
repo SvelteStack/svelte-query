@@ -12,8 +12,17 @@ export { focusManager } from './focusManager'
 export { onlineManager } from './onlineManager'
 export { hashQueryKey, isError } from './utils'
 export { isCancelledError } from './retryer'
+export { dehydrate, hydrate } from './hydration'
 
 // Types
 export * from './types'
-export type { Query as QueryCore } from './query'
+export type { Query as QueryCore} from './query'
+export type { Mutation as MutationCore} from './mutation'
 export type { Logger } from './logger'
+export type {
+  DehydrateOptions,
+  DehydratedState,
+  HydrateOptions,
+  ShouldDehydrateMutationFunction,
+  ShouldDehydrateQueryFunction,
+} from './hydration'

@@ -1,10 +1,12 @@
 import {
+  getAbortController,
   Updater,
   functionalUpdate,
   isValidTimeout,
   noop,
   replaceEqualDeep,
   timeUntilStale,
+  ensureQueryKeyArray,
 } from './utils'
 import type {
   InitialDataFunction,
@@ -12,12 +14,16 @@ import type {
   QueryOptions,
   QueryStatus,
   QueryFunctionContext,
+  EnsuredQueryKey,
+  QueryMeta,
+  CancelOptions,
+  SetDataOptions,
 } from './types'
 import type { QueryCache } from './queryCache'
 import type { QueryObserver } from './queryObserver'
 import { notifyManager } from './notifyManager'
 import { getLogger } from './logger'
-import { Retryer, CancelOptions, isCancelledError } from './retryer'
+import { Retryer, isCancelledError } from './retryer'
 
 // TYPES
 
@@ -33,6 +39,7 @@ interface QueryConfig<
   options?: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
   defaultOptions?: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
   state?: QueryState<TData, TError>
+  meta: QueryMeta | undefined
 }
 
 export interface QueryState<TData = unknown, TError = unknown> {
@@ -58,9 +65,10 @@ export interface FetchContext<
 > {
   fetchFn: () => unknown | Promise<unknown>
   fetchOptions?: FetchOptions
-  options: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
-  queryKey: TQueryKey
+  options: QueryOptions<TQueryFnData, TError, TData, any>
+  queryKey: EnsuredQueryKey<TQueryKey>
   state: QueryState<TData, TError>
+  meta: QueryMeta | undefined
 }
 
 export interface QueryBehavior<
@@ -77,10 +85,6 @@ export interface QueryBehavior<
 export interface FetchOptions {
   cancelRefetch?: boolean
   meta?: any
-}
-
-export interface SetDataOptions {
-  updatedAt?: number
 }
 
 interface FailedAction {
@@ -150,6 +154,7 @@ export class Query<
   revertState?: QueryState<TData, TError>
   state: QueryState<TData, TError>
   cacheTime!: number
+  meta: QueryMeta | undefined
 
   private cache: QueryCache
   private promise?: Promise<TData>
@@ -157,8 +162,12 @@ export class Query<
   private retryer?: Retryer<TData, TError>
   private observers: QueryObserver<any, any, any, any, any>[]
   private defaultOptions?: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
+  private abortSignalConsumed: boolean
+  private hadObservers: boolean
 
   constructor(config: QueryConfig<TQueryFnData, TError, TData, TQueryKey>) {
+    this.abortSignalConsumed = false
+    this.hadObservers = false
     this.defaultOptions = config.defaultOptions
     this.setOptions(config.options)
     this.observers = []
@@ -167,6 +176,7 @@ export class Query<
     this.queryHash = config.queryHash
     this.initialState = config.state || this.getDefaultState(this.options)
     this.state = this.initialState
+    this.meta = config.meta
     this.scheduleGc()
   }
 
@@ -174,6 +184,8 @@ export class Query<
     options?: QueryOptions<TQueryFnData, TError, TData, TQueryKey>
   ): void {
     this.options = { ...this.defaultOptions, ...options }
+
+    this.meta = options?.meta
 
     // Default to 5 minutes if not cache time is set
     this.cacheTime = Math.max(
@@ -205,8 +217,14 @@ export class Query<
   }
 
   private optionalRemove() {
-    if (!this.observers.length && !this.state.isFetching) {
-      this.cache.remove(this)
+    if (!this.observers.length) {
+      if (this.state.isFetching) {
+        if (this.hadObservers) {
+          this.scheduleGc()
+        }
+      } else {
+        this.cache.remove(this)
+      }
     }
   }
 
@@ -309,6 +327,7 @@ export class Query<
   addObserver(observer: QueryObserver<any, any, any, any, any>): void {
     if (this.observers.indexOf(observer) === -1) {
       this.observers.push(observer)
+      this.hadObservers = true
 
       // Stop the query from being garbage collected
       this.clearGcTimeout()
@@ -325,7 +344,7 @@ export class Query<
         // If the transport layer does not support cancellation
         // we'll let the query continue so the result can be cached
         if (this.retryer) {
-          if (this.retryer.isTransportCancelable) {
+          if (this.retryer.isTransportCancelable || this.abortSignalConsumed) {
             this.retryer.cancel({ revert: true })
           } else {
             this.retryer.cancelRetry()
@@ -343,6 +362,10 @@ export class Query<
     }
   }
 
+  getObserversCount(): number {
+    return this.observers.length
+  }
+
   invalidate(): void {
     if (!this.state.isInvalidated) {
       this.dispatch({ type: 'invalidate' })
@@ -358,6 +381,8 @@ export class Query<
         // Silently cancel current fetch if the user wants to cancel refetches
         this.cancel({ silent: true })
       } else if (this.promise) {
+        // make sure that retries that were potentially cancelled due to unmounts can continue
+        this.retryer?.continueRetry()
         // Return current promise if we are already fetching
         return this.promise
       }
@@ -377,25 +402,44 @@ export class Query<
       }
     }
 
+    const queryKey = ensureQueryKeyArray(this.queryKey)
+    const abortController = getAbortController()
+
     // Create query function context
     const queryFnContext: QueryFunctionContext<TQueryKey> = {
-      queryKey: this.queryKey,
+      queryKey,
       pageParam: undefined,
+      meta: this.meta,
     }
 
+    Object.defineProperty(queryFnContext, 'signal', {
+      enumerable: true,
+      get: () => {
+        if (abortController) {
+          this.abortSignalConsumed = true
+          return abortController.signal
+        }
+        return undefined
+      },
+    })
+
     // Create fetch function
-    const fetchFn = () =>
-      this.options.queryFn
-        ? this.options.queryFn(queryFnContext)
-        : Promise.reject('Missing queryFn')
+    const fetchFn = () => {
+      if (!this.options.queryFn) {
+        return Promise.reject('Missing queryFn')
+      }
+      this.abortSignalConsumed = false
+      return this.options.queryFn(queryFnContext)
+    }
 
     // Trigger behavior hook
-    const context: FetchContext<TQueryFnData, TError, TData, any> = {
+    const context: FetchContext<TQueryFnData, TError, TData, TQueryKey> = {
       fetchOptions,
       options: this.options,
-      queryKey: this.queryKey,
+      queryKey: queryKey,
       state: this.state,
       fetchFn,
+      meta: this.meta,
     }
 
     if (this.options.behavior?.onFetch) {
@@ -416,8 +460,12 @@ export class Query<
     // Try to fetch the data
     this.retryer = new Retryer({
       fn: context.fetchFn as () => TData,
+      abort: abortController?.abort?.bind(abortController),
       onSuccess: data => {
         this.setData(data as TData)
+
+        // Notify cache callback
+        this.cache.config.onSuccess?.(data, this as Query<any, any, any, any>)
 
         // Remove query after fetching if cache time is 0
         if (this.cacheTime === 0) {
@@ -435,9 +483,7 @@ export class Query<
 
         if (!isCancelledError(error)) {
           // Notify cache callback
-          if (this.cache.config.onError) {
-            this.cache.config.onError(error, this as Query<any, any, any, any>)
-          }
+          this.cache.config.onError?.(error, this as Query<any, any, any, any>)
 
           // Log error
           getLogger().error(error)
@@ -539,7 +585,10 @@ export class Query<
           fetchMeta: action.meta ?? null,
           isFetching: true,
           isPaused: false,
-          status: !state.dataUpdatedAt ? 'loading' : state.status,
+          ...(!state.dataUpdatedAt && {
+            error: null,
+            status: 'loading',
+          }),
         }
       case 'success':
         return {

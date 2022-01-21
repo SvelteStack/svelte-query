@@ -14,6 +14,16 @@ interface MutationCacheConfig {
     context: unknown,
     mutation: Mutation<unknown, unknown, unknown, unknown>
   ) => void
+  onSuccess?: (
+    data: unknown,
+    variables: unknown,
+    context: unknown,
+    mutation: Mutation<unknown, unknown, unknown, unknown>
+  ) => void
+  onMutate?: (
+    variables: unknown,
+    mutation: Mutation<unknown, unknown, unknown, unknown>
+  ) => void
 }
 
 type MutationCacheListener = (mutation?: Mutation) => void
@@ -46,6 +56,7 @@ export class MutationCache extends Subscribable<MutationCacheListener> {
       defaultOptions: options.mutationKey
         ? client.getMutationDefaults(options.mutationKey)
         : undefined,
+      meta: options.meta,
     })
 
     this.add(mutation)
@@ -76,12 +87,7 @@ export class MutationCache extends Subscribable<MutationCacheListener> {
     return this.mutations
   }
 
-  find<
-    TData = unknown,
-    TError = unknown,
-    TVariables = any,
-    TContext = unknown
-  >(
+  find<TData = unknown, TError = unknown, TVariables = any, TContext = unknown>(
     filters: MutationFilters
   ): Mutation<TData, TError, TVariables, TContext> | undefined {
     if (typeof filters.exact === 'undefined') {
