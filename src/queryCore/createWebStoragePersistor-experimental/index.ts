@@ -101,6 +101,7 @@ function throttle<TArgs extends any[]>(
   return function (...args: TArgs) {
     params = args
     if (timer === null) {
+      // @ts-ignore
       timer = setTimeout(() => {
         func(...params)
         timer = null
