@@ -23,7 +23,7 @@ export function useInfiniteQuery<
     TQueryKey extends QueryKey = QueryKey
 >(
     queryKey: TQueryKey,
-    options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+    options?: Omit<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, 'queryKey'>
 ): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useInfiniteQuery<
     TQueryFnData = unknown,
@@ -33,7 +33,7 @@ export function useInfiniteQuery<
 >(
     queryKey: TQueryKey,
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-    options?: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+    options?: Omit<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, 'queryKey' | 'queryFn'>
 ): UseInfiniteQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(
     arg1: TQueryKey | UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
@@ -78,7 +78,7 @@ export default function useInfiniteQuery<TQueryFnData, TError, TData = TQueryFnD
             let defaultedOptions = client.defaultQueryObserverOptions(options)
             // Include callbacks in batch renders
             defaultedOptions = setBatchCalls<UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>(defaultedOptions)
-            observer.setOptions(defaultedOptions)
+            observer.setOptions(defaultedOptions, { listeners: false })
         }
     }
 

@@ -28,7 +28,7 @@ export function useMutation<
     TContext = unknown
 >(
     mutationFn: MutationFunction<TData, TVariables>,
-    options?: UseMutationOptions<TData, TError, TVariables, TContext>
+    options?: Omit<UseMutationOptions<TData, TError, TVariables, TContext>, 'mutationFn'>
 ): MutationStoreResult<TData, TError, TVariables, TContext>
 export function useMutation<
     TData = unknown,
@@ -37,7 +37,7 @@ export function useMutation<
     TContext = unknown
 >(
     mutationKey: MutationKey,
-    options?: UseMutationOptions<TData, TError, TVariables, TContext>
+    options?: Omit<UseMutationOptions<TData, TError, TVariables, TContext>, 'mutationKey'>
 ): MutationStoreResult<TData, TError, TVariables, TContext>
 export function useMutation<
     TData = unknown,
@@ -47,7 +47,7 @@ export function useMutation<
 >(
     mutationKey: MutationKey,
     mutationFn?: MutationFunction<TData, TVariables>,
-    options?: UseMutationOptions<TData, TError, TVariables, TContext>
+    options?: Omit<UseMutationOptions<TData, TError, TVariables, TContext>, 'mutationKey' | 'mutationFn'>
 ): MutationStoreResult<TData, TError, TVariables, TContext>
 export default function useMutation<
     TData = unknown,
