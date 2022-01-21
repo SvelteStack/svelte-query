@@ -31,7 +31,7 @@ export default function useQueries<T extends any[]>(
     const setQueries = (newQueries: readonly [...QueriesOptions<T>]) => {
         if (observer.hasListeners()) {
             const defaultedNewQueries = getDefaultQuery(newQueries)
-            observer.setQueries(defaultedNewQueries)
+            observer.setQueries(defaultedNewQueries, { listeners: false })
         }
     }
 
