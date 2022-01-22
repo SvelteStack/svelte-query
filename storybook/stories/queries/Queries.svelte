@@ -20,7 +20,15 @@
     { queryKey: 'myQuery3', queryFn: queryFn3 },
   ] as const
 
-  const queriesStore = useQueries(queries)
+  const queriesStore = useQueries<
+    [{ queryFnData: string }, { queryFnData: string }, { queryFnData: boolean }]
+  >(queries)
+  // TS Error
+  // const queriesStore = useQueries<
+  //   [{ queryFnData: string }, { queryFnData: string }, { queryFnData: string }]
+  // >(queries)
+  // can pass only TData (data prop) although TQueryFnData will be left unknown
+  // Please see QueriesOptions for more details
 </script>
 
 <main>
