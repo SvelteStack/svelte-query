@@ -2,7 +2,7 @@
   "name": "@sveltestack/svelte-query",
   "homepage": "https://github.com/SvelteStack/svelte-query",
   "private": false,
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Hooks for managing, caching and syncing asynchronous and remote data in Svelte",
   "license": "MIT",
   "svelte": "svelte/index.js",
@@ -82,7 +82,7 @@
     "svelte-jester": "^1.0.5",
     "svelte2tsx": "^0.4.8",
     "ts-jest": "^26.5.4",
-    "type-fest": "^0.21.1",
+    "type-fest": "^2.10.0",
     "typescript": "^4.0.3"
   },
   "peerDependencies": {

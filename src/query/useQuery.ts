@@ -19,7 +19,7 @@ export function useQuery<
     TError = unknown,
     TData = TQueryFnData,
     TQueryKey extends QueryKey = QueryKey
->(queryKey: TQueryKey, options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
+>(queryKey: TQueryKey, options?: Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export function useQuery<
     TQueryFnData = unknown,
     TError = unknown,
@@ -28,7 +28,7 @@ export function useQuery<
 >(
     queryKey: TQueryKey,
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-    options?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+    options?: Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
 ): UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>
 export default function useQuery<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(
     arg1: TQueryKey | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
@@ -74,7 +74,7 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
         // Include callbacks in batch renders
         defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>(defaultedOptions)
         if (observer.hasListeners()) {
-            observer.setOptions(defaultedOptions)
+            observer.setOptions(defaultedOptions, { listeners: false })
         }
     }
 

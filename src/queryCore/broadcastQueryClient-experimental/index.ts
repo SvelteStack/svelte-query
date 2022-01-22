@@ -1,16 +1,15 @@
+import { BroadcastChannel } from 'broadcast-channel'
 import { QueryClient } from '../core'
 
 interface BroadcastQueryClientOptions {
   queryClient: QueryClient
-  broadcastChannel: string
+  broadcastChannel?: string
 }
 
-export async function broadcastQueryClient({
+export function broadcastQueryClient({
   queryClient,
   broadcastChannel = 'svelte-query',
 }: BroadcastQueryClientOptions) {
-  const { BroadcastChannel } = await import('broadcast-channel')
-
   let transaction = false
   const tx = (cb: () => void) => {
     transaction = true
