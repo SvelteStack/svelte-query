@@ -86,6 +86,7 @@
     "typescript": "^4.0.3"
   },
   "peerDependencies": {
+    "svelte": "^3.29.0",
     "broadcast-channel": "^4.5.0"
   },
   "peerDependenciesMeta": {
