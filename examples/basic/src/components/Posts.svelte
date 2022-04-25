@@ -4,7 +4,7 @@
 
   export let setPostId
 
-  async function getPosys() {
+  async function getPosts() {
     const { data } = await axios.get(
       'https://jsonplaceholder.typicode.com/posts'
     )
@@ -13,9 +13,9 @@
 
   const client = useQueryClient()
   const posts = useQuery<
-    { id: string; title: string; body: string }[],
+    { id: number; title: string; body: string }[],
     AxiosError
-  >('posts', getPosys)
+  >('posts', getPosts)
 </script>
 
 <div>
