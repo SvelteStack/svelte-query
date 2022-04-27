@@ -18,6 +18,7 @@ export default {
 		{ file: pkg.main, 'format': 'umd', name },
 		{ file: pkg.main.replace('.js', '.min.js'), format: 'iife', name, plugins: [terser()] }
 	],
+	external: (id) => id.startsWith('svelte'),
 	plugins: [
 		svelte({
 			preprocess: autoPreprocess()
