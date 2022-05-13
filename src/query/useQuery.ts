@@ -43,8 +43,10 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
     // Include callbacks in batch renders
     defaultedOptions = setBatchCalls<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>(defaultedOptions)
     const observer = new QueryObserver<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>(client, defaultedOptions)
+    let setter: any // Subscriber<UseQueryStoreResult<TQueryFnData, TError, TData, TQueryKey>> ???
 
     const { subscribe } = readable(observer.getCurrentResult(), set => {
+        setter = set
         return observer.subscribe(notifyManager.batchCalls(set))
     })
 
@@ -76,10 +78,12 @@ export default function useQuery<TQueryFnData = unknown, TError = unknown, TData
         if (observer.hasListeners()) {
             observer.setOptions(defaultedOptions, { listeners: false })
         }
+        if (setter) setter(observer.getCurrentResult())
     }
 
     function updateOptions(options: Partial<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>): void {
         observer.updateOptions(options)
+        if (setter) setter(observer.getCurrentResult())
     }
 
     function setEnabled(enabled: boolean): void {
