@@ -1,8 +1,10 @@
 <img src="./docs/src/images/svelte-query-og.png" />
-
 Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 
-## Visit [sveltequery.vercel.app](https://sveltequery.vercel.app) for docs, guides, API and more!
+# This package has been migrated to the [TanStack Query](https://github.com/TanStack/query/tree/main/packages/svelte-query) repo. 
+You can install it with npm install `@tanstack/svelte-query`
+
+## Visit [tanstack.com](https://tanstack.com/query/latest/docs/svelte/overview) for docs, guides, API and more!
 
 ## Quick Features
 
