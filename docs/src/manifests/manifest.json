@@ -161,7 +161,7 @@
           "editUrl": "/guides/query-filters.md"
         },
         {
-          "title": "SSR & Sapper",
+          "title": "SSR & SvelteKit",
           "path": "/guides/ssr",
           "editUrl": "/guides/ssr.md"
         },
