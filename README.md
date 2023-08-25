@@ -4,6 +4,30 @@ Hooks for managing, caching and syncing asynchronous and remote data in Svelte
 # This package has been migrated to the [TanStack Query](https://github.com/TanStack/query/tree/main/packages/svelte-query) repo. 
 You can install it with npm install `@tanstack/svelte-query`
 
+## Upgrading to TanStack
+
+It's easy to migrate your existing application over to tanstack from this package ✨
+
+```bash 
+npm uninstall @sveltestack/svelte-query
+npm install @tanstack/svelte-query
+```
+
+Replace the following import: 
+`@sveltestack/svelte-query` -> `@tanstack/svelte-query`
+
+Rename the following functions:
+
+`useQuery` -> `createQuery`
+
+`useQueries` -> `createQueries`
+
+`useMutation` -> `createMutation`
+
+Finally, as of v4, queryKey needs to be an Array:
+ 
+If you are using a string like `repoData`, please change it to an Array, e.g. `['repoData']`
+
 ## Visit [tanstack.com](https://tanstack.com/query/latest/docs/svelte/overview) for docs, guides, API and more!
 
 ## Quick Features
