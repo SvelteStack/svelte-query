@@ -97,7 +97,8 @@ Sometimes you may want to enable or disable a Query by using a svelte [reactive 
 
   export let isEnabled = false;
 
-  const queryResult = useQuery('todos', fetchTodos)
+  const queryResult = useQuery('todos', fetchTodos, { enabled: isEnabled })
+  
   $: queryResult.setEnabled(isEnabled)
 </script>
 
